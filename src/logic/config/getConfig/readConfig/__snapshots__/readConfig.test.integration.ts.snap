@@ -1,0 +1,121 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`readConfig should be able to read the example config provisioned in _test_assets 1`] = `
+ControlConfig {
+  "connection": ConnectionConfig {
+    "host": "__HOST__",
+    "password": "__PASSWORD__",
+    "port": 3306,
+    "schema": "__SCHEMA__",
+    "username": "__USERNAME__",
+  },
+  "definitions": Array [
+    ChangeDefinition {
+      "hash": "1c94e8540709dc58f76d528d843add1ca2ed56bddb40afddb550473bfc379054",
+      "id": "first_change",
+      "path": "./first_change.sql",
+      "reappliable": false,
+      "sql": "wassup!
+",
+      "status": undefined,
+    },
+    ChangeDefinition {
+      "hash": "60675ff6ce6168cc979c4c24cd9d943938f3e66b585c855158c93fa6b0c18b4a",
+      "id": "init_20190619_1",
+      "path": "./init/service_user.sql",
+      "reappliable": false,
+      "sql": "CREATE USER ...
+GRANT ...
+",
+      "status": undefined,
+    },
+    ChangeDefinition {
+      "hash": "57ccb893536b1a5708a6ffc105980eda3b3182ea57fc88e3f8362b3537d2a4d4",
+      "id": "data_20190619_1",
+      "path": "./init/data_sources.sql",
+      "reappliable": false,
+      "sql": "-- sometimes users want to provision their databases with some initial values or ensure something exists in the database
+INSERT INTO ...
+",
+      "status": undefined,
+    },
+    ChangeDefinition {
+      "hash": "c61a11e61b3fd7fdd827734dda8fbaec17cc1bbcf7d9784874e4d26348f79828",
+      "id": "procedures_20190619_1",
+      "path": "./procedures/awesome_sproc.sql",
+      "reappliable": true,
+      "sql": "DROP IF EXISTS PROCEDURE ...
+CREATE PROCEDURE ...
+",
+      "status": undefined,
+    },
+    ResourceDefinition {
+      "name": "communication_channel",
+      "path": "./tables/communication_channel.sql",
+      "sql": "-- ----------------------------------------
+-- create communication channel table
+-- ----------------------------------------
+CREATE TABLE \`communication_channel\` (
+  -- meta
+  \`id\` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  \`uuid\` VARCHAR(36) NOT NULL,
+  \`created_at\` DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+  -- static data
+  \`type\` ENUM('APP', 'SMS', 'EMAIL') NOT NULL, -- e.g., \\"how do we send this\\"
+  \`address\` VARCHAR(36) NOT NULL, -- e.g., \\"where do we send this\\"
+
+  -- meta meta
+  UNIQUE (\`type\`, \`address\`) -- type + address uniquely identify a communication channel
+) ENGINE = InnoDB;
+",
+      "status": undefined,
+      "type": "TABLE",
+    },
+    ResourceDefinition {
+      "name": "upsert_user_description",
+      "path": "./procedures/upsert_user_description.sql",
+      "sql": "/*
+  this is an example procedure with an example comment at the top, just to prove that we can extrac thte name and type from it
+*/
+CREATE PROCEDURE upsert_user_description(
+  IN in_from_user_id BIGINT,
+  IN in_first_name VARCHAR(255),
+  IN in_last_name VARCHAR(255),
+  IN in_phone_channel_id BIGINT
+)
+BEGIN
+  -- ----------------------------------------
+  -- DECLARATIONS
+  -- ----------------------------------------
+  DECLARE v_data_hash BINARY(20);
+  DECLARE v_entity_exists BOOLEAN DEFAULT false;
+
+  -- -----------------------------------------
+  -- UPSERT RECORD
+  -- -----------------------------------------
+  -- calculate the hash
+  SET v_data_hash = UNHEX( --  get the binary
+    SHA( -- of the hex hash
+      CONCAT_WS( -- of a string combining all non-null values
+        ':',
+        in_from_user_id,
+        in_first_name,
+        in_last_name,
+        in_phone_channel_id
+      )
+    )
+  );
+
+  -- ... do more stuff
+END;
+",
+      "status": undefined,
+      "type": "PROCEDURE",
+    },
+  ],
+  "dialect": "5.7",
+  "language": "mysql",
+  "strict": true,
+}
+`;

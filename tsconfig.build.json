@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "declaration": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "lib": [
+      "dom",
+      "es7",
+    ],
+  },
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.integration.ts",
+  ],
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}

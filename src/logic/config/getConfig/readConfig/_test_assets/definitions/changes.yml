@@ -1,0 +1,14 @@
+- type: change
+  path: './init/service_user.sql'
+  id: 'init_20190619_1'
+  reappliable: false # we'll do it manually for now
+
+- type: change
+  id: 'data_20190619_1'
+  path: './init/data_sources.sql'
+  reappliable: false # only run each insert once
+
+- type: change
+  id: 'procedures_20190619_1'
+  path: './procedures/awesome_sproc.sql'
+  reappliable: true

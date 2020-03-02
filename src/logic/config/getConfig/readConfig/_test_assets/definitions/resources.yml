@@ -1,0 +1,4 @@
+- type: resource
+  path: './tables/communication_channel.sql'
+- type: resource
+  path: './procedures/upsert_user_description.sql'

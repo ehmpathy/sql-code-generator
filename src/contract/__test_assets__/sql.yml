@@ -1,0 +1,7 @@
+language: mysql
+dialect: 5.7
+definitions:
+  - ./definitions/tables.yml
+  - ./definitions/functions.yml
+  - ./definitions/procedures.yml
+  - ./definitions/init.yml

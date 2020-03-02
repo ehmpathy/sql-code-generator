@@ -1,0 +1,13 @@
+version: '3'
+services:
+  mysql:
+    build:
+      context: .
+      dockerfile: build-image.dockerfile
+    container_name: superimportantdb_server
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 12821:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: a-secure-password
+      MYSQL_DATABASE: superimportantdb # creates the database for us automatically
