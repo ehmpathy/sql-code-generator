@@ -1,7 +1,7 @@
-import { ResourceDefinition } from '../../../../../../types';
 import { InvalidDefinitionError } from '../errors';
-import { readFileAsync } from './../../../../_utils/readFileAsync';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
+import { ResourceDefinition } from '../../../../../../model';
+import { getSqlFromFile } from '../../utils/getSqlFromFile';
 
 /*
   1. get the sql
@@ -16,10 +16,7 @@ import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameF
 export const hydrateResourceDefinitionContent = async ({ readRoot, content }: { readRoot: string; content: any }) => {
   // 1. get the sql defined at the path
   if (!content.path) throw new InvalidDefinitionError({ explanation: 'path must be defined', basis: content });
-  if (content.path.split('.').slice(-1)[0] !== 'sql') {
-    throw new InvalidDefinitionError({ explanation: 'path must specify a .sql file', basis: content });
-  }
-  const sql = await readFileAsync({ filePath: `${readRoot}/${content.path}` });
+  const sql = await getSqlFromFile({ filePath: `${readRoot}/${content.path}` });
 
   // 2. extract the type and name of the resource
   const { name, type } = extractResourceTypeAndNameFromDDL({ ddl: sql });
@@ -29,6 +26,5 @@ export const hydrateResourceDefinitionContent = async ({ readRoot, content }: { 
     sql,
     type,
     name,
-    path: content.path,
   });
 };

@@ -1,15 +1,15 @@
-import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 import { InvalidDefinitionError } from './errors';
-import { hydrateChangeDefinitionContent } from './hydrateChangeDefinitionContent';
+import { hydrateQueryDefinitionContent } from './hydrateQueryDefinitionContent';
 import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
-
-jest.mock('./hydrateChangeDefinitionContent');
-const hydrateChangeDefinitionContentMock = hydrateChangeDefinitionContent as jest.Mock;
-hydrateChangeDefinitionContentMock.mockResolvedValue('__HYDRATED_CHANGE_DEF_RESULT__');
+import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 
 jest.mock('./hydrateResourceDefinitionContent');
 const hydrateResourceDefinitionContentMock = hydrateResourceDefinitionContent as jest.Mock;
 hydrateResourceDefinitionContentMock.mockResolvedValue('__HYDRATED_RESOURCE_DEF_RESULT__');
+
+jest.mock('./hydrateQueryDefinitionContent');
+const hydrateQueryDefinitionContentMock = hydrateQueryDefinitionContent as jest.Mock;
+hydrateQueryDefinitionContentMock.mockResolvedValue('__HYDRATED_QUERY_DEF_RESULT__');
 
 describe('validateAndHydrateDefinitionsYmlContents', () => {
   beforeEach(() => jest.clearAllMocks());
@@ -51,14 +51,14 @@ describe('validateAndHydrateDefinitionsYmlContents', () => {
   it('should return the result of hydrateChangeDefinitionContent, if type === change', async () => {
     const definitions = await validateAndHydrateDefinitionsYmlContents({
       readRoot: '__READ_ROOT__',
-      contents: [{ type: 'change' }],
+      contents: [{ type: 'query' }],
     });
-    expect(hydrateChangeDefinitionContentMock.mock.calls.length).toEqual(1);
-    expect(hydrateChangeDefinitionContentMock.mock.calls[0][0]).toMatchObject({
+    expect(hydrateQueryDefinitionContentMock.mock.calls.length).toEqual(1);
+    expect(hydrateQueryDefinitionContentMock.mock.calls[0][0]).toMatchObject({
       readRoot: '__READ_ROOT__',
-      content: { type: 'change' },
+      content: { type: 'query' },
     });
-    expect(definitions[0]).toEqual('__HYDRATED_CHANGE_DEF_RESULT__');
+    expect(definitions[0]).toEqual('__HYDRATED_QUERY_DEF_RESULT__');
   });
   it('should return the result of hydrateResourceDefinitionContent, if type === resource', async () => {
     const definitions = await validateAndHydrateDefinitionsYmlContents({

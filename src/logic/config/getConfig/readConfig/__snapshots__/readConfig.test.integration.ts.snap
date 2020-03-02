@@ -1,57 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`readConfig should be able to read the example config provisioned in _test_assets 1`] = `
-ControlConfig {
-  "connection": ConnectionConfig {
-    "host": "__HOST__",
-    "password": "__PASSWORD__",
-    "port": 3306,
-    "schema": "__SCHEMA__",
-    "username": "__USERNAME__",
-  },
+exports[`readConfig should be able to read the example config provisioned in __test_assets__ 1`] = `
+GeneratorConfig {
   "definitions": Array [
-    ChangeDefinition {
-      "hash": "1c94e8540709dc58f76d528d843add1ca2ed56bddb40afddb550473bfc379054",
-      "id": "first_change",
-      "path": "./first_change.sql",
-      "reappliable": false,
-      "sql": "wassup!
-",
-      "status": undefined,
-    },
-    ChangeDefinition {
-      "hash": "60675ff6ce6168cc979c4c24cd9d943938f3e66b585c855158c93fa6b0c18b4a",
-      "id": "init_20190619_1",
-      "path": "./init/service_user.sql",
-      "reappliable": false,
-      "sql": "CREATE USER ...
-GRANT ...
-",
-      "status": undefined,
-    },
-    ChangeDefinition {
-      "hash": "57ccb893536b1a5708a6ffc105980eda3b3182ea57fc88e3f8362b3537d2a4d4",
-      "id": "data_20190619_1",
-      "path": "./init/data_sources.sql",
-      "reappliable": false,
-      "sql": "-- sometimes users want to provision their databases with some initial values or ensure something exists in the database
-INSERT INTO ...
-",
-      "status": undefined,
-    },
-    ChangeDefinition {
-      "hash": "c61a11e61b3fd7fdd827734dda8fbaec17cc1bbcf7d9784874e4d26348f79828",
-      "id": "procedures_20190619_1",
-      "path": "./procedures/awesome_sproc.sql",
-      "reappliable": true,
-      "sql": "DROP IF EXISTS PROCEDURE ...
-CREATE PROCEDURE ...
-",
-      "status": undefined,
+    QueryDefinition {
+      "name": "selectOne",
+      "sql": "select 1",
     },
     ResourceDefinition {
       "name": "communication_channel",
-      "path": "./tables/communication_channel.sql",
       "sql": "-- ----------------------------------------
 -- create communication channel table
 -- ----------------------------------------
@@ -69,12 +26,10 @@ CREATE TABLE \`communication_channel\` (
   UNIQUE (\`type\`, \`address\`) -- type + address uniquely identify a communication channel
 ) ENGINE = InnoDB;
 ",
-      "status": undefined,
       "type": "TABLE",
     },
     ResourceDefinition {
       "name": "upsert_user_description",
-      "path": "./procedures/upsert_user_description.sql",
       "sql": "/*
   this is an example procedure with an example comment at the top, just to prove that we can extrac thte name and type from it
 */
@@ -110,12 +65,14 @@ BEGIN
   -- ... do more stuff
 END;
 ",
-      "status": undefined,
       "type": "PROCEDURE",
+    },
+    QueryDefinition {
+      "name": "findAllUsersByName",
+      "sql": "SELECT * FROM users WHERE name = :name",
     },
   ],
   "dialect": "5.7",
   "language": "mysql",
-  "strict": true,
 }
 `;

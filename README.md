@@ -1,7 +1,7 @@
 sql-code-generator
 ==============
 
-Generate code from your SQL schema for type safety and and development speed.
+Generate code from your SQL schema and queries for type safety and development speed.
 
 Generates type definitions and query methods with a single function call.
 

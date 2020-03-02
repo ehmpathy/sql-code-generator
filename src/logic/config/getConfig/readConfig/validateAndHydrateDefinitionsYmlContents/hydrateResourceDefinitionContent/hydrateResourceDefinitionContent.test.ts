@@ -1,8 +1,9 @@
-import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
-import { readFileAsync } from './../../../../_utils/readFileAsync';
+import { DefinitionType, ResourceType, ResourceDefinition } from '../../../../../../model';
+import { readFileAsync } from '../../../../_utils/readFileAsync';
+import { getSqlFromFile } from '../../utils/getSqlFromFile';
 import { InvalidDefinitionError } from '../errors';
-import { ResourceDefinition, DefinitionType, ResourceType } from '../../../../../../types';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
+import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
 
 jest.mock('./../../../../_utils/readFileAsync');
 const readFileAsyncMock = readFileAsync as jest.Mock;
@@ -15,6 +16,10 @@ extractResourceTypeAndNameFromDDLMock.mockReturnValue({
   type: ResourceType.FUNCTION,
 });
 
+jest.mock('../../utils/getSqlFromFile');
+const getSqlFromFileMock = getSqlFromFile as jest.Mock;
+getSqlFromFileMock.mockResolvedValue('__SQL_CONTENTS__');
+
 describe('hydrate change definition content', () => {
   beforeEach(() => jest.clearAllMocks());
   it('should throw an error if the path is not defiend', async () => {
@@ -26,23 +31,14 @@ describe('hydrate change definition content', () => {
       expect(error.explanation).toEqual('path must be defined');
     }
   });
-  it('should throw an error if the extension is not .sql', async () => {
-    try {
-      await hydrateResourceDefinitionContent({ readRoot: '__READ_ROOT__', content: { path: 'somefile.json' } });
-      throw new Error('should not reach here');
-    } catch (error) {
-      expect(error.constructor).toEqual(InvalidDefinitionError);
-      expect(error.explanation).toEqual('path must specify a .sql file');
-    }
-  });
   it('should get the sql content from the path', async () => {
     const exampleContent = {
       type: DefinitionType.RESOURCE,
       path: '__FILE_PATH__.sql',
     };
     await hydrateResourceDefinitionContent({ readRoot: '__READ_ROOT__', content: exampleContent });
-    expect(readFileAsyncMock.mock.calls.length).toEqual(1);
-    expect(readFileAsyncMock.mock.calls[0][0]).toMatchObject({
+    expect(getSqlFromFileMock.mock.calls.length).toEqual(1);
+    expect(getSqlFromFileMock.mock.calls[0][0]).toMatchObject({
       filePath: '__READ_ROOT__/__FILE_PATH__.sql',
     });
   });
@@ -65,7 +61,6 @@ describe('hydrate change definition content', () => {
     const result = await hydrateResourceDefinitionContent({ readRoot: '__READ_ROOT__', content: exampleContent });
     expect(result.constructor).toEqual(ResourceDefinition);
     expect(result.sql).toEqual('__SQL_CONTENTS__');
-    expect(result.path).toEqual(exampleContent.path);
     expect(result.name).toEqual('__RESOURCE_NAME__');
     expect(result.type).toEqual(ResourceType.FUNCTION);
   });

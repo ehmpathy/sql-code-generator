@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getSqlFromFile should be able to read sql from a sql file 1`] = `
+"CREATE TABLE user (
+  id BIGINT,
+  name VARCHAR(255)
+)
+"
+`;
+
+exports[`getSqlFromFile should be able to read sql from a ts file with a named "sql" export 1`] = `"SELECT * FROM user WHERE id = :id"`;

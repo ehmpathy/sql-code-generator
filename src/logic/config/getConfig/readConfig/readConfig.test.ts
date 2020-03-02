@@ -1,11 +1,10 @@
-import { ControlConfig, ChangeDefinition, ConnectionConfig, DatabaseLanguage } from '../../../../types';
-import { readConfig } from './readConfig';
-import { readYmlFile } from './_utils/readYmlFile';
-import { getConnectionConfig } from './getConnectionConfig';
+import { DatabaseLanguage, GeneratorConfig, QueryDefinition } from '../../../../model';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
+import { readConfig } from './readConfig';
+import { readYmlFile } from './utils/readYmlFile';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 
-jest.mock('./_utils/readYmlFile');
+jest.mock('./utils/readYmlFile');
 const readYmlFileMock = readYmlFile as jest.Mock;
 readYmlFileMock.mockResolvedValue({
   language: DatabaseLanguage.MYSQL,
@@ -14,37 +13,20 @@ readYmlFileMock.mockResolvedValue({
   definitions: ['__DEF_1__', '__DEF_2__'],
 });
 
-jest.mock('./getConnectionConfig');
-const getConnectionConfigMock = getConnectionConfig as jest.Mock;
-const exampleConnectionConfig = new ConnectionConfig({
-  host: '__HOST__',
-  port: 3306,
-  schema: '__SCHEMA__',
-  username: '__USERNAME__',
-  password: '__PASSWORD__',
-});
-getConnectionConfigMock.mockResolvedValue(exampleConnectionConfig);
-
 jest.mock('./flattenDefinitionsRecursive');
 const flattenDefinitionsRecursiveMock = flattenDefinitionsRecursive as jest.Mock;
 const exampleDefinitions = [
-  new ChangeDefinition({
-    id: 'some id',
-    path: '__PATH__',
+  new QueryDefinition({
+    name: '__NAME__',
     sql: '__SOME_SQL__',
-    hash: '3783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
   }),
-  new ChangeDefinition({
-    id: 'some other id',
-    path: '__PATH__',
+  new QueryDefinition({
+    name: '__NAME__',
     sql: '__SOME_SQL__',
-    hash: '5783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
   }),
-  new ChangeDefinition({
-    id: 'another id',
-    path: '__PATH__',
+  new QueryDefinition({
+    name: '__NAME__',
     sql: '__SOME_SQL__',
-    hash: '7783d795180be08230d90e0178c1f2bdf09612716a51b5fb42902e486453cbd8',
   }),
 ];
 flattenDefinitionsRecursiveMock.mockResolvedValue(exampleDefinitions);
@@ -109,13 +91,6 @@ describe('readConfig', () => {
       expect(error.message).toEqual('connection must be defined');
     }
   });
-  it('retrieves the connection config', async () => {
-    await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
-    expect(getConnectionConfigMock.mock.calls.length).toEqual(1);
-    expect(getConnectionConfigMock.mock.calls[0][0]).toMatchObject({
-      modulePath: '__CONFIG_DIR__/__CONNECTION_PATH__', // default mock response
-    });
-  });
   it('gets and flattens the definitions', async () => {
     validateAndHydrateDefinitionsYmlContentsMock.mockResolvedValueOnce([
       '__HYDRATED_DEF_ONE__',
@@ -134,31 +109,11 @@ describe('readConfig', () => {
   });
   it('should return the full config - default strict to true', async () => {
     const config = await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
-    expect(config.constructor).toEqual(ControlConfig);
+    expect(config.constructor).toEqual(GeneratorConfig);
     expect(config).toEqual({
       language: DatabaseLanguage.MYSQL,
       dialect: '__DIALECT__',
-      connection: exampleConnectionConfig,
       definitions: exampleDefinitions,
-      strict: true,
-    });
-  });
-  it('should return the full config - strict defined explicitly', async () => {
-    readYmlFileMock.mockResolvedValueOnce({
-      language: DatabaseLanguage.MYSQL,
-      dialect: '__DIALECT__',
-      connection: './__CONNECTION_PATH__',
-      definitions: ['__DEF_1__', '__DEF_2__'],
-      strict: false,
-    });
-    const config = await readConfig({ filePath: '__CONFIG_DIR__/control.yml' });
-    expect(config.constructor).toEqual(ControlConfig);
-    expect(config).toEqual({
-      language: DatabaseLanguage.MYSQL,
-      dialect: '__DIALECT__',
-      connection: exampleConnectionConfig,
-      definitions: exampleDefinitions,
-      strict: false,
     });
   });
 });

@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../../../types';
+import { ResourceType } from '../../../../../../model';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
 
 describe('extractResourceTypeAndNameFromDDL', () => {
@@ -45,6 +45,18 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
     expect(name).toEqual('find_super_cool_stuff');
     expect(type).toEqual(ResourceType.FUNCTION);
+  });
+  it('should be able to find a view resource', () => {
+    const ddl = 'create view find_super_cool_stuff ( ... )';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('find_super_cool_stuff');
+    expect(type).toEqual(ResourceType.VIEW);
+  });
+  it('should be able to find a VIEW resource', () => {
+    const ddl = 'CREATE VIEW find_super_cool_stuff ( ... )';
+    const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+    expect(name).toEqual('find_super_cool_stuff');
+    expect(type).toEqual(ResourceType.VIEW);
   });
   it('should be able to find a resource name even if encased in backticks', () => {
     const ddl = 'CREATE TABLE `super_cool_table` ( ... )';

@@ -1,9 +1,7 @@
-import { ControlConfig } from '../../../../types';
-import { readYmlFile } from './_utils/readYmlFile';
-import { getReadFilePath } from './_utils/getReadFilePath';
+import { readYmlFile } from './utils/readYmlFile';
 import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
 import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
-import { getConnectionConfig } from './getConnectionConfig';
+import { GeneratorConfig } from '../../../../model';
 
 /*
   1. read the yml file
@@ -26,18 +24,7 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   if (!contents.dialect) throw new Error('dialect must be defined');
   const dialect = `${contents.dialect}`; // ensure that we read it as a string, as it could be a number
 
-  // determine if schema control should be strict
-  const strict = contents.strict === undefined ? true : contents.strict;
-  if (typeof strict !== 'boolean') throw new Error('strict must be a boolean');
-
-  // get the connection config
-  if (!contents.connection) throw new Error('connection must be defined');
-  const connectionPath = contents.connection;
-  const connection = await getConnectionConfig({
-    modulePath: getReadFilePath({ readRoot: configDir, relativePath: connectionPath }),
-  }); // NOTE: we expect connection path to be relative to the config path
-
-  // get the resource and change definitions
+  // get the resource and query definitions
   if (!contents.definitions) throw new Error('definitions must be defined');
   const definitionContents = contents.definitions;
   const nestedDefinitions = await validateAndHydrateDefinitionsYmlContents({
@@ -47,11 +34,9 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   const definitions = await flattenDefinitionsRecursive({ readRoot: configDir, definitions: nestedDefinitions });
 
   // return the results
-  return new ControlConfig({
+  return new GeneratorConfig({
     language,
     dialect,
-    strict,
-    connection,
     definitions,
   });
 };

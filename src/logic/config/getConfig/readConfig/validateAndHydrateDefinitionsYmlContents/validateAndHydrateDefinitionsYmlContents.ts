@@ -1,7 +1,7 @@
-import { ChangeDefinition, ResourceDefinition, DefinitionType } from '../../../../../types';
-import { hydrateChangeDefinitionContent } from './hydrateChangeDefinitionContent';
-import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
+import { DefinitionType, QueryDefinition, ResourceDefinition } from '../../../../../model';
 import { InvalidDefinitionError } from './errors';
+import { hydrateQueryDefinitionContent } from './hydrateQueryDefinitionContent';
+import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
 
 /*
   validate and hydrate an array of definitions from a yml file:
@@ -18,7 +18,7 @@ export const validateAndHydrateDefinitionsYmlContents = async ({
   if (!contents) return []; // enables empty files
   return Promise.all(
     contents.map(
-      async (content): Promise<string | ChangeDefinition | ResourceDefinition> => {
+      async (content): Promise<string | ResourceDefinition | QueryDefinition> => {
         if (typeof content === 'string') {
           if (content.slice(-4) !== '.yml') {
             throw new InvalidDefinitionError({ explanation: 'string must be path to a .yml file', basis: content });
@@ -29,8 +29,8 @@ export const validateAndHydrateDefinitionsYmlContents = async ({
           if (!content.type) {
             throw new InvalidDefinitionError({ explanation: 'definitions must have a type', basis: content });
           }
-          if (content.type === DefinitionType.CHANGE) return hydrateChangeDefinitionContent({ readRoot, content });
           if (content.type === DefinitionType.RESOURCE) return hydrateResourceDefinitionContent({ readRoot, content });
+          if (content.type === DefinitionType.QUERY) return hydrateQueryDefinitionContent({ readRoot, content });
           throw new InvalidDefinitionError({ explanation: 'unsupported definition type', basis: content });
         }
         throw new InvalidDefinitionError({
