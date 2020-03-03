@@ -56,6 +56,7 @@
   },
   "devDependencies": {
     "@oclif/dev-cli": "^1.22.0",
+    "@types/change-case": "^2.3.1",
     "@types/diff": "^4.0.2",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^23.3.14",
@@ -81,6 +82,7 @@
     "@oclif/config": "^1.13.0",
     "@oclif/plugin-help": "^2.2.0",
     "chalk": "^2.4.2",
+    "change-case": "^4.1.1",
     "diff": "^4.0.1",
     "indent-string": "^4.0.0",
     "joi": "^14.3.1",
@@ -89,6 +91,7 @@
     "oclif": "^1.13.4",
     "schematic-joi-model": "^1.2.2",
     "simple-sha256": "^1.0.0",
+    "sql-strip-comments": "0.0.23",
     "yaml": "^1.6.0",
     "yesql": "^3.2.2"
   }

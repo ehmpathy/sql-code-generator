@@ -1,13 +1,8 @@
 import { DefinitionType, ResourceType, ResourceDefinition } from '../../../../../../model';
-import { readFileAsync } from '../../../../_utils/readFileAsync';
-import { getSqlFromFile } from '../../utils/getSqlFromFile';
+import { getSqlFromFile } from '../../../../_utils/getSqlFromFile';
 import { InvalidDefinitionError } from '../errors';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
 import { hydrateResourceDefinitionContent } from './hydrateResourceDefinitionContent';
-
-jest.mock('./../../../../_utils/readFileAsync');
-const readFileAsyncMock = readFileAsync as jest.Mock;
-readFileAsyncMock.mockResolvedValue('__SQL_CONTENTS__');
 
 jest.mock('./extractResourceTypeAndNameFromDDL');
 const extractResourceTypeAndNameFromDDLMock = extractResourceTypeAndNameFromDDL as jest.Mock;
@@ -16,7 +11,7 @@ extractResourceTypeAndNameFromDDLMock.mockReturnValue({
   type: ResourceType.FUNCTION,
 });
 
-jest.mock('../../utils/getSqlFromFile');
+jest.mock('../../../../_utils/getSqlFromFile');
 const getSqlFromFileMock = getSqlFromFile as jest.Mock;
 getSqlFromFileMock.mockResolvedValue('__SQL_CONTENTS__');
 

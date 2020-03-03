@@ -16,6 +16,7 @@
   },
   "include": [
     "src/**/*.ts",
+    "nontyped_modules"
   ],
   "exclude": [
     "src/**/*.test.ts",

@@ -1,9 +1,9 @@
 import { InvalidDefinitionError } from '../errors';
 import { hydrateQueryDefinitionContent } from './hydrateQueryDefinitionContent';
-import { getSqlFromFile } from '../../utils/getSqlFromFile';
+import { getSqlFromFile } from '../../../../_utils/getSqlFromFile';
 import { DefinitionType, QueryDefinition } from '../../../../../../model';
 
-jest.mock('../../utils/getSqlFromFile');
+jest.mock('../../../../_utils/getSqlFromFile');
 const getSqlFromFileMock = getSqlFromFile as jest.Mock;
 getSqlFromFileMock.mockResolvedValue('__SQL_CONTENTS__');
 

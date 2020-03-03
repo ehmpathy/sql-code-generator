@@ -1,5 +1,5 @@
 import { QueryDefinition } from '../../../../../../model';
-import { getSqlFromFile } from '../../utils/getSqlFromFile';
+import { getSqlFromFile } from '../../../../_utils/getSqlFromFile';
 import { InvalidDefinitionError } from '../errors';
 
 export const hydrateQueryDefinitionContent = async ({ readRoot, content }: { readRoot: string; content: any }) => {

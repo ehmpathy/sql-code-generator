@@ -1,6 +1,6 @@
 import YAML from 'yaml';
 import { readYmlFile } from './readYmlFile';
-import { readFileAsync } from './../../../_utils/readFileAsync';
+import { readFileAsync } from '../../../_utils/readFileAsync';
 
 jest.mock('./../../../_utils/readFileAsync');
 const readFileAsyncMock = readFileAsync as jest.Mock;

@@ -1,7 +1,7 @@
 import { InvalidDefinitionError } from '../errors';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
 import { ResourceDefinition } from '../../../../../../model';
-import { getSqlFromFile } from '../../utils/getSqlFromFile';
+import { getSqlFromFile } from '../../../../_utils/getSqlFromFile';
 
 /*
   1. get the sql

@@ -1,4 +1,4 @@
-import { readFileAsync } from '../../../_utils/readFileAsync';
+import { readFileAsync } from './readFileAsync';
 
 export const getSqlFromFile = async ({ filePath }: { filePath: string }): Promise<string> => {
   const extension = filePath.split('.').slice(-1)[0];

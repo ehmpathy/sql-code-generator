@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extractTypeDefinitionFromTableSql should be able to extract types in this example 1`] = `
+TypeDefinitionOfResourceTable {
+  "columns": Array [
+    TypeDefinitionOfResourceColumn {
+      "name": "id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "uuid",
+      "type": Array [
+        "string",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "created_at",
+      "type": Array [
+        "date",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "url",
+      "type": Array [
+        "string",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "caption",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "credit",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "alt_text",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+  ],
+  "name": "image",
+}
+`;
+
+exports[`extractTypeDefinitionFromTableSql should be able to extract types in this other example 1`] = `
+TypeDefinitionOfResourceTable {
+  "columns": Array [
+    TypeDefinitionOfResourceColumn {
+      "name": "id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "suggestion_id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "effective_at",
+      "type": Array [
+        "date",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "created_at",
+      "type": Array [
+        "date",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "status",
+      "type": Array [
+        "string",
+      ],
+    },
+  ],
+  "name": "suggestion_version",
+}
+`;
