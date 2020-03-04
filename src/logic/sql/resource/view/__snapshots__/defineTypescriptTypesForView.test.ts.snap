@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defineTypescriptTypesForView should generate an accurate looking interface for this table definition 1`] = `
+"export interface SqlView\\",Image {
+  id: SqlTableSuggestion['id'];
+  uuid: SqlTableSuggestion['uuid'];
+  suggestion_source: SqlTableSuggestion['suggestion_source'];
+  external_id: SqlTableSuggestion['external_id'];
+  status: SqlTableSuggestionVersion['status'];
+  result: SqlTableSuggestionVersion['result'];
+  created_at: SqlTableSuggestion['created_at'];
+  effective_at: SqlTableSuggestionVersion['effective_at'];
+  updated_at: SqlTableSuggestionVersion['created_at'];
+}"
+`;

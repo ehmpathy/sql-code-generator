@@ -1,8 +1,8 @@
 select
-  id,
-  url,
-  caption,
-  alt_text,
-  credit
-from image
+  i.id,
+  i.url,
+  i.caption,
+  i.alt_text,
+  i.credit
+from image i
 where id = :id

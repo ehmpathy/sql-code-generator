@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`defineTypescriptTypesForTable should generate an accurate looking interface for this other table definition 1`] = `
-"export interface SuggestionVersion {
+"export interface SqlTableSuggestionVersion {
   id: number;
   suggestion_id: number;
   effective_at: Date;
@@ -11,7 +11,7 @@ exports[`defineTypescriptTypesForTable should generate an accurate looking inter
 `;
 
 exports[`defineTypescriptTypesForTable should generate an accurate looking interface for this table definition 1`] = `
-"export interface Image {
+"export interface SqlTableImage {
   id: number;
   uuid: string;
   created_at: Date;

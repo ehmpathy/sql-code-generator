@@ -10,7 +10,7 @@ describe('extractSelectExpressionsFromQuerySql', () => {
   it('should be able to determine types accurately for this other example', async () => {
     const sql = await getSqlFromFile({ filePath: `${__dirname}/../__test_assets__/selectSuggestion.sql` });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
-    expect(defs.slice(-1)[0].name).toEqual('updated_at');
+    expect(defs.slice(-1)[0].alias).toEqual('updated_at');
     expect(defs.slice(-1)[0].sourcePath).toEqual('v.created_at');
     expect(defs).toMatchSnapshot();
   });

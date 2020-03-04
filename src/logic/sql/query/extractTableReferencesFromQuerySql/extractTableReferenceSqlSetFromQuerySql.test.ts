@@ -5,7 +5,7 @@ describe('extractTableReferenceSqlSetFromQuerySql', () => {
   it('should be able to determine types accurately for this example', async () => {
     const sql = await getSqlFromFile({ filePath: `${__dirname}/../__test_assets__/selectImageById.sql` });
     const defs = extractTableReferenceSqlSetFromQuerySql({ sql });
-    expect(defs).toEqual(['FROM image']);
+    expect(defs).toEqual(['FROM image i']);
   });
   it('should be able to determine types accurately for this other example', async () => {
     const sql = await getSqlFromFile({ filePath: `${__dirname}/../__test_assets__/selectSuggestion.sql` });

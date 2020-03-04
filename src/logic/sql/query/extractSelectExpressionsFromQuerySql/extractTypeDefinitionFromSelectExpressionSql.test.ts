@@ -4,16 +4,12 @@ import { TypeDefinitionOfQuerySelectExpression } from '../../../../model';
 describe('extractTypeDefinitionFromSelectExpressionSql', () => {
   const examples = [
     {
-      sql: 'latitude',
-      def: new TypeDefinitionOfQuerySelectExpression({ name: 'latitude', sourcePath: 'latitude' }),
-    },
-    {
       sql: 'g.latitude',
-      def: new TypeDefinitionOfQuerySelectExpression({ name: 'latitude', sourcePath: 'g.latitude' }),
+      def: new TypeDefinitionOfQuerySelectExpression({ alias: 'latitude', sourcePath: 'g.latitude' }),
     },
     {
       sql: 'g.latitude as lat',
-      def: new TypeDefinitionOfQuerySelectExpression({ name: 'lat', sourcePath: 'g.latitude' }),
+      def: new TypeDefinitionOfQuerySelectExpression({ alias: 'lat', sourcePath: 'g.latitude' }),
     },
     // TODO: support common sql functions in select expressions; https://github.com/uladkasach/sql-code-generator/issues/3
   ];
@@ -22,5 +18,15 @@ describe('extractTypeDefinitionFromSelectExpressionSql', () => {
       const def = extractTypeDefinitionFromSelectExpressionSql({ sql: example.sql });
       expect(def).toEqual(example.def);
     });
+  });
+  it('should throw an error if table alias is not explicitly defined', () => {
+    try {
+      extractTypeDefinitionFromSelectExpressionSql({ sql: 'latitude as lat' });
+      throw new Error('should not reach here');
+    } catch (error) {
+      expect(error.message).toEqual(
+        'select expression of "latitude as lat" does not have the table alias explicitly defined, violating best practice',
+      );
+    }
   });
 });

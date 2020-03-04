@@ -3,7 +3,7 @@
 exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for this example 1`] = `
 Array [
   TypeDefinitionOfQueryTableReference {
-    "alias": "image",
+    "alias": "i",
     "tableName": "image",
   },
 ]

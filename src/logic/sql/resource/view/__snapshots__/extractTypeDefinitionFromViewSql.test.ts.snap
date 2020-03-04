@@ -1,40 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this example 1`] = `
-TypeDefinitionOfQuery {
-  "selectExpressions": Array [
-    TypeDefinitionOfQuerySelectExpression {
-      "alias": "id",
-      "sourcePath": "i.id",
-    },
-    TypeDefinitionOfQuerySelectExpression {
-      "alias": "url",
-      "sourcePath": "i.url",
-    },
-    TypeDefinitionOfQuerySelectExpression {
-      "alias": "caption",
-      "sourcePath": "i.caption",
-    },
-    TypeDefinitionOfQuerySelectExpression {
-      "alias": "alt_text",
-      "sourcePath": "i.alt_text",
-    },
-    TypeDefinitionOfQuerySelectExpression {
-      "alias": "credit",
-      "sourcePath": "i.credit",
-    },
-  ],
-  "tableReferences": Array [
-    TypeDefinitionOfQueryTableReference {
-      "alias": "i",
-      "tableName": "image",
-    },
-  ],
-}
-`;
-
-exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this other example 1`] = `
-TypeDefinitionOfQuery {
+exports[`extractTypeDefinitionFromViewSql should be able to extract types in this example 1`] = `
+TypeDefinitionOfResourceView {
+  "name": "view_suggestion_current",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -51,14 +19,6 @@ TypeDefinitionOfQuery {
     TypeDefinitionOfQuerySelectExpression {
       "alias": "external_id",
       "sourcePath": "s.external_id",
-    },
-    TypeDefinitionOfQuerySelectExpression {
-      "alias": "suggested_idea_id",
-      "sourcePath": "s.suggested_idea_id",
-    },
-    TypeDefinitionOfQuerySelectExpression {
-      "alias": "resultant_curated_idea_id",
-      "sourcePath": "s.resultant_curated_idea_id",
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "status",

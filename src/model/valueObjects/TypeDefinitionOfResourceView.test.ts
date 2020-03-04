@@ -1,6 +1,6 @@
-import { TypeDefinitionOfQuery } from './TypeDefinitionOfQuery';
 import { TypeDefinitionOfQuerySelectExpression } from './TypeDefinitionOfQuerySelectExpression';
 import { TypeDefinitionOfQueryTableReference } from './TypeDefinitionOfQueryTableReference';
+import { TypeDefinitionOfResourceView } from './TypeDefinitionOfResourceView';
 
 const selectExpression = new TypeDefinitionOfQuerySelectExpression({
   alias: 'id',
@@ -12,9 +12,10 @@ const tableReference = new TypeDefinitionOfQueryTableReference({
   tableName: 'user',
 });
 
-describe('TypeDefinitionOfQuerySelectExpression', () => {
+describe('TypeDefinitionOfResourceView', () => {
   it('should initialize for valid inputs', () => {
-    const def = new TypeDefinitionOfQuery({
+    const def = new TypeDefinitionOfResourceView({
+      name: 'cool_view',
       selectExpressions: [selectExpression],
       tableReferences: [tableReference],
     });
@@ -25,7 +26,7 @@ describe('TypeDefinitionOfQuerySelectExpression', () => {
   });
   it('should throw error on invalid input', () => {
     try {
-      new TypeDefinitionOfQuery({
+      new TypeDefinitionOfResourceView({
         name: 'id',
         sourcePathZ: 's.id',
       } as any); // tslint:disable-line no-unused-expression

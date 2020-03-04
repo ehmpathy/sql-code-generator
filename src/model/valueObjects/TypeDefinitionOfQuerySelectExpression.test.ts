@@ -3,11 +3,11 @@ import { TypeDefinitionOfQuerySelectExpression } from './TypeDefinitionOfQuerySe
 describe('TypeDefinitionOfQuerySelectExpression', () => {
   it('should initialize for valid inputs', () => {
     const def = new TypeDefinitionOfQuerySelectExpression({
-      name: 'id',
+      alias: 'id',
       sourcePath: 's.id',
     });
     expect(def).toMatchObject({
-      name: 'id',
+      alias: 'id',
       sourcePath: 's.id',
     });
   });

@@ -3,24 +3,24 @@
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
 Array [
   TypeDefinitionOfQuerySelectExpression {
-    "name": "id",
-    "sourcePath": "id",
+    "alias": "id",
+    "sourcePath": "i.id",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "url",
-    "sourcePath": "url",
+    "alias": "url",
+    "sourcePath": "i.url",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "caption",
-    "sourcePath": "caption",
+    "alias": "caption",
+    "sourcePath": "i.caption",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "alt_text",
-    "sourcePath": "alt_text",
+    "alias": "alt_text",
+    "sourcePath": "i.alt_text",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "credit",
-    "sourcePath": "credit",
+    "alias": "credit",
+    "sourcePath": "i.credit",
   },
 ]
 `;
@@ -28,47 +28,47 @@ Array [
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other example 1`] = `
 Array [
   TypeDefinitionOfQuerySelectExpression {
-    "name": "id",
+    "alias": "id",
     "sourcePath": "s.id",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "uuid",
+    "alias": "uuid",
     "sourcePath": "s.uuid",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "suggestion_source",
+    "alias": "suggestion_source",
     "sourcePath": "s.suggestion_source",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "external_id",
+    "alias": "external_id",
     "sourcePath": "s.external_id",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "suggested_idea_id",
+    "alias": "suggested_idea_id",
     "sourcePath": "s.suggested_idea_id",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "resultant_curated_idea_id",
+    "alias": "resultant_curated_idea_id",
     "sourcePath": "s.resultant_curated_idea_id",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "status",
+    "alias": "status",
     "sourcePath": "v.status",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "result",
+    "alias": "result",
     "sourcePath": "v.result",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "created_at",
+    "alias": "created_at",
     "sourcePath": "s.created_at",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "effective_at",
+    "alias": "effective_at",
     "sourcePath": "v.effective_at",
   },
   TypeDefinitionOfQuerySelectExpression {
-    "name": "updated_at",
+    "alias": "updated_at",
     "sourcePath": "v.created_at",
   },
 ]
