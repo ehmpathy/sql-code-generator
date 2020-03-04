@@ -1,0 +1,2 @@
+export const JOIN_TYPES = ['JOIN', 'INNER JOIN', 'LEFT JOIN', 'OUTER JOIN'];
+export const TABLE_REFERENCE_TYPE = ['FROM', ...JOIN_TYPES];

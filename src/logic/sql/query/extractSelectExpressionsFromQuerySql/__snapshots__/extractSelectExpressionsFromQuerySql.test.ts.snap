@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
+Array [
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "id",
+    "sourcePath": "id",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "url",
+    "sourcePath": "url",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "caption",
+    "sourcePath": "caption",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "alt_text",
+    "sourcePath": "alt_text",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "credit",
+    "sourcePath": "credit",
+  },
+]
+`;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other example 1`] = `
+Array [
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "id",
+    "sourcePath": "s.id",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "uuid",
+    "sourcePath": "s.uuid",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "suggestion_source",
+    "sourcePath": "s.suggestion_source",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "external_id",
+    "sourcePath": "s.external_id",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "suggested_idea_id",
+    "sourcePath": "s.suggested_idea_id",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "resultant_curated_idea_id",
+    "sourcePath": "s.resultant_curated_idea_id",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "status",
+    "sourcePath": "v.status",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "result",
+    "sourcePath": "v.result",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "created_at",
+    "sourcePath": "s.created_at",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "effective_at",
+    "sourcePath": "v.effective_at",
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "name": "updated_at",
+    "sourcePath": "v.created_at",
+  },
+]
+`;

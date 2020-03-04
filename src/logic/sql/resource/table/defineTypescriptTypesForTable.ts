@@ -1,6 +1,5 @@
-import { pascalCase } from 'change-case';
-
 import { TypeDefinitionOfResourceTable } from '../../../../model';
+import { castTableNameToInterfaceName } from './castTableNameToInterfaceName';
 
 export const defineTypescriptTypesForTable = ({ definition }: { definition: TypeDefinitionOfResourceTable }) => {
   // define column types in typescript format
@@ -10,7 +9,7 @@ export const defineTypescriptTypesForTable = ({ definition }: { definition: Type
 
   // output
   const typescriptInterfaceDefinition = `
-export interface ${pascalCase(definition.name)} {
+export interface ${castTableNameToInterfaceName(definition.name)} {
   ${typescriptInterfaceColumnDefinitions.join('\n  ')}
 }
   `.trim();

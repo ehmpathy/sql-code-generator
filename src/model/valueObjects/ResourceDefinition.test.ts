@@ -1,18 +1,15 @@
-import { ResourceType } from '../constants';
-import { ResourceDefinition } from './ResourceDefinition';
+import { ResourceDefinition, ResourceType } from './ResourceDefinition';
 
 describe('ChangeDefinition', () => {
   it('should initialize for valid inputs', () => {
     const changeDefinition = new ResourceDefinition({
       type: ResourceType.TABLE,
       name: 'notification',
-      path: '__PATH__',
       sql: '__SQL__',
     });
     expect(changeDefinition).toMatchObject({
       type: ResourceType.TABLE,
       name: 'notification',
-      path: '__PATH__',
       sql: '__SQL__',
     });
   });
