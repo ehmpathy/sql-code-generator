@@ -1,4 +1,4 @@
-import { getSqlFromFile } from '../../../../config/_utils/getSqlFromFile';
+import { getSqlFromFile } from '../../../config/_utils/getSqlFromFile';
 import { castCommasInParensToPipesForTokenSafety } from './castCommasInParensToPipesForTokenSafety';
 
 describe('castCommasInParensToPipesForTokenSafety', () => {

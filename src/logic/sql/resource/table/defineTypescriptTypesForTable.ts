@@ -1,5 +1,5 @@
 import { TypeDefinitionOfResourceTable, ResourceType } from '../../../../model';
-import { castResourceNameToInterfaceName } from '../_utils/castResourceNameToInterfaceName';
+import { castResourceNameToTypescriptTypeName } from '../common/castResourceNameToTypescriptTypeName';
 
 export const defineTypescriptTypesForTable = ({ definition }: { definition: TypeDefinitionOfResourceTable }) => {
   // define column types in typescript format
@@ -9,7 +9,7 @@ export const defineTypescriptTypesForTable = ({ definition }: { definition: Type
 
   // output
   const typescriptInterfaceDefinition = `
-export interface ${castResourceNameToInterfaceName({ name: definition.name, resourceType: ResourceType.TABLE })} {
+export interface ${castResourceNameToTypescriptTypeName({ name: definition.name, resourceType: ResourceType.TABLE })} {
   ${typescriptInterfaceColumnDefinitions.join('\n  ')}
 }
   `.trim();

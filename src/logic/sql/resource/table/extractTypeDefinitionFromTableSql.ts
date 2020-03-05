@@ -1,6 +1,6 @@
 import strip from 'sql-strip-comments';
 
-import { castCommasInParensToPipesForTokenSafety } from './utils/castCommasInParensToPipesForTokenSafety';
+import { castCommasInParensToPipesForTokenSafety } from '../common/castCommasInParensToPipesForTokenSafety';
 import { extractTypeDefinitionFromColumnSql } from './extractTypeDefinitionFromColumnSql';
 import { TypeDefinitionOfResourceTable } from '../../../../model';
 

@@ -1,5 +1,5 @@
 import { ResourceType } from '../../../../model';
-import { castResourceNameToInterfaceName } from '../_utils/castResourceNameToInterfaceName';
+import { castResourceNameToTypescriptTypeName } from '../common/castResourceNameToTypescriptTypeName';
 import { TypeDefinitionOfResourceView } from '../../../../model/valueObjects/TypeDefinitionOfResourceView';
 
 export const defineTypescriptTypesForView = ({ definition }: { definition: TypeDefinitionOfResourceView }) => {
@@ -13,7 +13,7 @@ export const defineTypescriptTypesForView = ({ definition }: { definition: TypeD
         `table alias for of select expression "${selectExpression.sourcePath}" not found in view table references`,
       );
     }
-    const sourceTableInterfaceName = castResourceNameToInterfaceName({
+    const sourceTableInterfaceName = castResourceNameToTypescriptTypeName({
       name: sourceTableName,
       resourceType: ResourceType.TABLE,
     });
@@ -22,7 +22,7 @@ export const defineTypescriptTypesForView = ({ definition }: { definition: TypeD
 
   // output
   const typescriptInterfaceDefinition = `
-export interface ${castResourceNameToInterfaceName({ name: definition.name, resourceType: ResourceType.VIEW })} {
+export interface ${castResourceNameToTypescriptTypeName({ name: definition.name, resourceType: ResourceType.VIEW })} {
   ${typescriptInterfaceColumnDefinitions.join('\n  ')}
 }
   `.trim();

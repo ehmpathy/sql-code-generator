@@ -2,7 +2,7 @@ import { pascalCase } from 'pascal-case';
 
 import { ResourceType } from '../../../../model';
 
-export const castResourceNameToInterfaceName = ({
+export const castResourceNameToTypescriptTypeName = ({
   name,
   resourceType,
 }: {

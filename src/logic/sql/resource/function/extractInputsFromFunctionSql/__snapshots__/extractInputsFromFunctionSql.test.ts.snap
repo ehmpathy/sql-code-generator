@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extractInputsFromFunctionSql should extract the inputs accurately in this example 1`] = `
+Array [
+  TypeDefinitionOfResourceInput {
+    "name": "in_url",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_caption",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_credit",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_alt_text",
+    "type": Array [
+      "string",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql should extract the inputs accurately in this other example 1`] = `
+Array [
+  TypeDefinitionOfResourceInput {
+    "name": "in_suggestion_source",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_external_id",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_suggested_idea_id",
+    "type": Array [
+      "number",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_status",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_result",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_resultant_curated_idea_id",
+    "type": Array [
+      "number",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql should extract the inputs accurately in this other example again 1`] = `
+Array [
+  TypeDefinitionOfResourceInput {
+    "name": "in_array",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_delimiter",
+    "type": Array [
+      "string",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_index",
+    "type": Array [
+      "number",
+    ],
+  },
+]
+`;

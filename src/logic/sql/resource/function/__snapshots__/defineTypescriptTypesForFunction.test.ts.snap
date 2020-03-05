@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defineTypescriptTypesForFunction should generate accurate looking types for this function definition 1`] = `
+"export interface SqlFunctionUpsertImageInput {
+  in_url: string;
+  in_caption: string;
+  in_credit: string;
+  in_alt_text: string;
+}
+export type SqlFunctionUpsertImageOutput = number;"
+`;
+
+exports[`defineTypescriptTypesForFunction should generate accurate looking types for this other function definition 1`] = `
+"export interface SqlFunctionUpsertSuggestionInput {
+  in_suggestion_source: string;
+  in_external_id: string;
+  in_suggested_idea_id: number;
+  in_status: string;
+  in_result: string;
+  in_resultant_curated_idea_id: number;
+}
+export type SqlFunctionUpsertSuggestionOutput = number;"
+`;
+
+exports[`defineTypescriptTypesForFunction should generate accurate looking types for this other other function definition 1`] = `
+"export interface SqlFunctionHashStringInput {
+  in_array: string;
+  in_delimiter: string;
+  in_index: number;
+}
+export type SqlFunctionHashStringOutput = string;"
+`;
