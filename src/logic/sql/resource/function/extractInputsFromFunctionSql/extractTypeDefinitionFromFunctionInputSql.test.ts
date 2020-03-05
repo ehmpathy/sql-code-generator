@@ -8,21 +8,21 @@ describe('extractTypeDefinitionFromFunctionInputSql', () => {
       sql: 'in_price DECIMAL(5,2)',
       def: new TypeDefinitionOfResourceColumn({
         name: 'in_price',
-        type: [DataType.NUMBER],
+        type: [DataType.NUMBER, DataType.NULL],
       }),
     },
     {
       sql: 'in_created_at datetime(6)',
       def: new TypeDefinitionOfResourceColumn({
         name: 'in_created_at',
-        type: [DataType.DATE],
+        type: [DataType.DATE, DataType.NULL],
       }),
     },
     {
       sql: 'in_credit VARCHAR(190)',
       def: new TypeDefinitionOfResourceColumn({
         name: 'in_credit',
-        type: [DataType.STRING],
+        type: [DataType.STRING, DataType.NULL],
       }),
     },
   ];

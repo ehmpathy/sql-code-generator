@@ -6,24 +6,28 @@ Array [
     "name": "in_url",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_caption",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_credit",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_alt_text",
     "type": Array [
       "string",
+      "null",
     ],
   },
 ]
@@ -35,36 +39,42 @@ Array [
     "name": "in_suggestion_source",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_external_id",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_suggested_idea_id",
     "type": Array [
       "number",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_status",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_result",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_resultant_curated_idea_id",
     "type": Array [
       "number",
+      "null",
     ],
   },
 ]
@@ -76,18 +86,21 @@ Array [
     "name": "in_array",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_delimiter",
     "type": Array [
       "string",
+      "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_index",
     "type": Array [
       "number",
+      "null",
     ],
   },
 ]

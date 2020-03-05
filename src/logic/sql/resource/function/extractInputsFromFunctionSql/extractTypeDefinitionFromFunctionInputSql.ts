@@ -10,7 +10,10 @@ export const extractTypeDefinitionFromFunctionInputSql = ({ sql }: { sql: string
   const primaryType = extractDataTypeFromColumnOrArgumentDefinitionSql({ sql });
 
   // 3. define the full type definition; note: array => union
-  const type = [primaryType].filter((type) => !!type) as DataType[];
+  const type = [
+    primaryType,
+    DataType.NULL, // note: inputs to functions are always nullable ?
+  ].filter((type) => !!type) as DataType[];
 
   // 4. return the definition
   return new TypeDefinitionOfResourceInput({
