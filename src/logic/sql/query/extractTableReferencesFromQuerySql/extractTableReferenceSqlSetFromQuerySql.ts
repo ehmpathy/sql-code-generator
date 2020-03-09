@@ -7,7 +7,7 @@ export const extractTableReferenceSqlSetFromQuerySql = ({ sql }: { sql: string }
   // 1. grab the content of everything between FROM and WHERE
   const everythingAfterFromInclusive = (() => {
     const partsSplitOnSelect = sql.split(/(?:FROM|from)/g);
-    if (partsSplitOnSelect.length === 1) throw new Error('no "from" keyword found; unexpected'); // fail fast
+    if (partsSplitOnSelect.length === 1) throw new Error('no "from" keyword found'); // fail fast; allow this being caught above
     if (partsSplitOnSelect.length > 2) throw new Error('more than one "from" keyword found; not yet supported'); // TODO: https://github.com/uladkasach/sql-code-generator/issues/2
     return `FROM${partsSplitOnSelect[1]}`; // inclusive, since we include "from"
   })();

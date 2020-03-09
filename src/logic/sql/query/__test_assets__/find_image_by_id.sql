@@ -5,4 +5,5 @@ select
   i.alt_text,
   i.credit
 from image i
-where id = :id
+where i.id = :id
+

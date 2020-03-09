@@ -2,6 +2,13 @@
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this example 1`] = `
 TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "functionReferencePath": null,
+      "name": "id",
+      "tableReferencePath": "i.id",
+    },
+  ],
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -35,6 +42,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this other example 1`] = `
 TypeDefinitionOfQuery {
+  "inputVariables": Array [],
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",

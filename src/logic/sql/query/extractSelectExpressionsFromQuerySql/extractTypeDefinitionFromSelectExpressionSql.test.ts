@@ -11,7 +11,7 @@ describe('extractTypeDefinitionFromSelectExpressionSql', () => {
       sql: 'g.latitude as lat',
       def: new TypeDefinitionOfQuerySelectExpression({ alias: 'lat', sourcePath: 'g.latitude' }),
     },
-    // TODO: support common sql functions in select expressions; https://github.com/uladkasach/sql-code-generator/issues/3
+    // TODO: sql functions in select expressions; https://github.com/uladkasach/sql-code-generator/issues/3
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {
@@ -25,7 +25,7 @@ describe('extractTypeDefinitionFromSelectExpressionSql', () => {
       throw new Error('should not reach here');
     } catch (error) {
       expect(error.message).toEqual(
-        'select expression of "latitude as lat" does not have the table alias explicitly defined, violating best practice',
+        'table reference of "latitude" does not have the table alias explicitly defined, violating best practice',
       );
     }
   });
