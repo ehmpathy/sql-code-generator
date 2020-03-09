@@ -8,7 +8,7 @@ export const tryToExtractTableReferenceSqlSet = ({ sql }: { sql: string }) => {
   try {
     return extractTableReferenceSqlSetFromQuerySql({ sql });
   } catch (error) {
-    if (error.message === 'no "from" keyword found; unexpected') return []; // if no from keyword was found, it may just be a "select function_call()" query; no table references
+    if (error.message === 'no "from" keyword found') return []; // if no from keyword was found, it may just be a "select function_call()" query; no table references
     throw error; // otherwise, error was unexpected
   }
 };

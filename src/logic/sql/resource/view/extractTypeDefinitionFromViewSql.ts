@@ -15,7 +15,7 @@ export const extractTypeDefinitionFromViewSql = ({ name, sql }: { name: string; 
   const queryDef = extractTypeDefinitionFromQuerySql({ sql: querySql });
 
   // 1. check that query def does not have any inputs, as views with inputs in query are invalid
-  if (false) throw new Error(`query def for view '${name}' can not have inputs`); // TODO: when inputs are defined on query
+  if (queryDef.inputVariables.length) throw new Error(`query def for view '${name}' can not have inputs`);
 
   // 2. grab the selectExpressions and tableReferences off of the query
   return new TypeDefinitionOfResourceView({

@@ -1,16 +1,14 @@
 import Joi from 'joi';
 import SchematicJoiModel from 'schematic-joi-model';
+import { TypeDefinitionReference } from './TypeDefinitionReference';
 
-/*
-  key value map of any key string -> data type[] (we join the array into a union)
-*/
 const schema = Joi.object().keys({
   alias: Joi.string().required(), // e.g., "v.id as version_id" => "version_id"
-  sourcePath: Joi.string().required(), // e.g., "id" or "s.id" or "job.uuid"
+  typeReference: TypeDefinitionReference.schema.required(),
 });
 export interface TypeDefinitionOfQuerySelectExpression {
   alias: string;
-  sourcePath: string;
+  typeReference: TypeDefinitionReference;
 }
 export class TypeDefinitionOfQuerySelectExpression extends SchematicJoiModel<TypeDefinitionOfQuerySelectExpression>
   implements TypeDefinitionOfQuerySelectExpression {

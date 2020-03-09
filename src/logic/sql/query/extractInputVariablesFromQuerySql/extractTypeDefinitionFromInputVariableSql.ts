@@ -1,5 +1,6 @@
 import { TypeDefinitionOfQueryInputVariable } from '../../../../model/valueObjects/TypeDefinitionOfQueryInputVariable';
 import { throwErrorIfTableReferencePathImpliesTable } from '../common/throwErrorIfTableReferencePathImpliesTable';
+import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
 
 export const extractTypeDefinitionFromInputVariableSql = ({ token, sql }: { token: string; sql: string }) => {
   // 1. check if this token matches the "resource.column = :token" pattern; if so, then the input type = the resource.column type
@@ -11,8 +12,10 @@ export const extractTypeDefinitionFromInputVariableSql = ({ token, sql }: { toke
     throwErrorIfTableReferencePathImpliesTable({ referencePath: leftEqualsTableReferencePath });
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
-      tableReferencePath: leftEqualsTableReferencePath,
-      functionReferencePath: null,
+      typeReference: new TypeDefinitionReference({
+        tableReferencePath: leftEqualsTableReferencePath,
+        functionReferencePath: null,
+      }),
     });
   }
 
@@ -25,15 +28,15 @@ export const extractTypeDefinitionFromInputVariableSql = ({ token, sql }: { toke
     throwErrorIfTableReferencePathImpliesTable({ referencePath: rightEqualsTableReferencePath });
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
-      tableReferencePath: rightEqualsTableReferencePath,
-      functionReferencePath: null,
+      typeReference: new TypeDefinitionReference({
+        tableReferencePath: rightEqualsTableReferencePath,
+        functionReferencePath: null,
+      }),
     });
   }
 
   // 3. check if this token is used in a function. If so, its equivalent to whatever is at that index of the function params
-
-  // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
-  const reg = `\\s+(\\w+\\((?:\\s*[:\\w]+,)*(?:\\s*${token},?)(?:\\s*[:\\w]+,?)*\\s?\\))`;
+  const reg = `\\s+(\\w+\\((?:\\s*[:\\w]+,)*(?:\\s*${token},?)(?:\\s*[:\\w]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
   const [
     ___, // tslint:disable-line no-unused
     tokenInsideFunctionMatch, // check if "resource.column = :token"
@@ -52,8 +55,10 @@ export const extractTypeDefinitionFromInputVariableSql = ({ token, sql }: { toke
     // return the function path
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
-      functionReferencePath: `${functionName}.${index}`,
-      tableReferencePath: null,
+      typeReference: new TypeDefinitionReference({
+        functionReferencePath: `${functionName}.input.${index}`,
+        tableReferencePath: null,
+      }),
     });
   }
 

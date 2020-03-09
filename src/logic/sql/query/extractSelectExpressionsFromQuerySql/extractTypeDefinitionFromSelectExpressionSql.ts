@@ -1,18 +1,28 @@
 import { TypeDefinitionOfQuerySelectExpression } from '../../../../model';
-import { throwErrorIfTableReferencePathImpliesTable } from '../common/throwErrorIfTableReferencePathImpliesTable';
+import { extractTypeDefinitionReferenceFromSelectExpression } from './extractTypeDefinitionReferenceFromSelectExpressionSql';
 
 export const extractTypeDefinitionFromSelectExpressionSql = ({ sql }: { sql: string }) => {
-  // grab the source path
-  const [_, sourcePath] = new RegExp(/^(\w+\.?\w*)(?:\s+(?:[\w\s]*))?$/).exec(sql) ?? []; // tslint:disable-line no-unused
-  if (!sourcePath) throw new Error('could not extract source path from select expression sql; unexpected'); // fail fast
-  throwErrorIfTableReferencePathImpliesTable({ referencePath: sourcePath });
+  // grab the type reference
+  const typeReference = extractTypeDefinitionReferenceFromSelectExpression({ sql });
 
   // grab the alias, if any
-  const [__, specifiedAlias] = new RegExp(/(?:[\w\.]+)(?:\s+)(?:as)(?:\s+)(\w+)/g).exec(sql) ?? []; // tslint:disable-line no-unused
+  const [__, specifiedAlias] = new RegExp(/(?:[\w\.,:\(\)\s]+)(?:\s+)(?:as)(?:\s+)(\w+)/g).exec(sql) ?? []; // tslint:disable-line no-unused
 
   // define the alias, considering whether alias was specified
-  const alias = specifiedAlias ? specifiedAlias : sourcePath.split('.').slice(-1)[0];
+  if (!specifiedAlias && !!typeReference.functionReferencePath) {
+    // throw error if fn reference and alias not defined, as its best practice to explicitly define it - and we're not going to "infer" it for the user
+    throw new Error(
+      `
+select expressions that reference a function must have an alias defined, per best practice.
+  - e.g., \`select concat(n.first, n.last)\` => \`select concat(n.first, n.last) as full_name\`
+`.trim(),
+    );
+  }
+  const alias = specifiedAlias ? specifiedAlias : typeReference.tableReferencePath!.split('.').slice(-1)[0];
 
   // return the full definition
-  return new TypeDefinitionOfQuerySelectExpression({ alias, sourcePath });
+  return new TypeDefinitionOfQuerySelectExpression({
+    alias,
+    typeReference,
+  });
 };

@@ -1,34 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this example 1`] = `
+exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately an example of selecting columns a single table by id 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [
     TypeDefinitionOfQueryInputVariable {
-      "functionReferencePath": null,
       "name": "id",
-      "tableReferencePath": "i.id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "i.id",
+      },
     },
   ],
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
-      "sourcePath": "i.id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "i.id",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "url",
-      "sourcePath": "i.url",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "i.url",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "caption",
-      "sourcePath": "i.caption",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "i.caption",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "alt_text",
-      "sourcePath": "i.alt_text",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "i.alt_text",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "credit",
-      "sourcePath": "i.credit",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "i.credit",
+      },
     },
   ],
   "tableReferences": Array [
@@ -40,53 +57,192 @@ TypeDefinitionOfQuery {
 }
 `;
 
-exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this other example 1`] = `
+exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately an upsert query 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "suggestionSource",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_suggestion.input.0",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "externalId",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_suggestion.input.1",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "suggestedIdeaId",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_suggestion.input.2",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "status",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_suggestion.input.3",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "result",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_suggestion.input.4",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_suggestion.output",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "tableReferences": Array [],
+}
+`;
+
+exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this example that selects both from tables and functions 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "lastName",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "u.last_name",
+      },
+    },
+  ],
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "u.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "full_name",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "concat.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "age",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "u.age",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "phone_number",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "p.number",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "u",
+      "tableName": "user",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "p",
+      "tableName": "phone",
+    },
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately when selecting columns from multiple tables, no input variables 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [],
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
-      "sourcePath": "s.id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.id",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "uuid",
-      "sourcePath": "s.uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.uuid",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "suggestion_source",
-      "sourcePath": "s.suggestion_source",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.suggestion_source",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "external_id",
-      "sourcePath": "s.external_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.external_id",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "suggested_idea_id",
-      "sourcePath": "s.suggested_idea_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.suggested_idea_id",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "resultant_curated_idea_id",
-      "sourcePath": "s.resultant_curated_idea_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.resultant_curated_idea_id",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "status",
-      "sourcePath": "v.status",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.status",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "result",
-      "sourcePath": "v.result",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.result",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "created_at",
-      "sourcePath": "s.created_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.created_at",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "effective_at",
-      "sourcePath": "v.effective_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.effective_at",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "updated_at",
-      "sourcePath": "v.created_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.created_at",
+      },
     },
   ],
   "tableReferences": Array [

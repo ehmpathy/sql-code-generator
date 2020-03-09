@@ -1,10 +1,14 @@
 import { TypeDefinitionOfQuerySelectExpression } from './TypeDefinitionOfQuerySelectExpression';
 import { TypeDefinitionOfQueryTableReference } from './TypeDefinitionOfQueryTableReference';
 import { TypeDefinitionOfResourceView } from './TypeDefinitionOfResourceView';
+import { TypeDefinitionReference } from './TypeDefinitionReference';
 
 const selectExpression = new TypeDefinitionOfQuerySelectExpression({
   alias: 'id',
-  sourcePath: 's.id',
+  typeReference: new TypeDefinitionReference({
+    tableReferencePath: 'u.id',
+    functionReferencePath: null,
+  }),
 });
 
 const tableReference = new TypeDefinitionOfQueryTableReference({

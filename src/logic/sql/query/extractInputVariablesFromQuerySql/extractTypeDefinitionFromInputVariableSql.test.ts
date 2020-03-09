@@ -1,5 +1,6 @@
 import { TypeDefinitionOfQueryInputVariable } from '../../../../model/valueObjects/TypeDefinitionOfQueryInputVariable';
 import { extractTypeDefinitionFromInputVariableSql } from './extractTypeDefinitionFromInputVariableSql';
+import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
 
 describe('extractTypeDefinitionFromInputVariableSql', () => {
   const examples = [
@@ -12,8 +13,10 @@ where i.id = :id;
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        tableReferencePath: 'i.id',
-        functionReferencePath: null,
+        typeReference: new TypeDefinitionReference({
+          tableReferencePath: 'i.id',
+          functionReferencePath: null,
+        }),
       }),
     },
     {
@@ -25,8 +28,10 @@ where i.id=:id;
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        tableReferencePath: 'i.id',
-        functionReferencePath: null,
+        typeReference: new TypeDefinitionReference({
+          tableReferencePath: 'i.id',
+          functionReferencePath: null,
+        }),
       }),
     },
     {
@@ -38,8 +43,10 @@ where :id = i.id;
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        tableReferencePath: 'i.id',
-        functionReferencePath: null,
+        typeReference: new TypeDefinitionReference({
+          tableReferencePath: 'i.id',
+          functionReferencePath: null,
+        }),
       }),
     },
     {
@@ -51,8 +58,10 @@ where :id=i.id;
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        tableReferencePath: 'i.id',
-        functionReferencePath: null,
+        typeReference: new TypeDefinitionReference({
+          tableReferencePath: 'i.id',
+          functionReferencePath: null,
+        }),
       }),
     },
     {
@@ -66,8 +75,29 @@ where 1=1
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'externalId',
-        tableReferencePath: 'idea.external_id',
-        functionReferencePath: null,
+        typeReference: new TypeDefinitionReference({
+          tableReferencePath: 'idea.external_id',
+          functionReferencePath: null,
+        }),
+      }),
+    },
+    {
+      token: ':externalId',
+      sql: `
+SELECT upsert_suggestion(
+  :suggestionSource,
+  :externalId,
+  :suggestedIdeaId,
+  :status,
+  :result
+) as id;
+      `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'externalId',
+        typeReference: new TypeDefinitionReference({
+          tableReferencePath: null,
+          functionReferencePath: 'upsert_suggestion.input.1', // second arg of function
+        }),
       }),
     },
     {
@@ -84,8 +114,10 @@ WHERE 1=1
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'name',
-        tableReferencePath: null,
-        functionReferencePath: 'get_id_from_suggestion_source_name.0', // second arg of function
+        typeReference: new TypeDefinitionReference({
+          tableReferencePath: null,
+          functionReferencePath: 'get_id_from_suggestion_source_name.input.0', // first arg of function
+        }),
       }),
     },
     // TODO: support functions in functions; https://github.com/uladkasach/sql-code-generator/issues/4

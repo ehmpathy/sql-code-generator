@@ -6,11 +6,14 @@ export const defineTypescriptTypesForView = ({ definition }: { definition: TypeD
   // define column types in typescript format
   const typescriptInterfaceColumnDefinitions = definition.selectExpressions.map((selectExpression) => {
     // grab the source table name and source table column name
-    const [sourceTableAlias, sourceTableColumnName] = selectExpression.sourcePath.split('.');
+    if (!selectExpression.typeReference.tableReferencePath) {
+      throw new Error('columns in views must reference tables; referencing functions is not supported yet');
+    }
+    const [sourceTableAlias, sourceTableColumnName] = selectExpression.typeReference.tableReferencePath.split('.');
     const sourceTableName = definition.tableReferences.find((ref) => ref.alias === sourceTableAlias)?.tableName;
     if (!sourceTableName) {
       throw new Error(
-        `table alias for of select expression "${selectExpression.sourcePath}" not found in view table references`,
+        `table alias for of select expression "${selectExpression.typeReference.tableReferencePath}" not found in view table references`,
       );
     }
     const sourceTableInterfaceName = castResourceNameToTypescriptTypeName({

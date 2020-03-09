@@ -1,14 +1,21 @@
 import { TypeDefinitionOfQuerySelectExpression } from './TypeDefinitionOfQuerySelectExpression';
+import { TypeDefinitionReference } from './TypeDefinitionReference';
 
 describe('TypeDefinitionOfQuerySelectExpression', () => {
   it('should initialize for valid inputs', () => {
     const def = new TypeDefinitionOfQuerySelectExpression({
       alias: 'id',
-      sourcePath: 's.id',
+      typeReference: new TypeDefinitionReference({
+        tableReferencePath: 's.id',
+        functionReferencePath: null,
+      }),
     });
     expect(def).toMatchObject({
       alias: 'id',
-      sourcePath: 's.id',
+      typeReference: new TypeDefinitionReference({
+        tableReferencePath: 's.id',
+        functionReferencePath: null,
+      }),
     });
   });
   it('should throw error on invalid input', () => {

@@ -3,9 +3,11 @@
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
 Array [
   TypeDefinitionOfQueryInputVariable {
-    "functionReferencePath": null,
     "name": "id",
-    "tableReferencePath": "i.id",
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "i.id",
+    },
   },
 ]
 `;
@@ -15,29 +17,39 @@ exports[`extractSelectExpressionsFromQuerySql should be able to determine types 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other other example 1`] = `
 Array [
   TypeDefinitionOfQueryInputVariable {
-    "functionReferencePath": "upsert_suggestion.0",
     "name": "suggestionSource",
-    "tableReferencePath": null,
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.0",
+      "tableReferencePath": null,
+    },
   },
   TypeDefinitionOfQueryInputVariable {
-    "functionReferencePath": "upsert_suggestion.1",
     "name": "externalId",
-    "tableReferencePath": null,
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.1",
+      "tableReferencePath": null,
+    },
   },
   TypeDefinitionOfQueryInputVariable {
-    "functionReferencePath": "upsert_suggestion.2",
     "name": "suggestedIdeaId",
-    "tableReferencePath": null,
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.2",
+      "tableReferencePath": null,
+    },
   },
   TypeDefinitionOfQueryInputVariable {
-    "functionReferencePath": "upsert_suggestion.3",
     "name": "status",
-    "tableReferencePath": null,
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.3",
+      "tableReferencePath": null,
+    },
   },
   TypeDefinitionOfQueryInputVariable {
-    "functionReferencePath": "upsert_suggestion.4",
     "name": "result",
-    "tableReferencePath": null,
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.4",
+      "tableReferencePath": null,
+    },
   },
 ]
 `;
@@ -45,9 +57,11 @@ Array [
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for yet another example 1`] = `
 Array [
   TypeDefinitionOfQueryInputVariable {
-    "functionReferencePath": "get_id_from_suggestion_source_name.0",
     "name": "name",
-    "tableReferencePath": null,
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": "get_id_from_suggestion_source_name.input.0",
+      "tableReferencePath": null,
+    },
   },
 ]
 `;

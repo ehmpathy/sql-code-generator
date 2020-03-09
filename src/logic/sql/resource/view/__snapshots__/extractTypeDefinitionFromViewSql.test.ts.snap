@@ -6,39 +6,66 @@ TypeDefinitionOfResourceView {
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
-      "sourcePath": "s.id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.id",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "uuid",
-      "sourcePath": "s.uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.uuid",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "suggestion_source",
-      "sourcePath": "s.suggestion_source",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.suggestion_source",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "external_id",
-      "sourcePath": "s.external_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.external_id",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "status",
-      "sourcePath": "v.status",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.status",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "result",
-      "sourcePath": "v.result",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.result",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "created_at",
-      "sourcePath": "s.created_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.created_at",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "effective_at",
-      "sourcePath": "v.effective_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.effective_at",
+      },
     },
     TypeDefinitionOfQuerySelectExpression {
       "alias": "updated_at",
-      "sourcePath": "v.created_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.created_at",
+      },
     },
   ],
   "tableReferences": Array [

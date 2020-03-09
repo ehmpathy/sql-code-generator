@@ -1,16 +1,21 @@
 import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInputVariable';
+import { TypeDefinitionReference } from './TypeDefinitionReference';
 
 describe('TypeDefinitionOfQueryInputVariable', () => {
   it('should initialize for valid inputs', () => {
     const def = new TypeDefinitionOfQueryInputVariable({
       name: 'externalId',
-      tableReferencePath: 'i.external_id',
-      functionReferencePath: null,
+      typeReference: new TypeDefinitionReference({
+        tableReferencePath: 'i.external_id',
+        functionReferencePath: null,
+      }),
     });
     expect(def).toMatchObject({
       name: 'externalId',
-      tableReferencePath: 'i.external_id',
-      functionReferencePath: null,
+      typeReference: new TypeDefinitionReference({
+        tableReferencePath: 'i.external_id',
+        functionReferencePath: null,
+      }),
     });
   });
   it('should throw error on invalid input', () => {

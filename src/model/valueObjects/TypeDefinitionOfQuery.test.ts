@@ -1,11 +1,15 @@
 import { TypeDefinitionOfQuery } from './TypeDefinitionOfQuery';
+import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInputVariable';
 import { TypeDefinitionOfQuerySelectExpression } from './TypeDefinitionOfQuerySelectExpression';
 import { TypeDefinitionOfQueryTableReference } from './TypeDefinitionOfQueryTableReference';
-import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInputVariable';
+import { TypeDefinitionReference } from './TypeDefinitionReference';
 
 const selectExpression = new TypeDefinitionOfQuerySelectExpression({
   alias: 'id',
-  sourcePath: 's.id',
+  typeReference: new TypeDefinitionReference({
+    tableReferencePath: 's.id',
+    functionReferencePath: null,
+  }),
 });
 
 const tableReference = new TypeDefinitionOfQueryTableReference({
@@ -15,8 +19,10 @@ const tableReference = new TypeDefinitionOfQueryTableReference({
 
 const inputVariable = new TypeDefinitionOfQueryInputVariable({
   name: 'externalId',
-  tableReferencePath: 'i.external_id',
-  functionReferencePath: null,
+  typeReference: new TypeDefinitionReference({
+    tableReferencePath: 'i.external_id',
+    functionReferencePath: null,
+  }),
 });
 
 describe('TypeDefinitionOfQuerySelectExpression', () => {
@@ -29,6 +35,7 @@ describe('TypeDefinitionOfQuerySelectExpression', () => {
     expect(def).toMatchObject({
       selectExpressions: [selectExpression],
       tableReferences: [tableReference],
+      inputVariables: [inputVariable],
     });
   });
   it('should throw error on invalid input', () => {
