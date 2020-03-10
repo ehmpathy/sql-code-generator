@@ -1,7 +1,7 @@
 import { extractTypeDefinitionFromQuerySql } from '../../query/extractTypeDefinitionFromQuerySql';
 import { TypeDefinitionOfResourceView } from '../../../../model/valueObjects/TypeDefinitionOfResourceView';
 /*
-  note: a view is effectively an alias for a query
+  note: a view is effectively a named alias for a query
     - with the condition that the query can not have input variables
 
   therefore, the types are a subset of the query types

@@ -14,12 +14,13 @@
       2. define typescript code for inputs and output
    3. generate "methods" for queries (based on interfaces)
    2. improve range of query support
-      1. support functions in query selecteExpressions
-      2. support functions in functions in query inputVariables (e.g., get_id_from_string inside of upsert)
-      3. support subselects in query selectExpressions
-      4. support reused input variables (i.e., defined in two places... maybe just go with first type defined, for maintainability and ease of implementation?)
-      5. support functions and subselects in whereConditions for extracting inputVariables
-      6. [not-mvp] support "CALL procedure()"
+      1. [done:2020-03-09] support functions in query selecteExpressions
+      2. [done:2020-03-07] support functions in functions in query inputVariables (e.g., get_id_from_string inside of upsert)
+      3. support functions in functions for selectExpressions and whereConditions
+      4. support subselects in query selectExpressions
+      5. support subselects in query whereConditions for extracting inputVariables
+      6. support reused input variables (i.e., defined in two places... maybe just go with first type defined, for maintainability and ease of implementation?)
+      7. [not-mvp] support "CALL procedure()"
 
 3. record the generated interfaces, types, and methods
     `npx sql-code-generator generate -c ./src/dao/sql.ts -d ./src/dao/generated`
