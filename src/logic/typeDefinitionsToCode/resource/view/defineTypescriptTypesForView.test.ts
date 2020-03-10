@@ -3,7 +3,7 @@ import { extractTypeDefinitionFromViewSql } from '../../../sqlToTypeDefinitions/
 import { getSqlFromFile } from '../../../config/_utils/getSqlFromFile';
 
 describe('defineTypescriptTypesForView', () => {
-  it('should generate an accurate looking interface for this table definition', async () => {
+  it('should generate an accurate looking interface for a view joining three tables and selecting from two', async () => {
     const definition = extractTypeDefinitionFromViewSql({
       name: 'image',
       sql: await getSqlFromFile({

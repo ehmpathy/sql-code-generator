@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately an example of selecting columns a single table by id 1`] = `
+"export interface SqlQueryFindImageByIdInput {
+  id: SqlTableImage['id'];
+}
+export interface SqlQueryFindImageByIdOutput {
+  id: SqlTableImage['id'];
+  url: SqlTableImage['url'];
+  caption: SqlTableImage['caption'];
+  alt_text: SqlTableImage['alt_text'];
+  credit: SqlTableImage['credit'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately an upsert query 1`] = `
+"export interface SqlQueryUpsertSuggestionInput {
+  suggestionSource: SqlFunctionUpsertSuggestionInput['0'];
+  externalId: SqlFunctionUpsertSuggestionInput['1'];
+  suggestedIdeaId: SqlFunctionUpsertSuggestionInput['2'];
+  status: SqlFunctionUpsertSuggestionInput['3'];
+  result: SqlFunctionUpsertSuggestionInput['4'];
+}
+export interface SqlQueryUpsertSuggestionOutput {
+  id: SqlFunctionUpsertSuggestionOutput;
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately for this example that selects both from tables and functions 1`] = `
+"export interface SqlQueryFindUsersByLastNameInput {
+  lastName: SqlTableUser['last_name'];
+}
+export interface SqlQueryFindUsersByLastNameOutput {
+  id: SqlTableUser['id'];
+  full_name: SqlFunctionConcatOutput;
+  age: SqlTableUser['age'];
+  phone_number: SqlTablePhone['number'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately when selecting columns from multiple tables, no input variables 1`] = `
+"export interface SqlQuerySelectSuggestionInput {
+  
+}
+export interface SqlQuerySelectSuggestionOutput {
+  id: SqlTableSuggestion['id'];
+  uuid: SqlTableSuggestion['uuid'];
+  suggestion_source: SqlTableSuggestion['suggestion_source'];
+  external_id: SqlTableSuggestion['external_id'];
+  suggested_idea_id: SqlTableSuggestion['suggested_idea_id'];
+  resultant_curated_idea_id: SqlTableSuggestion['resultant_curated_idea_id'];
+  status: SqlTableSuggestionVersion['status'];
+  result: SqlTableSuggestionVersion['result'];
+  created_at: SqlTableSuggestion['created_at'];
+  effective_at: SqlTableSuggestionVersion['effective_at'];
+  updated_at: SqlTableSuggestionVersion['created_at'];
+}"
+`;

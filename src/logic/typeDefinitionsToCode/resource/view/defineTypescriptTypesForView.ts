@@ -1,26 +1,16 @@
 import { ResourceType } from '../../../../model';
-import { castResourceNameToTypescriptTypeName } from '../common/castResourceNameToTypescriptTypeName';
+import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
 import { TypeDefinitionOfResourceView } from '../../../../model/valueObjects/TypeDefinitionOfResourceView';
+import { defineTypescriptTypeFromReference } from '../../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
 
 export const defineTypescriptTypesForView = ({ definition }: { definition: TypeDefinitionOfResourceView }) => {
   // define column types in typescript format
   const typescriptInterfaceColumnDefinitions = definition.selectExpressions.map((selectExpression) => {
-    // grab the source table name and source table column name
-    if (!selectExpression.typeReference.tableReferencePath) {
-      throw new Error('columns in views must reference tables; referencing functions is not supported yet');
-    }
-    const [sourceTableAlias, sourceTableColumnName] = selectExpression.typeReference.tableReferencePath.split('.');
-    const sourceTableName = definition.tableReferences.find((ref) => ref.alias === sourceTableAlias)?.tableName;
-    if (!sourceTableName) {
-      throw new Error(
-        `table alias for of select expression "${selectExpression.typeReference.tableReferencePath}" not found in view table references`,
-      );
-    }
-    const sourceTableInterfaceName = castResourceNameToTypescriptTypeName({
-      name: sourceTableName,
-      resourceType: ResourceType.TABLE,
+    const typescriptTypeForReference = defineTypescriptTypeFromReference({
+      reference: selectExpression.typeReference,
+      queryTableReferences: definition.tableReferences,
     });
-    return `${selectExpression.alias}: ${sourceTableInterfaceName}['${sourceTableColumnName}'];`;
+    return `${selectExpression.alias}: ${typescriptTypeForReference};`;
   });
 
   // output

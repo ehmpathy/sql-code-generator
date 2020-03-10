@@ -1,5 +1,5 @@
 import { castResourceNameToTypescriptTypeName } from './castResourceNameToTypescriptTypeName';
-import { ResourceType } from '../../../../model';
+import { ResourceType } from '../../../model';
 
 describe('castResourceNameToInterfaceName', () => {
   it('should correctly define resource name for a table', () => {

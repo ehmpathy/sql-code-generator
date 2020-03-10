@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`defineTypescriptTypesForView should generate an accurate looking interface for this table definition 1`] = `
+exports[`defineTypescriptTypesForView should generate an accurate looking interface for a view joining three tables and selecting from two 1`] = `
 "export interface SqlView\\",Image {
   id: SqlTableSuggestion['id'];
   uuid: SqlTableSuggestion['uuid'];

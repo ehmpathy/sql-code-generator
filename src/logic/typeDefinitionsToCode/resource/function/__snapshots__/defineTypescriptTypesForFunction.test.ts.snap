@@ -2,31 +2,50 @@
 
 exports[`defineTypescriptTypesForFunction should generate accurate looking types for this function definition 1`] = `
 "export interface SqlFunctionUpsertImageInput {
-  in_url: string | null;
-  in_caption: string | null;
-  in_credit: string | null;
-  in_alt_text: string | null;
+  0: string | null;
+  1: string | null;
+  2: string | null;
+  3: string | null;
+}
+export interface SqlFunctionUpsertImageInputByName {
+  in_url: SqlFunctionUpsertImageInput['0'];
+  in_caption: SqlFunctionUpsertImageInput['1'];
+  in_credit: SqlFunctionUpsertImageInput['2'];
+  in_alt_text: SqlFunctionUpsertImageInput['3'];
 }
 export type SqlFunctionUpsertImageOutput = number;"
 `;
 
 exports[`defineTypescriptTypesForFunction should generate accurate looking types for this other function definition 1`] = `
 "export interface SqlFunctionUpsertSuggestionInput {
-  in_suggestion_source: string | null;
-  in_external_id: string | null;
-  in_suggested_idea_id: number | null;
-  in_status: string | null;
-  in_result: string | null;
-  in_resultant_curated_idea_id: number | null;
+  0: string | null;
+  1: string | null;
+  2: number | null;
+  3: string | null;
+  4: string | null;
+  5: number | null;
+}
+export interface SqlFunctionUpsertSuggestionInputByName {
+  in_suggestion_source: SqlFunctionUpsertSuggestionInput['0'];
+  in_external_id: SqlFunctionUpsertSuggestionInput['1'];
+  in_suggested_idea_id: SqlFunctionUpsertSuggestionInput['2'];
+  in_status: SqlFunctionUpsertSuggestionInput['3'];
+  in_result: SqlFunctionUpsertSuggestionInput['4'];
+  in_resultant_curated_idea_id: SqlFunctionUpsertSuggestionInput['5'];
 }
 export type SqlFunctionUpsertSuggestionOutput = number;"
 `;
 
 exports[`defineTypescriptTypesForFunction should generate accurate looking types for this other other function definition 1`] = `
 "export interface SqlFunctionHashStringInput {
-  in_array: string | null;
-  in_delimiter: string | null;
-  in_index: number | null;
+  0: string | null;
+  1: string | null;
+  2: number | null;
+}
+export interface SqlFunctionHashStringInputByName {
+  in_array: SqlFunctionHashStringInput['0'];
+  in_delimiter: SqlFunctionHashStringInput['1'];
+  in_index: SqlFunctionHashStringInput['2'];
 }
 export type SqlFunctionHashStringOutput = string;"
 `;

@@ -1,5 +1,5 @@
 import { TypeDefinitionOfResourceTable, ResourceType } from '../../../../model';
-import { castResourceNameToTypescriptTypeName } from '../common/castResourceNameToTypescriptTypeName';
+import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
 
 export const defineTypescriptTypesForTable = ({ definition }: { definition: TypeDefinitionOfResourceTable }) => {
   // define column types in typescript format
