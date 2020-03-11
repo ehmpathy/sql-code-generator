@@ -6,7 +6,6 @@ describe('defineTypescriptClientMethodForQuery', () => {
       name: 'upsert_image',
       relativePathToQueryExport: '../image/upsert',
     });
-    console.log(code);
     expect(code).toMatchSnapshot();
   });
 });

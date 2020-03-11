@@ -28,6 +28,7 @@ const inputVariable = new TypeDefinitionOfQueryInputVariable({
 describe('TypeDefinitionOfQuerySelectExpression', () => {
   it('should initialize for valid inputs', () => {
     const def = new TypeDefinitionOfQuery({
+      name: 'super_cool_query',
       selectExpressions: [selectExpression],
       tableReferences: [tableReference],
       inputVariables: [inputVariable],

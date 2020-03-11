@@ -2,15 +2,9 @@ import { TypeDefinitionOfQuery } from '../../../model/valueObjects/TypeDefinitio
 import { castQueryNameToTypescriptTypeName } from '../common/castQueryNameToTypescriptTypeName';
 import { defineTypescriptTypeFromReference } from '../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
 
-export const defineTypescriptTypesForQuery = ({
-  name,
-  definition,
-}: {
-  name: string; // note: because a name for the query can not be defined in sql, names must be passed in explicitly
-  definition: TypeDefinitionOfQuery;
-}) => {
+export const defineTypescriptTypesForQuery = ({ definition }: { definition: TypeDefinitionOfQuery }) => {
   // define the typescript type name for the query
-  const typescriptTypeName = castQueryNameToTypescriptTypeName({ name });
+  const typescriptTypeName = castQueryNameToTypescriptTypeName({ name: definition.name });
 
   // define the input interface
   const typescriptInputInterfacePropertyDefinitions = definition.inputVariables.map((inputVariable) => {

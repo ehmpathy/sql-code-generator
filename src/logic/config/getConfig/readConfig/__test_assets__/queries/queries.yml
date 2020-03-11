@@ -1,3 +1,0 @@
-- type: query
-  name: 'findAllUsersByName'
-  path: './findAllUsersByName.ts'

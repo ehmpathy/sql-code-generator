@@ -1,7 +1,8 @@
 import { readYmlFile } from './utils/readYmlFile';
-import { validateAndHydrateDefinitionsYmlContents } from './validateAndHydrateDefinitionsYmlContents';
-import { flattenDefinitionsRecursive } from './flattenDefinitionsRecursive';
 import { GeneratorConfig } from '../../../../model';
+import { getAllPathsMatchingGlobs } from '../getAllPathsMatchingGlobs/getAllPathsMatchingGlobs';
+import { extractResourceDeclarationFromGlobedFile } from '../extractDeclarationFromGlobbedFile/extractResourceDeclarationFromGlobedFile';
+import { extractQueryDeclarationFromGlobedFile } from '../extractDeclarationFromGlobbedFile/extractQueryDeclarationFromGlobedFile';
 
 /*
   1. read the yml file
@@ -24,19 +25,31 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   if (!contents.dialect) throw new Error('dialect must be defined');
   const dialect = `${contents.dialect}`; // ensure that we read it as a string, as it could be a number
 
-  // get the resource and query definitions
-  if (!contents.definitions) throw new Error('definitions must be defined');
-  const definitionContents = contents.definitions;
-  const nestedDefinitions = await validateAndHydrateDefinitionsYmlContents({
-    readRoot: configDir,
-    contents: definitionContents,
+  // get the resource declarations
+  const resourceGlobs = contents.resources;
+  const resourcePaths = await getAllPathsMatchingGlobs({
+    globs: resourceGlobs,
+    root: configDir,
   });
-  const definitions = await flattenDefinitionsRecursive({ readRoot: configDir, definitions: nestedDefinitions });
+  const resourceDeclarations = await Promise.all(
+    resourcePaths.map((relativePath) => extractResourceDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
+  );
+
+  // get the query declarations
+  const queryGlobs = contents.queries;
+  const queryPaths = await getAllPathsMatchingGlobs({
+    globs: queryGlobs,
+    root: configDir,
+  });
+  const queryDeclarations = await Promise.all(
+    queryPaths.map((relativePath) => extractQueryDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
+  );
 
   // return the results
   return new GeneratorConfig({
+    dir: configDir,
     language,
     dialect,
-    definitions,
+    declarations: [...resourceDeclarations, ...queryDeclarations],
   });
 };

@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
-require('@oclif/command').run()
-.then(require('@oclif/command/flush'))
-.catch(require('@oclif/errors/handle'))
+require('ts-node').register(); // register typescript REPL so that require() method can import typescript files as well as js
+
+require('@oclif/command')
+  .run()
+  .then(require('@oclif/command/flush'))
+  .catch(require('@oclif/errors/handle'));

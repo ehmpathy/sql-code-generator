@@ -1,20 +1,22 @@
 import Joi from 'joi';
 import SchematicJoiModel from 'schematic-joi-model';
 import { DatabaseLanguage } from '../constants';
-import { QueryDefinition } from './QueryDefinition';
-import { ResourceDefinition } from './ResourceDefinition';
+import { QueryDeclaration } from './QueryDeclaration';
+import { ResourceDeclaration } from './ResourceDeclaration';
 
 const generatorConfigSchema = Joi.object().keys({
+  dir: Joi.string().required(), // dir of config file, to which all config paths are relative
   language: Joi.string().valid(Object.values(DatabaseLanguage)),
   dialect: Joi.string().required(),
-  definitions: Joi.array().items(QueryDefinition.schema, ResourceDefinition.schema),
+  declarations: Joi.array().items(QueryDeclaration.schema, ResourceDeclaration.schema),
 });
 
-type DefinitionObject = QueryDefinition | ResourceDefinition;
+type DeclarationObject = QueryDeclaration | ResourceDeclaration;
 export interface GeneratorConfig {
+  dir: string;
   language: DatabaseLanguage;
   dialect: string;
-  definitions: DefinitionObject[];
+  declarations: DeclarationObject[];
 }
 export class GeneratorConfig extends SchematicJoiModel<GeneratorConfig> implements GeneratorConfig {
   public static schema = generatorConfigSchema;

@@ -6,6 +6,7 @@ import { TypeDefinitionOfQueryTableReference } from './TypeDefinitionOfQueryTabl
 import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInputVariable';
 
 const schema = Joi.object().keys({
+  name: Joi.string().required(),
   selectExpressions: Joi.array()
     .items(TypeDefinitionOfQuerySelectExpression.schema)
     .required(),
@@ -17,6 +18,7 @@ const schema = Joi.object().keys({
     .required(),
 });
 export interface TypeDefinitionOfQuery {
+  name: string;
   selectExpressions: TypeDefinitionOfQuerySelectExpression[];
   tableReferences: TypeDefinitionOfQueryTableReference[];
   inputVariables: TypeDefinitionOfQueryInputVariable[];

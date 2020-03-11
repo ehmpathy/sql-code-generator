@@ -1,9 +1,0 @@
-language: mysql
-dialect: 5.7
-definitions:
-  - type: query
-    name: 'selectOne'
-    path: ./selectOne.ts
-  - ./schema/resources.yml
-  - ./queries/queries.yml
-  - ./empty_file.yml # e.g., placeholder files

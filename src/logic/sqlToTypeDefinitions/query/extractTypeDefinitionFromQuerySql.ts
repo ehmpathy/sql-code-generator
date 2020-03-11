@@ -3,7 +3,7 @@ import { extractTableReferencesFromQuerySql } from './extractTableReferencesFrom
 import { TypeDefinitionOfQuery } from '../../../model/valueObjects/TypeDefinitionOfQuery';
 import { extractInputVariablesFromQuerySql } from './extractInputVariablesFromQuerySql/extractInputVariablesFromQuerySql';
 
-export const extractTypeDefinitionFromQuerySql = ({ sql }: { sql: string }) => {
+export const extractTypeDefinitionFromQuerySql = ({ name, sql }: { name: string; sql: string }) => {
   // 1. grab the selectExpression definitions
   const selectExpressions = extractSelectExpressionsFromQuerySql({ sql });
 
@@ -15,6 +15,7 @@ export const extractTypeDefinitionFromQuerySql = ({ sql }: { sql: string }) => {
 
   // 4. return the full query typedef
   return new TypeDefinitionOfQuery({
+    name,
     selectExpressions,
     tableReferences,
     inputVariables,

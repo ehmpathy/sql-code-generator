@@ -11,6 +11,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
+  "name": "find_image_by_id",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -96,6 +97,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
+  "name": "upsert_suggestion",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -120,6 +122,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
+  "name": "find_users_by_last_name",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -166,6 +169,7 @@ TypeDefinitionOfQuery {
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately when selecting columns from multiple tables, no input variables 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [],
+  "name": "select_suggestion",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",

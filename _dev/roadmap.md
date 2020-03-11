@@ -17,7 +17,20 @@
    2. [done:2020-03-11] generate "methods" for queries (based on interfaces)
 
 3. compose functionality to generate the interfaces, types, and methods
-    `npx sql-code-generator generate -c ./src/dao/sql.ts -d ./src/dao/generated`
+   - get query name from sql
+   - improve the config reader
+     - i.e., support glob patterns for finding `schema/tables/**.sql` and `src/dao/**.ts` and excluding `src/dao/**.test.ts` files
+     - https://www.npmjs.com/package/glob
+     - try to match syntax that graphql-code-generator used
+   - support after write hooks
+   - e.g., ```
+            hooks:
+            afterAllFileWrite:
+               - prettier --write
+               - eslint --fix
+            ```
+   - define a generate command (`npx sql-code-generator generate -c ./codegen.sql.yml`)
+
 
 4. improve range of query support
    1. support functions in functions for selectExpressions and whereConditions
@@ -25,4 +38,6 @@
    3. support subselects in query whereConditions for extracting inputVariables
    4. support reused input variables (i.e., defined in two places... maybe just go with first type defined, for maintainability and ease of implementation?)
    5. [not-mvp] support "CALL procedure()"
+
+
 
