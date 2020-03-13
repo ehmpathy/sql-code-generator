@@ -21,6 +21,7 @@
     "no-unnecessary-type-annotation": false,
     "ter-arrow-parens": false,
     "member-ordering": false,
-    "ter-indent": false
+    "ter-indent": false,
+    "array-type": false
   }
 }

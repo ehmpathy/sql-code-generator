@@ -1,9 +1,11 @@
 import { extractQueryDeclarationFromGlobedFile } from './extractQueryDeclarationFromGlobedFile';
 
+const rootDir = `${__dirname}/../../../__test_assets__/exampleProject`;
+
 describe('extractQueryDeclarationFromGlobedFile', () => {
   it('should be able to extract a query declaration from a ts file that exports a query string', async () => {
     const declaration = await extractQueryDeclarationFromGlobedFile({
-      rootDir: `${__dirname}/../__test_assets__`,
+      rootDir,
       relativePath: 'src/dao/user/findAllByName.ts',
     });
     expect(declaration.name).toEqual('find_all_by_name');
@@ -12,7 +14,7 @@ describe('extractQueryDeclarationFromGlobedFile', () => {
   it('should throw an error if the query name is not declared in the query string', async () => {
     try {
       await extractQueryDeclarationFromGlobedFile({
-        rootDir: `${__dirname}/../__test_assets__`,
+        rootDir,
         relativePath: 'src/others/queryWithoutName.ts',
       });
       throw new Error('should not reach here');
@@ -23,7 +25,7 @@ describe('extractQueryDeclarationFromGlobedFile', () => {
   it('should throw an error if passed in a file that does not declare a query export', async () => {
     try {
       await extractQueryDeclarationFromGlobedFile({
-        rootDir: `${__dirname}/../__test_assets__`,
+        rootDir,
         relativePath: 'src/others/fileThatDoesNotExportQuery.ts',
       });
       throw new Error('should not reach here');

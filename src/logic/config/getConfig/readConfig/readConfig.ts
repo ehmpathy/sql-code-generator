@@ -18,10 +18,16 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   // get the yml
   const contents = await readYmlFile({ filePath });
 
-  // get the language
+  // get the output dir
+  if (!contents.generates) throw new Error('generates key must be defined');
+  if (!contents.generates.types) throw new Error('generates.types must specify where to output the generated types');
+  if (!contents.generates.queryFunctions) {
+    throw new Error('generates.queryFunctions must specify where to output the query functions');
+  }
+
+  // get the language and dialect
   if (!contents.language) throw new Error('language must be defined');
   const language = contents.language;
-
   if (!contents.dialect) throw new Error('dialect must be defined');
   const dialect = `${contents.dialect}`; // ensure that we read it as a string, as it could be a number
 
@@ -47,7 +53,11 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
 
   // return the results
   return new GeneratorConfig({
-    dir: configDir,
+    rootDir: configDir,
+    generates: {
+      types: contents.generates.types,
+      queryFunctions: contents.generates.queryFunctions,
+    },
     language,
     dialect,
     declarations: [...resourceDeclarations, ...queryDeclarations],

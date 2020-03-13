@@ -17,14 +17,17 @@ describe('GeneratorConfig', () => {
   });
   it('should initialize for valid inputs', () => {
     const config = new GeneratorConfig({
-      dir: '__DIR__',
+      rootDir: '__DIR__',
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
+      generates: { types: '__TYPES_PATH__', queryFunctions: '__QUERY_FUNCTIONS_PATH__' },
       declarations: [queryDec, resourceDec],
     });
     expect(config).toMatchObject({
+      rootDir: '__DIR__',
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
+      generates: { types: '__TYPES_PATH__', queryFunctions: '__QUERY_FUNCTIONS_PATH__' },
       declarations: [queryDec, resourceDec],
     });
   });

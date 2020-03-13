@@ -17,18 +17,23 @@
    2. [done:2020-03-11] generate "methods" for queries (based on interfaces)
 
 3. compose functionality to generate the interfaces, types, and methods
-   - get query name from sql
-   - improve the config reader
+   - [done:2020-03-11] get query name from sql
+   - [done:2020-03-11] improve the config reader
      - i.e., support glob patterns for finding `schema/tables/**.sql` and `src/dao/**.ts` and excluding `src/dao/**.test.ts` files
      - https://www.npmjs.com/package/glob
      - try to match syntax that graphql-code-generator used
-   - support after write hooks
-   - e.g., ```
-            hooks:
-            afterAllFileWrite:
-               - prettier --write
-               - eslint --fix
-            ```
+   - [not-mvp] support after write hooks
+     - e.g., ```
+              hooks:
+              afterAllFileWrite:
+                 - prettier --write
+                 - eslint --fix
+              ```
+   - [done:2020-03-12] save the typescript type definitions
+     - sort the typescript type definitions by type: table, function, view, query
+     - output better errors - specifying exactly which "resource" or "query" we could not extract types or define code for, when error is thrown
+   - [done:2020-03-12] save the typescript client methods into one file
+   - [done:2020-03-12] specify what the files are named in config
    - define a generate command (`npx sql-code-generator generate -c ./codegen.sql.yml`)
 
 

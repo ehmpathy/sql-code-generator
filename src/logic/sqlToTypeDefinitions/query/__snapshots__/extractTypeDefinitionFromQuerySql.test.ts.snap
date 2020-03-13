@@ -111,6 +111,43 @@ TypeDefinitionOfQuery {
 }
 `;
 
+exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for query which comments out one of the select expressions 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "firstName",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "u.first_name",
+      },
+    },
+  ],
+  "name": "find_all_by_name_excluding_one_field",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "u.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "first_name",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "u.first_name",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "u",
+      "tableName": "user",
+    },
+  ],
+}
+`;
+
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this example that selects both from tables and functions 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [

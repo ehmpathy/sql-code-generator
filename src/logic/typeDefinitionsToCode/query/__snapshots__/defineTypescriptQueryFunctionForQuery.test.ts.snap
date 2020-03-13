@@ -1,12 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`defineTypescriptClientMethodForQuery should define the method accurately based on name and import path 1`] = `
-"import { mysql as prepare } from 'yesql';
-import { query } from '../image/upsert';
-import { SqlQueryUpsertImageInput, SqlQueryUpsertImageOutput } from '../types';
-import { DatabaseExecuteCommand, LogMethod } from './common';
-
-export const sqlQueryUpsertImage = async ({
+exports[`defineTypescriptQueryFunctionForQuery should define the method accurately based on name and import path 1`] = `
+"export const sqlQueryUpsertImage = async ({
   dbExecute,
   logDebug,
   input,
@@ -16,7 +11,7 @@ export const sqlQueryUpsertImage = async ({
   input: SqlQueryUpsertImageInput;
 }): Promise<SqlQueryUpsertImageOutput[]> => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(query)(input);
+  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryUpsertImageSql)(input);
 
   // 2. log that we're running the request
   logDebug('sqlQueryUpsertImage.input', { input });

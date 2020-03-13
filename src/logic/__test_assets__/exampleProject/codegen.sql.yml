@@ -6,4 +6,6 @@ queries:
   - "src/dao/**/*.ts"
   - "!src/**/*.test.ts"
   - "!src/**/*.test.integration.ts"
-generates: src/dao/common/generated/fromSql # a directory path
+generates:
+  types: src/generated/fromSql/types.ts
+  queryFunctions: src/generated/fromSql/queryFunctions.ts
