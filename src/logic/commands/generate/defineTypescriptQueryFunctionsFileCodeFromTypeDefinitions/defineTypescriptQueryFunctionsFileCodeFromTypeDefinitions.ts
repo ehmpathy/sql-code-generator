@@ -46,7 +46,7 @@ export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
   // merge the codes
   const typescriptQueryFunctionCode = `
 import { mysql as prepare } from 'yesql';
-${queryImportCode};
+${queryImportCode}
 ${generatedTypesImportCode}
 
 ${commonExportsCode}

@@ -1,3 +1,4 @@
+import chalk from 'chalk';
 import { ResourceDeclaration, QueryDeclaration } from '../../../model';
 import { getTypeDefinitionFromDeclaration } from '../../sqlToTypeDefinitions/getTypeDefinitionFromDeclaration';
 
@@ -26,6 +27,11 @@ export const getTypeDefinitionFromDeclarationWithHelpfulError = ({
   try {
     return getTypeDefinitionFromDeclaration({ declaration });
   } catch (error) {
+    // log that we have failed
+    const failureMessage = `  ${chalk.red('x')} ${chalk.red(chalk.bold('[PARSED]'))} ${chalk.bold(declaration.path)}`;
+    console.log(failureMessage); // tslint:disable-line no-console
+
+    // and pass the error up
     throw new ErrorExtractingTypeDefinitionFromDeclaration({ declaration, error });
   }
 };

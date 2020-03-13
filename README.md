@@ -3,7 +3,7 @@ sql-code-generator
 
 Generate code from your SQL schema and queries for type safety and development speed.
 
-Generates type definitions and query methods with a single function call.
+Generates type definitions and query functions with a single command.
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/sql-code-generator.svg)](https://npmjs.org/package/sql-code-generator)
