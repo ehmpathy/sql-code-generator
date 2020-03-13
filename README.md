@@ -3,7 +3,7 @@ sql-code-generator
 
 Generate code from your SQL schema and queries for type safety and development speed.
 
-Generates type definitions and query functions with a single command.
+Generates type definitions and query functions with a single command!
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/sql-code-generator.svg)](https://npmjs.org/package/sql-code-generator)
@@ -14,111 +14,193 @@ Generates type definitions and query functions with a single command.
 # Table of Contents
 <!-- toc -->
 - [Goals](#goals)
-- [Background](#background)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Commands](#commands)
-  - [`schema-control apply`](#schema-control-apply)
+  - [`schema-control generate`](#schema-control-generate)
   - [`schema-control help [COMMAND]`](#schema-control-help-command)
-  - [`schema-control plan`](#schema-control-plan)
-  - [`schema-control pull`](#schema-control-pull)
-  - [`schema-control sync`](#schema-control-sync)
 - [Contribution](#contribution)
 <!-- tocstop -->
 
 # Goals
 
-The goal of `sql-code-generator` is to use the type definitions you've already defined in your SQL in order to speed up development and eliminate errors.
+The goal of `sql-code-generator` is to use the SQL you've already defined in order to speed up development and eliminate errors. This is done by extracting type definitions from sql and exposing those type definitions in code, automatically generating the interface that bridges your sql and your primary development language.
 
 This includes:
 - generating type definitions from SQL resources (e.g., tables, views, functions, procedures)
-- generating type definitions from SQL queries (e.g., select * from table)
-- generating typed functions that execute SQL queries from SQL queries (e.g., generate database client methods)
+- generating type definitions from SQL queries (e.g., `select * from table`)
+- generating typed functions that execute SQL queries from SQL queries (e.g., `const sqlQueryFindAllUsersByName = async ({ input: InputType }): Promise<OutputType>`)
 
 This enables:
-- fully controlling and mastering database logic in SQL
-- strict typing between sql and typescript for compile time error checking
-- abstracting away the database interface and generating database clients from SQL
+- controlling and mastering database logic fully in SQL
+- strictly bound types between sql and typescript for compile time error checking
+- strongly typed, auto-generated database query functions for speed, consistency, and encoding of best practices
 - autocompletion and explore-ability of sql resources in your IDE
 
 Inspired by [graphql-code-generator](https://graphql-code-generator.com/)
 
 # Installation
 
-1. Save the package as a dev dependency
+## 1. Save the package as a dev dependency
   ```sh
   npm install --save-dev sql-code-generator
   ```
 
-2. Define a config yml
-  ```yml
- # TODO
-  ```
+## 2. Define a config yml
 
-3. Test it out!
+This file will define the sql language to extract type definitions from, where your sql resources and sql queries are, and where to output the generated types and query functions. By default, the generator looks for a file named `codegen.sql.yml` in your projects root.
+
+For example:
+```yml
+language: mysql
+dialect: 5.7
+resources: # where to find your tables, functions, views, procedures
+  - "schema/**/*.sql"
+queries: # where to find your queries (each file must `export const query = `...`);
+  - "src/dao/**/*.ts"
+  - "!src/**/*.test.ts"
+  - "!src/**/*.test.integration.ts"
+generates: # where to output the generated code
+  types: src/dao/generated/types.ts
+  queryFunctions: src/dao/generated/queryFunctions.ts
+```
+
+## 3. Test it out!
 ```
   $ npx sql-code-generator version
   $ npx sql-code-generator generate
 ```
 
+
 # Usage
 
-The typical use case consists of planning and applying:
-```sh
-  $ npx schema-control plan # to see what actions need to be done to sync your db
-  $ npx schema-control apply # to sync your db with your checked in schema
+## Resources
+
+Resources should be defined in `.sql` files. We'll extract both the name and the type from the create definition automatically. For example:
+```sql
+CREATE TABLE `image` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uuid` char(36) COLLATE utf8mb4_bin NOT NULL,
+  `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `url` varchar(190) COLLATE utf8mb4_bin NOT NULL,
+  `caption` varchar(190) COLLATE utf8mb4_bin DEFAULT NULL,
+  `credit` varchar(190) COLLATE utf8mb4_bin,
+  `alt_text` varchar(190) COLLATE utf8mb4_bin,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `image_ux1` (`url`,`caption`,`credit`,`alt_text`)
+)
 ```
 
-These commands will operate on all resource and change definitions that are defined in your config (i.e., `control.yml`).
+The above definition would generate the following typescript type definitions:
+```ts
+// types for table 'image'
+export interface SqlTableImage {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  url: string;
+  caption: string | null;
+  credit: string | null;
+  alt_text: string | null;
+}
+```
 
-If your schema control config specified strict control, then you may also want to pull resources that are not currently defined in your version control so that you can add them as controlled resources:
-```sh
-  $ npx schema-control pull # records the create DDL for each uncontrolled resource
+## Queries
+Queries can be defined in `.ts` or `.sql` files. If in a `.ts` file, this file should contain a named export called `query` exporting the sql of your query. We'll extract the name of the query from a specially formatted comment in your sql, e.g.: `-- query_name = find_images_by_url` would resolve a query name of `find_images_by_url`. For example:
+
+```ts
+export const query = `
+-- query_name = find_images_by_url
+SELECT
+  i.uuid,
+  i.url,
+  i.caption,
+  i.credit,
+  i.alt_text
+FROM image i
+WHERE i.url = :url
+`.trim();
+```
+
+The above definition would generate the following typescript type definitions:
+```ts
+// types for query 'find_images_by_url'
+export interface SqlQueryFindImagesByUrlInput {
+  url: SqlTableImage['url'];
+}
+export interface SqlQueryFindImagesByUrlOutput {
+  uuid: SqlTableImage['uuid'];
+  url: SqlTableImage['url'];
+  caption: SqlTableImage['caption'];
+  credit: SqlTableImage['credit'];
+  alt_text: SqlTableImage['alt_text'];
+}
+```
+
+And that same definition would also generate the following typescript query function:
+```ts
+import { mysql as prepare } from 'yesql';
+import { query as sqlQueryFindImagesByUrlSql } from '../../dao/user/findAllByName';
+import { SqlQueryFindImagesByUrlInput, SqlQueryFindImagesByUrlOutput } from './types';
+
+// typedefs common to each query function
+export type DatabaseExecuteCommand = (args: { sql: string; values: any[] }) => Promise<any[]>;
+export type LogMethod = (message: string, metadata: any) => void;
+
+// client method for query 'find_images_by_url'
+export const sqlQueryFindImagesByUrl = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQueryFindImagesByUrlInput;
+}): Promise<SqlQueryFindImagesByUrlOutput[]> => {
+  // 1. define the query with yesql
+  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindImagesByUrlSql)(input);
+
+  // 2. log that we're running the request
+  logDebug('sqlQueryFindImagesByUrl.input', { input });
+
+  // 3. execute the query
+  const output = await dbExecute({ sql: preparedSql, values: preparedValues });
+
+  // 4. log that we've executed the request
+  logDebug('sqlQueryFindImagesByUrl.output', { output });
+
+  // 5. return the output
+  return output;
+};
 ```
 
 # Commands
 <!-- commands -->
-* [`schema-control apply`](#schema-control-apply)
-* [`schema-control help [COMMAND]`](#schema-control-help-command)
-* [`schema-control plan`](#schema-control-plan)
-* [`schema-control pull`](#schema-control-pull)
-* [`schema-control sync`](#schema-control-sync)
+* [`sql-code-generator generate`](#sql-code-generator-generate)
+* [`sql-code-generator help [COMMAND]`](#sql-code-generator-help-command)
 
-## `schema-control apply`
+## `sql-code-generator generate`
 
-apply an execution plan
+generate typescript code by parsing sql definitions for types and usage
 
 ```
 USAGE
-  $ schema-control apply
+  $ sql-code-generator generate
 
 OPTIONS
-  -c, --config=config  [default: schema/control.yml] path to config file
+  -c, --config=config  (required) [default: codegen.sql.yml] path to config yml
   -h, --help           show CLI help
-
-EXAMPLE
-  $ schema-control apply -c src/contract/_test_assets/control.yml
-     ✔ [APPLY] ./tables/data_source.sql (change:table_20190626_1)
-     ✔ [APPLY] ./tables/notification.sql (resource:table:notification)
-     ↓ [MANUAL_MIGRATION] ./tables/notification_version.sql (resource:table:notification_version) [skipped]
-     ✔ [REAPPLY] ./functions/find_message_hash_by_text.sql (resource:function:find_message_hash_by_text)
-     ✔ [APPLY] ./procedures/upsert_message.sql (resource:procedure:upsert_message)
-     ✔ [APPLY] ./init/data_sources.sql (change:init_20190619_1)
-     ✖ [APPLY] ./init/service_user.sql (change:init_20190619_2)
-       → Could not apply ./init/service_user.sql: Operation CREATE USER failed for…
-
-  Could not apply ./init/service_user.sql: Operation CREATE USER failed for 'user_name'@'%'
 ```
 
-_See code: [dist/contract/commands/apply.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/apply.ts)_
+_See code: [dist/contract/commands/generate.ts](https://github.com/uladkasach/sql-code-generator/blob/v0.0.0/dist/contract/commands/generate.ts)_
 
-## `schema-control help [COMMAND]`
+## `sql-code-generator help [COMMAND]`
 
-display help for schema-control
+display help for sql-code-generator
 
 ```
 USAGE
-  $ schema-control help [COMMAND]
+  $ sql-code-generator help [COMMAND]
 
 ARGUMENTS
   COMMAND  command to show help for
@@ -128,71 +210,6 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v2.2.0/src/commands/help.ts)_
-
-## `schema-control plan`
-
-generate and show an execution plan
-
-```
-USAGE
-  $ schema-control plan
-
-OPTIONS
-  -c, --config=config  [default: schema/control.yml] path to config file
-  -h, --help           show CLI help
-
-EXAMPLE
-  $ schema-control plan
-    * [APPLY] ./init/service_user.sql (change:init_20190619_1)
-       CREATE USER 'user_name'@'%';
-       GRANT ALL PRIVILEGES ON awesomedb.* To 'user_name'@'%' IDENTIFIED BY '__CHANGE_M3__'; -- TODO: change password
-```
-
-_See code: [dist/contract/commands/plan.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/plan.ts)_
-
-## `schema-control pull`
-
-pull and record uncontrolled resources
-
-```
-USAGE
-  $ schema-control pull
-
-OPTIONS
-  -c, --config=config  [default: schema/control.yml] path to config file
-  -h, --help           show CLI help
-  -t, --target=target  [default: schema] target directory to record uncontrolled resources in
-
-EXAMPLE
-  $ schema-control pull -c src/contract/_test_assets/control.yml -t src/contract/_test_assets/uncontrolled
-  pulling uncontrolled resource definitions into .../schema-control/src/contract/commands/_test_assets/uncontrolled
-     ✓ [PULLED] resource:table:data_source
-     ✓ [PULLED] resource:table:invitation
-     ✓ [PULLED] resource:procedure:upsert_invitation
-     ✓ [PULLED] resource:function:get_id_by_name
-```
-
-_See code: [dist/contract/commands/pull.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/pull.ts)_
-
-## `schema-control sync`
-
-sync the change log for a specific change definition without applying it, for cases where a change has been reapplied manually
-
-```
-USAGE
-  $ schema-control sync
-
-OPTIONS
-  -c, --config=config  [default: schema/control.yml] path to config file
-  -h, --help           show CLI help
-  --id=id              (required) reference id of the change definition
-
-EXAMPLE
-  $ schema-control sync -c src/contract/__test_assets__/control.yml --id change:init_service_user
-     ✔ [SYNC] ./init/service_user.sql (change:init_service_user)
-```
-
-_See code: [dist/contract/commands/sync.ts](https://github.com/uladkasach/schema-control/blob/v1.1.0/dist/contract/commands/sync.ts)_
 <!-- commandsstop -->
 
 
