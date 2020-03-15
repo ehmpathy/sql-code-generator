@@ -22,7 +22,6 @@ export const generate = async ({ configPath }: { configPath: string }) => {
   });
   const typescriptQueryFunctionsFileCode = defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions({
     definitions,
-    declarations: config.declarations,
     generatedOutputPaths: config.generates,
   });
 

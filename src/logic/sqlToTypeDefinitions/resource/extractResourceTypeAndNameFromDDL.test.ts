@@ -1,4 +1,4 @@
-import { ResourceType } from '../../../../../model';
+import { ResourceType } from '../../../model';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
 
 describe('extractResourceTypeAndNameFromDDL', () => {

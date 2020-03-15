@@ -7,6 +7,7 @@ import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInput
 
 const schema = Joi.object().keys({
   name: Joi.string().required(),
+  path: Joi.string().required(), // path to the sql that the typedef was based on
   selectExpressions: Joi.array()
     .items(TypeDefinitionOfQuerySelectExpression.schema)
     .required(),
@@ -19,6 +20,7 @@ const schema = Joi.object().keys({
 });
 export interface TypeDefinitionOfQuery {
   name: string;
+  path: string;
   selectExpressions: TypeDefinitionOfQuerySelectExpression[];
   tableReferences: TypeDefinitionOfQueryTableReference[];
   inputVariables: TypeDefinitionOfQueryInputVariable[];

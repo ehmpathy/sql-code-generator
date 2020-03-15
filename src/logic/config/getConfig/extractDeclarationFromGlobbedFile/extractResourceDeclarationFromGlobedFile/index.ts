@@ -1,1 +1,0 @@
-export { extractResourceDeclarationFromGlobedFile } from './extractResourceDeclarationFromGlobedFile';

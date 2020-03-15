@@ -29,6 +29,7 @@ describe('TypeDefinitionOfQuerySelectExpression', () => {
   it('should initialize for valid inputs', () => {
     const def = new TypeDefinitionOfQuery({
       name: 'super_cool_query',
+      path: '__FILE_PATH__',
       selectExpressions: [selectExpression],
       tableReferences: [tableReference],
       inputVariables: [inputVariable],

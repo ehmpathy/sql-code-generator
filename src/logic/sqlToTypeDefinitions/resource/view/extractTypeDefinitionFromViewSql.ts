@@ -12,7 +12,11 @@ export const extractTypeDefinitionFromViewSql = ({ name, sql }: { name: string; 
     .split(/(SELECT|select)/)
     .slice(1) // slice(1) since part[0] = CREATE VIEW ... AS, part[1] = SELECT, part[2] = __SELECT_BODY__
     .join(''); // merge to have SELECT __SELECT_BODY__
-  const queryDef = extractTypeDefinitionFromQuerySql({ name, sql: querySql });
+  const queryDef = extractTypeDefinitionFromQuerySql({
+    name,
+    path: 'none', // we dont currently track paths for view - and it wont be a problem downstream to fake it, so put a placeholder value
+    sql: querySql,
+  });
 
   // 1. check that query def does not have any inputs, as views with inputs in query are invalid
   if (queryDef.inputVariables.length) throw new Error(`query def for view '${name}' can not have inputs`);

@@ -1,10 +1,4 @@
-import {
-  GeneratedOutputPaths,
-  QueryDeclaration,
-  ResourceDeclaration,
-  TypeDefinition,
-  TypeDefinitionOfQuery,
-} from '../../../../model';
+import { GeneratedOutputPaths, TypeDefinition, TypeDefinitionOfQuery } from '../../../../model';
 import { defineTypescriptCommonExportsForQueryFunctions } from './defineTypescriptCommonExportsForQueryFunctions';
 import { defineTypescriptFunctionCodeForQueryFunctions } from './defineTypescriptFunctionCodeForQueryFunctions';
 import { defineTypescriptImportGeneratedTypesCodeForQueryFunctions } from './defineTypescriptImportGeneratedTypesCodeForQueryFunctions';
@@ -12,11 +6,9 @@ import { defineTypescriptImportQuerySqlCodeForQueryFunctions } from './defineTyp
 
 export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
   definitions,
-  declarations,
   generatedOutputPaths,
 }: {
   definitions: TypeDefinition[];
-  declarations: (ResourceDeclaration | QueryDeclaration)[];
   generatedOutputPaths: GeneratedOutputPaths;
 }) => {
   // pick out all query definitions
@@ -34,7 +26,6 @@ export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
   const queryImportCode = defineTypescriptImportQuerySqlCodeForQueryFunctions({
     queryDefinitions,
     generatedOutputPaths,
-    declarations,
   });
 
   // define the common exports

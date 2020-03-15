@@ -18,6 +18,12 @@ export enum DataType {
   DATE = 'Date',
   NULL = 'null',
 }
+export enum ResourceType {
+  TABLE = 'TABLE',
+  FUNCTION = 'FUNCTION',
+  PROCEDURE = 'PROCEDURE',
+  VIEW = 'VIEW",',
+}
 export enum QuerySection {
   SELECT_EXPRESSIONS = 'SELECT_EXPRESSIONS',
   TABLE_REFERENCES = 'TABLE_REFERENCES',

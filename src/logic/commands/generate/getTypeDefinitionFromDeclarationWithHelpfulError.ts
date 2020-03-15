@@ -4,10 +4,9 @@ import { getTypeDefinitionFromDeclaration } from '../../sqlToTypeDefinitions/get
 
 class ErrorExtractingTypeDefinitionFromDeclaration extends Error {
   constructor({ declaration, error }: { declaration: ResourceDeclaration | QueryDeclaration; error: Error }) {
-    const declarationTypeCommonName =
-      declaration instanceof QueryDeclaration ? 'query' : declaration.type.toLowerCase();
+    const declarationTypeCommonName = declaration instanceof QueryDeclaration ? 'query' : 'resource';
     const message = `
-Error: Could not extract type definition from sql of ${declarationTypeCommonName} '${declaration.name}' ('${declaration.path}'): ${error.message}
+Error: Could not extract type definition from sql of ${declarationTypeCommonName} from file '${declaration.path}': ${error.message}
 
 You can fix the error by correcting the sql in '${declaration.path}'
     `.trim();

@@ -1,8 +1,7 @@
 import { readYmlFile } from './utils/readYmlFile';
 import { GeneratorConfig } from '../../../../model';
 import { getAllPathsMatchingGlobs } from '../getAllPathsMatchingGlobs/getAllPathsMatchingGlobs';
-import { extractResourceDeclarationFromGlobedFile } from '../extractDeclarationFromGlobbedFile/extractResourceDeclarationFromGlobedFile';
-import { extractQueryDeclarationFromGlobedFile } from '../extractDeclarationFromGlobbedFile/extractQueryDeclarationFromGlobedFile';
+import { extractDeclarationFromGlobedFile, DeclarationType } from './extractDeclarationFromGlobedFile';
 
 /*
   1. read the yml file
@@ -40,7 +39,9 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   const resourceDeclarations = await Promise.all(
     resourcePaths
       .sort() // for determinism in order
-      .map((relativePath) => extractResourceDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
+      .map((relativePath) =>
+        extractDeclarationFromGlobedFile({ rootDir: configDir, relativePath, type: DeclarationType.RESOURCE }),
+      ),
   );
 
   // get the query declarations
@@ -52,7 +53,9 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   const queryDeclarations = await Promise.all(
     queryPaths
       .sort() // for determinism in order
-      .map((relativePath) => extractQueryDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
+      .map((relativePath) =>
+        extractDeclarationFromGlobedFile({ rootDir: configDir, relativePath, type: DeclarationType.QUERY }),
+      ),
   );
 
   // return the results

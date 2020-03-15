@@ -7,7 +7,11 @@ describe('defineTypescriptTypesForQuery', () => {
     const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../__test_assets__/queries/find_image_by_id.sql`,
     });
-    const def = extractTypeDefinitionFromQuerySql({ name: 'find_image_by_id', sql });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'find_image_by_id',
+      path: '__PATH__',
+      sql,
+    });
     const code = defineTypescriptTypesForQuery({ definition: def });
     expect(code).toMatchSnapshot();
   });
@@ -15,7 +19,11 @@ describe('defineTypescriptTypesForQuery', () => {
     const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../__test_assets__/queries/select_suggestion.sql`,
     });
-    const def = extractTypeDefinitionFromQuerySql({ name: 'select_suggestion', sql });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'select_suggestion',
+      path: '__PATH__',
+      sql,
+    });
     const code = defineTypescriptTypesForQuery({ definition: def });
     expect(code).toMatchSnapshot();
   });
@@ -23,7 +31,11 @@ describe('defineTypescriptTypesForQuery', () => {
     const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../__test_assets__/queries/upsert_suggestion.sql`,
     });
-    const def = extractTypeDefinitionFromQuerySql({ name: 'upsert_suggestion', sql });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'upsert_suggestion',
+      path: '__PATH__',
+      sql,
+    });
     const code = defineTypescriptTypesForQuery({ definition: def });
     expect(code).toMatchSnapshot();
   });
@@ -31,7 +43,11 @@ describe('defineTypescriptTypesForQuery', () => {
     const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../__test_assets__/queries/find_users_by_last_name.sql`,
     });
-    const def = extractTypeDefinitionFromQuerySql({ name: 'find_users_by_last_name', sql });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'find_users_by_last_name',
+      path: '__PATH__',
+      sql,
+    });
     const code = defineTypescriptTypesForQuery({ definition: def });
     expect(code).toMatchSnapshot();
   });

@@ -5,7 +5,7 @@ import { extractInputVariablesFromQuerySql } from './extractInputVariablesFromQu
 import { extractSelectExpressionsFromQuerySql } from './extractSelectExpressionsFromQuerySql/extractSelectExpressionsFromQuerySql';
 import { extractTableReferencesFromQuerySql } from './extractTableReferencesFromQuerySql/extractTableReferencesFromQuerySql';
 
-export const extractTypeDefinitionFromQuerySql = ({ name, sql }: { name: string; sql: string }) => {
+export const extractTypeDefinitionFromQuerySql = ({ name, path, sql }: { name: string; path: string; sql: string }) => {
   // 0. strip out comments
   const strippedSql: string = strip(sql);
 
@@ -21,6 +21,7 @@ export const extractTypeDefinitionFromQuerySql = ({ name, sql }: { name: string;
   // 4. return the full query typedef
   return new TypeDefinitionOfQuery({
     name,
+    path,
     selectExpressions,
     tableReferences,
     inputVariables,

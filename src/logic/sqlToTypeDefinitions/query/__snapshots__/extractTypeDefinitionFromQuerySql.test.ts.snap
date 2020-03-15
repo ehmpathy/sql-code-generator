@@ -12,6 +12,7 @@ TypeDefinitionOfQuery {
     },
   ],
   "name": "find_image_by_id",
+  "path": "__PATH__",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -98,6 +99,7 @@ TypeDefinitionOfQuery {
     },
   ],
   "name": "upsert_suggestion",
+  "path": "__PATH__",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -123,6 +125,7 @@ TypeDefinitionOfQuery {
     },
   ],
   "name": "find_all_by_name_excluding_one_field",
+  "path": "__PATH__",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -160,6 +163,7 @@ TypeDefinitionOfQuery {
     },
   ],
   "name": "find_users_by_last_name",
+  "path": "__PATH__",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
@@ -207,6 +211,7 @@ exports[`extractTypeDefinitionFromQuerySql should be able to determine types acc
 TypeDefinitionOfQuery {
   "inputVariables": Array [],
   "name": "select_suggestion",
+  "path": "__PATH__",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
