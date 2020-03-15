@@ -47,13 +47,13 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     expect(type).toEqual(ResourceType.FUNCTION);
   });
   it('should be able to find a view resource', () => {
-    const ddl = 'create view find_super_cool_stuff ( ... )';
+    const ddl = 'create view find_super_cool_stuff as ...';
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
     expect(name).toEqual('find_super_cool_stuff');
     expect(type).toEqual(ResourceType.VIEW);
   });
   it('should be able to find a VIEW resource', () => {
-    const ddl = 'CREATE VIEW find_super_cool_stuff ( ... )';
+    const ddl = 'CREATE VIEW find_super_cool_stuff AS SELECT ...';
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
     expect(name).toEqual('find_super_cool_stuff');
     expect(type).toEqual(ResourceType.VIEW);
@@ -75,5 +75,30 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
     expect(name).toEqual('upsert_super_cool_thing');
     expect(type).toEqual(ResourceType.PROCEDURE);
+  });
+  describe('real world examples where error had previously occurred', () => {
+    it('should be able to get resource name from this view definition', () => {
+      const ddl = `
+CREATE VIEW \`view_suggestion_current\` AS
+  SELECT
+    s.id,
+    s.uuid,
+    s.suggestion_source,
+    s.external_id,
+    s.suggested_idea_id,
+    s.resultant_curated_idea_id,
+    v.status,
+    v.result,
+    s.created_at,
+    v.effective_at,
+    v.created_at as updated_at
+  FROM suggestion s
+  JOIN suggestion_cvp cvp ON s.id = cvp.suggestion_id
+  JOIN suggestion_version v ON v.id = cvp.suggestion_version_id;
+  `.trim();
+      const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
+      expect(name).toEqual('view_suggestion_current');
+      expect(type).toEqual(ResourceType.VIEW);
+    });
   });
 });

@@ -1,7 +1,7 @@
 import { ResourceType } from '../../../model';
 
 // TODO: generalize to other databases with adapter pattern
-const MYSQL_TYPE_NAME_CAPTURE_REGEX = /(?:CREATE|create)(?:\s+)(?:DEFINER=`[a-zA-Z0-9_]+`@`[a-zA-Z0-9_%]+`)?(?:\s*)(PROCEDURE|procedure|FUNCTION|function|TABLE|table|VIEW|view)(?:\s+)(?:`?)(\w+)(?:`?)(?:\s*)\(/g; // captures type and name from create statements of resources
+const MYSQL_TYPE_NAME_CAPTURE_REGEX = /(?:CREATE|create)(?:\s+)(?:DEFINER=`[a-zA-Z0-9_]+`@`[a-zA-Z0-9_%]+`)?(?:\s*)(PROCEDURE|procedure|FUNCTION|function|TABLE|table|VIEW|view)(?:\s+)(?:`?)(\w+)(?:`?)(?:\s*)(?:\(|AS|as)/g; // captures type and name from create statements of resources
 
 const regexTypeMatchToTypeEnum = {
   PROCEDURE: ResourceType.PROCEDURE,

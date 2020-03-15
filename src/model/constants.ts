@@ -23,7 +23,7 @@ export enum ResourceType {
   TABLE = 'TABLE',
   FUNCTION = 'FUNCTION',
   PROCEDURE = 'PROCEDURE',
-  VIEW = 'VIEW",',
+  VIEW = 'VIEW',
 }
 export enum QuerySection {
   SELECT_EXPRESSIONS = 'SELECT_EXPRESSIONS',

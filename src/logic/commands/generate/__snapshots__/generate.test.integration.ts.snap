@@ -67,6 +67,12 @@ export interface SqlFunctionUpsertImageInputByName {
 }
 export type SqlFunctionUpsertImageOutput = number;
 
+// types for view 'view_user_name'
+export interface SqlViewViewUserName {
+  first_name: SqlTableUser['first_name'];
+  last_name: SqlTableUser['last_name'];
+}
+
 // types for query 'find_all_by_name'
 export interface SqlQueryFindAllByNameInput {
   firstName: SqlTableUser['first_name'];

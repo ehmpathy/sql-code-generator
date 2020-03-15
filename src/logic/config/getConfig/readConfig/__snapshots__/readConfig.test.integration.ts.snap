@@ -135,6 +135,15 @@ CREATE TABLE \`communication_channel\` (
 ) ENGINE = InnoDB;
 ",
     },
+    ResourceDeclaration {
+      "path": "schema/views/view_numbers.sql",
+      "sql": "CREATE VIEW \`view_user_name\` AS
+  SELECT
+    u.first_name,
+    u.last_name
+  FROM user u;
+",
+    },
     QueryDeclaration {
       "path": "src/dao/user/findAllByName.ts",
       "sql": "
