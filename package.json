@@ -1,6 +1,6 @@
 {
   "name": "sql-code-generator",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Generate code from your SQL schema and queries for type safety and development speed.",
   "author": "UladKasach @uladkasach",
   "license": "MIT",
