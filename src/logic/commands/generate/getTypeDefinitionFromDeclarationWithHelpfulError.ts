@@ -27,7 +27,9 @@ export const getTypeDefinitionFromDeclarationWithHelpfulError = ({
     return getTypeDefinitionFromDeclaration({ declaration });
   } catch (error) {
     // log that we have failed
-    const failureMessage = `  ${chalk.red('x')} ${chalk.red(chalk.bold('[PARSED]'))} ${chalk.bold(declaration.path)}`;
+    const failureMessage = `  ${chalk.bold(chalk.red('x'))} ${chalk.red(chalk.bold('[PARSED]'))} ${chalk.bold(
+      declaration.path,
+    )}\n`;
     console.log(failureMessage); // tslint:disable-line no-console
 
     // and pass the error up

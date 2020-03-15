@@ -28,6 +28,9 @@ const mysqlNumberTypes = [
 // https://dev.mysql.com/doc/refman/8.0/en/date-and-time-types.html
 const mysqlDateTypes = ['DATE', 'TIME', 'DATETIME', 'TIMESTAMP', 'YEAR'];
 
+// https://dev.mysql.com/doc/refman/8.0/en/binary-varbinary.html
+const mysqlBinaryTypes = ['BINARY', 'VARBINARY'];
+
 export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({ sql }: { sql: string }) => {
   // 1. cast to upper
   const sqlUpper = sql.toUpperCase();
@@ -36,4 +39,6 @@ export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({ sql }: { sql:
   if (mysqlStringTypes.some((mysqlType) => sqlUpper.includes(` ${mysqlType}`))) return DataType.STRING;
   if (mysqlNumberTypes.some((mysqlType) => sqlUpper.includes(` ${mysqlType}`))) return DataType.NUMBER;
   if (mysqlDateTypes.some((mysqlType) => sqlUpper.includes(` ${mysqlType}`))) return DataType.DATE;
+  if (mysqlBinaryTypes.some((mysqlType) => sqlUpper.includes(` ${mysqlType}`))) return DataType.BUFFER;
+  throw new Error(`could not extract data type from '${sql}'`);
 };

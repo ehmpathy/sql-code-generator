@@ -10,13 +10,13 @@ export const generate = async ({ configPath }: { configPath: string }) => {
   const config = await readConfig({ filePath: configPath });
 
   // 2. get type definitions for each resource and query
-  console.log(chalk.bold('Parsing sql and extracting type definitions...')); // tslint:disable-line no-console
+  console.log(chalk.bold('Parsing sql and extracting type definitions...\n')); // tslint:disable-line no-console
   const definitions = config.declarations.map((declaration) =>
     getTypeDefinitionFromDeclarationWithHelpfulError({ declaration }),
   );
 
   // 3. get the typescript types code and client methods code
-  console.log(chalk.bold('Generating types and query functions code...')); // tslint:disable-line no-console
+  console.log(chalk.bold('Generating types and query functions code...\n')); // tslint:disable-line no-console
   const typescriptTypesFileCode = defineTypescriptTypesFileCodeFromTypeDefinitions({
     definitions,
   });

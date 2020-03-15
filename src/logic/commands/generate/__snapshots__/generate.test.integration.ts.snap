@@ -10,6 +10,15 @@ export interface SqlTableCommunicationChannel {
   address: string;
 }
 
+// types for table 'ice_cream'
+export interface SqlTableIceCream {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  name: string;
+  ingredient_ids_hash: Buffer;
+}
+
 // types for table 'image'
 export interface SqlTableImage {
   id: number;

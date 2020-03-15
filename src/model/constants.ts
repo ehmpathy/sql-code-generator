@@ -17,6 +17,7 @@ export enum DataType {
   NUMBER = 'number',
   DATE = 'Date',
   NULL = 'null',
+  BUFFER = 'Buffer', // e.g., for binary
 }
 export enum ResourceType {
   TABLE = 'TABLE',

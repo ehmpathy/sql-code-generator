@@ -27,6 +27,10 @@ describe('extractDataTypeFromColumnOrArgumentDefinitionSql', () => {
       sql: 'in_url varchar(190)',
       type: DataType.STRING,
     },
+    {
+      sql: '`ingredient_ids_hash` binary(32) NOT NULL',
+      type: DataType.BUFFER,
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine type accurately for this example: "${example.sql}"`, () => {
