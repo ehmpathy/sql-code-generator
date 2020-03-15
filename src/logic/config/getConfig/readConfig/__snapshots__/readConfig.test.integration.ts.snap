@@ -135,13 +135,15 @@ CREATE TABLE \`communication_channel\` (
     QueryDeclaration {
       "name": "find_all_by_name",
       "path": "src/dao/user/findAllByName.ts",
-      "sql": "-- query_name = find_all_by_name
+      "sql": "
+-- query_name = find_all_by_name
 SELECT
   u.id,
   u.first_name
   -- concat(u.first_name, u.last_name) as full_name; TODO: support mysql native functions https://github.com/uladkasach/sql-code-generator/issues/3
 FROM user u
-WHERE u.first_name = :firstName",
+WHERE u.first_name = :firstName
+",
     },
   ],
   "dialect": "5.7",

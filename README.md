@@ -56,7 +56,7 @@ language: mysql
 dialect: 5.7
 resources: # where to find your tables, functions, views, procedures
   - "schema/**/*.sql"
-queries: # where to find your queries (each file must `export const query = `...`);
+queries: # where to find your queries
   - "src/dao/**/*.ts"
   - "!src/**/*.test.ts"
   - "!src/**/*.test.integration.ts"
@@ -106,10 +106,10 @@ export interface SqlTableImage {
 ```
 
 ## Queries
-Queries can be defined in `.ts` or `.sql` files. If in a `.ts` file, this file should contain a named export called `query` exporting the sql of your query. We'll extract the name of the query from a specially formatted comment in your sql, e.g.: `-- query_name = find_images_by_url` would resolve a query name of `find_images_by_url`. For example:
+Queries can be defined in `.ts` or `.sql` files. If in a `.ts` file, this file should contain a named export called `sql` exporting the sql of your query. We'll extract the name of the query from a specially formatted comment in your sql, e.g.: `-- query_name = find_images_by_url` would resolve a query name of `find_images_by_url`. For example:
 
 ```ts
-export const query = `
+export const sql = `
 -- query_name = find_images_by_url
 SELECT
   i.uuid,
@@ -140,7 +140,7 @@ export interface SqlQueryFindImagesByUrlOutput {
 And that same definition would also generate the following typescript query function:
 ```ts
 import { mysql as prepare } from 'yesql';
-import { query as sqlQueryFindImagesByUrlSql } from '../../dao/user/findAllByName';
+import { sql as sqlQueryFindImagesByUrlSql } from '../../dao/user/findAllByName';
 import { SqlQueryFindImagesByUrlInput, SqlQueryFindImagesByUrlOutput } from './types';
 
 // typedefs common to each query function

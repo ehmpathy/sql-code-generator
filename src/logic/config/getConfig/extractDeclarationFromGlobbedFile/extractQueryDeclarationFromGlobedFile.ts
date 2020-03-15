@@ -1,7 +1,5 @@
 import { QueryDeclaration } from '../../../../model';
-
-const VALID_EXTENSIONS = ['ts', 'js'];
-const VALID_EXTENSIONS_DISPLAY_STRING = VALID_EXTENSIONS.map((ext) => `'.${ext}'`).join(',');
+import { extractSqlFromFile } from '../../../common/extractSqlFromFile';
 
 export const extractQueryDeclarationFromGlobedFile = async ({
   rootDir,
@@ -14,15 +12,7 @@ export const extractQueryDeclarationFromGlobedFile = async ({
   const filePath = `${rootDir}/${relativePath}`;
 
   // 1. validate the file type
-  const extension = filePath.split('.').slice(-1)[0];
-  if (!VALID_EXTENSIONS.includes(extension)) {
-    throw new Error(
-      `can not import query from '${relativePath}'. file extension must be one of ${VALID_EXTENSIONS_DISPLAY_STRING}`,
-    );
-  }
-
-  // 2. import the file (note, we registered ts-node in bin so we're able to import both .js and .ts)
-  const { query } = await import(filePath);
+  const query = await extractSqlFromFile({ filePath });
 
   // 3. validate the result
   if (!query) throw new Error(`no export named 'query' was found at filePath '${filePath}'`);

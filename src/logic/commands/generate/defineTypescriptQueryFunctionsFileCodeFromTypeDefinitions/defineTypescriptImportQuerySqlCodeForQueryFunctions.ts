@@ -27,7 +27,7 @@ const defineTypescriptImportQuerySqlCodeForAQueryFunction = ({
   const importAlias = defineTypescriptQueryFunctionForQuery({ name: definition.name }).imports.queryNameAlias;
 
   // return the import statement
-  return `import { query as ${importAlias} } from '${relativePathToExport}';`;
+  return `import { sql as ${importAlias} } from '${relativePathToExport}';`;
 };
 
 export const defineTypescriptImportQuerySqlCodeForQueryFunctions = ({

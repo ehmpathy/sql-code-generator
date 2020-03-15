@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extractSqlFromTsFile should extract sql from a file that only has sql exported 1`] = `
+"
+  select
+    u.id,
+    concat(first_name, last_name) as full_name
+  from user u
+  where 1=1
+    and name = :name;
+"
+`;
+
+exports[`extractSqlFromTsFile should extract sql that exports the sql and imports and exports other things 1`] = `
+"
+  -- query_name = find_suggestion_by_id
+  select
+    s.id,
+    s.uuid,
+    s.suggestion_source,
+    s.external_id,
+    s.suggested_idea_id,
+    s.status,
+    s.result,
+    s.resultant_curated_idea_id
+  from view_suggestion_current s
+  where s.id = :id
+"
+`;

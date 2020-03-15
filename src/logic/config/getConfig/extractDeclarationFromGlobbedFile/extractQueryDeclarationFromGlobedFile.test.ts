@@ -22,15 +22,4 @@ describe('extractQueryDeclarationFromGlobedFile', () => {
       expect(error.message).toContain('please define the query name');
     }
   });
-  it('should throw an error if passed in a file that does not declare a query export', async () => {
-    try {
-      await extractQueryDeclarationFromGlobedFile({
-        rootDir,
-        relativePath: 'src/others/fileThatDoesNotExportQuery.ts',
-      });
-      throw new Error('should not reach here');
-    } catch (error) {
-      expect(error.message).toContain("no export named 'query' was found at filePath");
-    }
-  });
 });

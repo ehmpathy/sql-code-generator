@@ -71,7 +71,7 @@ export interface SqlQueryFindAllByNameOutput {
 
 exports[`generate should be able to read the example config provisioned in __test_assets__ 2`] = `
 "import { mysql as prepare } from 'yesql';
-import { query as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
+import { sql as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
 import {
   SqlQueryFindAllByNameInput,
   SqlQueryFindAllByNameOutput,

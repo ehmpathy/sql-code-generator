@@ -1,4 +1,4 @@
-export const query = `
+export const sql = `
 SELECT
   u.id
 FROM

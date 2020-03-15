@@ -1,0 +1,1 @@
+export { extractSqlFromFile } from './extractSqlFromFile';

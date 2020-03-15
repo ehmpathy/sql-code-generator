@@ -1,4 +1,4 @@
-export const query = `
+export const sql = `
 -- query_name = find_all_by_name
 SELECT
   u.id,

@@ -1,16 +1,16 @@
+import { extractSqlFromFile } from '../../../common/extractSqlFromFile';
 import { extractSelectExpressionsFromQuerySql } from './extractSelectExpressionsFromQuerySql';
-import { getSqlFromFile } from '../../../config/_utils/getSqlFromFile';
 
 describe('extractSelectExpressionsFromQuerySql', () => {
   it('should be able to determine types accurately for this example', async () => {
-    const sql = await getSqlFromFile({
+    const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../../__test_assets__/queries/find_image_by_id.sql`,
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
     expect(defs).toMatchSnapshot();
   });
   it('should be able to determine types accurately for this other example', async () => {
-    const sql = await getSqlFromFile({
+    const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../../__test_assets__/queries/select_suggestion.sql`,
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
@@ -19,7 +19,7 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     expect(defs).toMatchSnapshot();
   });
   it('should be able to determine types accurately for query selecting function output', async () => {
-    const sql = await getSqlFromFile({
+    const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../../__test_assets__/queries/upsert_suggestion.sql`,
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
@@ -28,7 +28,7 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     expect(defs).toMatchSnapshot();
   });
   it('should be able to determine types accurately for query selecting function output and normal table columns', async () => {
-    const sql = await getSqlFromFile({
+    const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../../__test_assets__/queries/find_users_by_last_name.sql`,
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });

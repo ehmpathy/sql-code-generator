@@ -38,7 +38,9 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
     root: configDir,
   });
   const resourceDeclarations = await Promise.all(
-    resourcePaths.map((relativePath) => extractResourceDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
+    resourcePaths
+      .sort() // for determinism in order
+      .map((relativePath) => extractResourceDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
   );
 
   // get the query declarations
@@ -48,7 +50,9 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
     root: configDir,
   });
   const queryDeclarations = await Promise.all(
-    queryPaths.map((relativePath) => extractQueryDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
+    queryPaths
+      .sort() // for determinism in order
+      .map((relativePath) => extractQueryDeclarationFromGlobedFile({ rootDir: configDir, relativePath })),
   );
 
   // return the results

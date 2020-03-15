@@ -1,5 +1,5 @@
 import YAML from 'yaml';
-import { readFileAsync } from '../../../_utils/readFileAsync';
+import { readFileAsync } from '../../../../common/readFileAsync';
 
 export const readYmlFile = async ({ filePath }: { filePath: string }) => {
   // check path is for yml file

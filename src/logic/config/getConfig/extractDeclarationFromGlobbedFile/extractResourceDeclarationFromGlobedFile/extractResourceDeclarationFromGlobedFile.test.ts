@@ -1,5 +1,5 @@
-import { ResourceType, ResourceDeclaration } from '../../../../../model';
-import { getSqlFromFile } from '../../../_utils/getSqlFromFile';
+import { ResourceDeclaration, ResourceType } from '../../../../../model';
+import { extractSqlFromFile } from '../../../../common/extractSqlFromFile';
 import { extractResourceDeclarationFromGlobedFile } from './extractResourceDeclarationFromGlobedFile';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
 
@@ -10,8 +10,8 @@ extractResourceTypeAndNameFromDDLMock.mockReturnValue({
   type: ResourceType.FUNCTION,
 });
 
-jest.mock('../../../_utils/getSqlFromFile');
-const getSqlFromFileMock = getSqlFromFile as jest.Mock;
+jest.mock('../../../../common/extractSqlFromFile');
+const getSqlFromFileMock = extractSqlFromFile as jest.Mock;
 getSqlFromFileMock.mockResolvedValue('__SQL_CONTENTS__');
 
 describe('extractResourceDeclarationFromGlobedFile', () => {
