@@ -3,7 +3,7 @@ import { extractTypeDefinitionFromTableSql } from '../../../sqlToTypeDefinitions
 import { defineTypescriptTypesForTable } from './defineTypescriptTypesForTable';
 
 describe('defineTypescriptTypesForTable', () => {
-  it('should generate an accurate looking interface for this table definition', async () => {
+  it('should generate an accurate looking interface for a simple table', async () => {
     const definition = extractTypeDefinitionFromTableSql({
       name: 'image',
       sql: await extractSqlFromFile({ filePath: `${__dirname}/../../../__test_assets__/tables/image.sql` }),
@@ -11,7 +11,7 @@ describe('defineTypescriptTypesForTable', () => {
     const code = defineTypescriptTypesForTable({ definition });
     expect(code).toMatchSnapshot();
   });
-  it('should generate an accurate looking interface for this other table definition', async () => {
+  it('should generate an accurate looking interface for a more complex table', async () => {
     const definition = extractTypeDefinitionFromTableSql({
       name: 'suggestion_version',
       sql: await extractSqlFromFile({

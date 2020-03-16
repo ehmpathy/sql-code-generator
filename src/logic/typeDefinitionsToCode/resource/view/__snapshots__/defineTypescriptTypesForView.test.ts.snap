@@ -1,15 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`defineTypescriptTypesForView should generate an accurate looking interface for a view joining three tables and selecting from two 1`] = `
-"export interface SqlViewImage {
-  id: SqlTableSuggestion['id'];
-  uuid: SqlTableSuggestion['uuid'];
-  suggestion_source: SqlTableSuggestion['suggestion_source'];
-  external_id: SqlTableSuggestion['external_id'];
-  status: SqlTableSuggestionVersion['status'];
-  result: SqlTableSuggestionVersion['result'];
-  created_at: SqlTableSuggestion['created_at'];
-  effective_at: SqlTableSuggestionVersion['effective_at'];
-  updated_at: SqlTableSuggestionVersion['created_at'];
-}"
+"export interface SqlViewViewSuggestionCurrent {
+  id: SqlTableOrViewSuggestion['id'];
+  uuid: SqlTableOrViewSuggestion['uuid'];
+  suggestion_source: SqlTableOrViewSuggestion['suggestion_source'];
+  external_id: SqlTableOrViewSuggestion['external_id'];
+  status: SqlTableOrViewSuggestionVersion['status'];
+  result: SqlTableOrViewSuggestionVersion['result'];
+  created_at: SqlTableOrViewSuggestion['created_at'];
+  effective_at: SqlTableOrViewSuggestionVersion['effective_at'];
+  updated_at: SqlTableOrViewSuggestionVersion['created_at'];
+}
+export type SqlTableOrViewViewSuggestionCurrent = SqlViewViewSuggestionCurrent;"
 `;

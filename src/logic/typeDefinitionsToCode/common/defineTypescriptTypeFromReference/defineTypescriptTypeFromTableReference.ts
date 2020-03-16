@@ -1,6 +1,6 @@
 import { ResourceType, TypeDefinitionOfQueryTableReference } from '../../../../model';
 import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
-import { castResourceNameToTypescriptTypeName } from '../castResourceNameToTypescriptTypeName';
+import { castTableReferenceableResourceNameToTypescriptQueryReferenceTypeName } from '../castTableReferenceableResourceNameToTypescriptQueryReferenceTypeName';
 
 export const defineTypescriptTypeFromTableReference = ({
   reference,
@@ -28,7 +28,7 @@ export const defineTypescriptTypeFromTableReference = ({
   }
 
   // grab the interface name for this table
-  const sourceTableInterfaceName = castResourceNameToTypescriptTypeName({
+  const sourceTableInterfaceName = castTableReferenceableResourceNameToTypescriptQueryReferenceTypeName({
     name: sourceTableName,
     resourceType: ResourceType.TABLE,
   });

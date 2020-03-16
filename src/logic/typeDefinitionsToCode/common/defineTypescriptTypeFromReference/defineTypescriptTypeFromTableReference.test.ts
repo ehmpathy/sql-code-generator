@@ -8,7 +8,7 @@ describe('defineTypescriptTypeFromTableReference', () => {
       reference: new TypeDefinitionReference({ tableReferencePath: 'i.url', functionReferencePath: null }),
       queryTableReferences: [new TypeDefinitionOfQueryTableReference({ tableName: 'image', alias: 'i' })],
     });
-    expect(code).toEqual("SqlTableImage['url']");
+    expect(code).toEqual("SqlTableOrViewImage['url']");
   });
   it('should throw an error if the queryTableReference that this reference is talking about was not defined', () => {
     try {

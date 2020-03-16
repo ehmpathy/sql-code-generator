@@ -5,7 +5,7 @@ import { defineTypescriptTypesForView } from './defineTypescriptTypesForView';
 describe('defineTypescriptTypesForView', () => {
   it('should generate an accurate looking interface for a view joining three tables and selecting from two', async () => {
     const definition = extractTypeDefinitionFromViewSql({
-      name: 'image',
+      name: 'view_suggestion_current',
       sql: await extractSqlFromFile({
         filePath: `${__dirname}/../../../__test_assets__/views/view_suggestion_current.sql`,
       }),
