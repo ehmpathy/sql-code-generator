@@ -136,9 +136,10 @@ CREATE TABLE \`communication_channel\` (
 ",
     },
     ResourceDeclaration {
-      "path": "schema/views/view_numbers.sql",
+      "path": "schema/views/view_user_name.sql",
       "sql": "CREATE VIEW \`view_user_name\` AS
   SELECT
+    u.id,
     u.first_name,
     u.last_name
   FROM user u;
@@ -154,6 +155,17 @@ SELECT
   -- concat(u.first_name, u.last_name) as full_name; TODO: support mysql native functions https://github.com/uladkasach/sql-code-generator/issues/3
 FROM user u
 WHERE u.first_name = :firstName
+",
+    },
+    QueryDeclaration {
+      "path": "src/others/queryUserNameView.ts",
+      "sql": "
+-- query_name = select_user_name_from_view
+SELECT
+  u.first_name,
+  u.last_name
+FROM view_user_name u
+WHERE u.id = :userId
 ",
     },
   ],

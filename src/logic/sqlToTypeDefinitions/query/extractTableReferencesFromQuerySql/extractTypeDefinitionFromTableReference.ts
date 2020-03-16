@@ -15,7 +15,7 @@ const SPECIFIED_ALIAS_MATCHER_REGEX = `(?:${
 }|${
   // and lowercase (e.g., 'from', 'join', 'left join')
   TABLE_REFERENCE_TYPE.map((str) => str.toLowerCase()).join('|')
-})\\s(?:\\w+\\.)?(?:\\w+)(?:\\s(?:as|AS))?\\s(\\w)?`;
+})\\s(?:\\w+\\.)?(?:\\w+)(?:\\s(?:as|AS))?\\s(\\w+)?`;
 
 export const extractTypeDefinitionFromTableReference = ({ sql }: { sql: string }) => {
   // grab the source path

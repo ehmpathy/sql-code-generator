@@ -193,6 +193,13 @@ TypeDefinitionOfQuery {
         "tableReferencePath": "p.number",
       },
     },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "description",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "up.description",
+      },
+    },
   ],
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
@@ -202,6 +209,10 @@ TypeDefinitionOfQuery {
     TypeDefinitionOfQueryTableReference {
       "alias": "p",
       "tableName": "phone",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "up",
+      "tableName": "view_user_profile_current",
     },
   ],
 }
@@ -297,7 +308,7 @@ TypeDefinitionOfQuery {
       "tableName": "suggestion",
     },
     TypeDefinitionOfQueryTableReference {
-      "alias": "c",
+      "alias": "cvp",
       "tableName": "suggestion_cvp",
     },
     TypeDefinitionOfQueryTableReference {

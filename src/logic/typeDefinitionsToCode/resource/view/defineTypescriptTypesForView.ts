@@ -1,14 +1,21 @@
-import { ResourceType } from '../../../../model';
+import { ResourceType, TypeDefinition } from '../../../../model';
 import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
 import { TypeDefinitionOfResourceView } from '../../../../model/valueObjects/TypeDefinitionOfResourceView';
 import { defineTypescriptTypeFromReference } from '../../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
 
-export const defineTypescriptTypesForView = ({ definition }: { definition: TypeDefinitionOfResourceView }) => {
+export const defineTypescriptTypesForView = ({
+  definition,
+  allDefinitions,
+}: {
+  definition: TypeDefinitionOfResourceView;
+  allDefinitions: TypeDefinition[];
+}) => {
   // define column types in typescript format
   const typescriptInterfaceColumnDefinitions = definition.selectExpressions.map((selectExpression) => {
     const typescriptTypeForReference = defineTypescriptTypeFromReference({
       reference: selectExpression.typeReference,
       queryTableReferences: definition.tableReferences,
+      typeDefinitions: allDefinitions,
     });
     return `${selectExpression.alias}: ${typescriptTypeForReference};`;
   });

@@ -74,7 +74,7 @@ TypeDefinitionOfResourceView {
       "tableName": "suggestion",
     },
     TypeDefinitionOfQueryTableReference {
-      "alias": "c",
+      "alias": "cvp",
       "tableName": "suggestion_cvp",
     },
     TypeDefinitionOfQueryTableReference {

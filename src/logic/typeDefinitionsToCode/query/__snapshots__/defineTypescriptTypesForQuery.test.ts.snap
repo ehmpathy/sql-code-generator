@@ -26,7 +26,7 @@ export interface SqlQueryUpsertSuggestionOutput {
 }"
 `;
 
-exports[`defineTypescriptTypesForQuery should be able to determine types accurately for this example that selects both from tables and functions 1`] = `
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately for this example that selects from tables, functions, and views 1`] = `
 "export interface SqlQueryFindUsersByLastNameInput {
   lastName: SqlTableUser['last_name'];
 }
@@ -35,6 +35,7 @@ export interface SqlQueryFindUsersByLastNameOutput {
   full_name: SqlFunctionConcatOutput;
   age: SqlTableUser['age'];
   phone_number: SqlTablePhone['number'];
+  description: SqlViewViewUserProfileCurrent['description'];
 }"
 `;
 

@@ -23,6 +23,14 @@ describe('extractTypeDefinitionFromTableReference', () => {
       sql: 'left join cool_db.avatars a on a.id = user.avatar_id',
       def: new TypeDefinitionOfQueryTableReference({ alias: 'a', tableName: 'avatars' }),
     },
+    {
+      sql: 'JOIN view_user_profile_current up ON up.user_id = u.id',
+      def: new TypeDefinitionOfQueryTableReference({ alias: 'up', tableName: 'view_user_profile_current' }),
+    },
+    {
+      sql: 'JOIN user best_friend ON a_friend.id = user.best_friend_id',
+      def: new TypeDefinitionOfQueryTableReference({ alias: 'best_friend', tableName: 'user' }),
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {

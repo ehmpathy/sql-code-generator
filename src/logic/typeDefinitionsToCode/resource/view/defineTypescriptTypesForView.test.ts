@@ -1,3 +1,4 @@
+import { TypeDefinitionOfResourceTable } from '../../../../model';
 import { extractSqlFromFile } from '../../../common/extractSqlFromFile';
 import { extractTypeDefinitionFromViewSql } from '../../../sqlToTypeDefinitions/resource/view/extractTypeDefinitionFromViewSql';
 import { defineTypescriptTypesForView } from './defineTypescriptTypesForView';
@@ -10,7 +11,13 @@ describe('defineTypescriptTypesForView', () => {
         filePath: `${__dirname}/../../../__test_assets__/views/view_suggestion_current.sql`,
       }),
     });
-    const code = defineTypescriptTypesForView({ definition });
+    const code = defineTypescriptTypesForView({
+      definition,
+      allDefinitions: [
+        new TypeDefinitionOfResourceTable({ name: 'suggestion', columns: [] }),
+        new TypeDefinitionOfResourceTable({ name: 'suggestion_version', columns: [] }),
+      ],
+    });
     expect(code).toMatchSnapshot();
   });
 });

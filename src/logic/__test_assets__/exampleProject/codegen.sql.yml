@@ -4,6 +4,7 @@ resources:
   - "schema/**/*.sql"
 queries:
   - "src/dao/**/*.ts"
+  - "src/others/queryUserNameView.ts"
   - "!src/**/*.test.ts"
   - "!src/**/*.test.integration.ts"
 generates:

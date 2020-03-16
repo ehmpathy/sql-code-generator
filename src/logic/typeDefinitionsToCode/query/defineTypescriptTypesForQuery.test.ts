@@ -1,6 +1,7 @@
 import { extractSqlFromFile } from '../../common/extractSqlFromFile';
 import { extractTypeDefinitionFromQuerySql } from '../../sqlToTypeDefinitions/query/extractTypeDefinitionFromQuerySql';
 import { defineTypescriptTypesForQuery } from './defineTypescriptTypesForQuery';
+import { TypeDefinitionOfResourceTable, TypeDefinitionOfResourceView } from '../../../model';
 
 describe('defineTypescriptTypesForQuery', () => {
   it('should be able to determine types accurately an example of selecting columns a single table by id', async () => {
@@ -12,7 +13,10 @@ describe('defineTypescriptTypesForQuery', () => {
       path: '__PATH__',
       sql,
     });
-    const code = defineTypescriptTypesForQuery({ definition: def });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [new TypeDefinitionOfResourceTable({ name: 'image', columns: [] })],
+    });
     expect(code).toMatchSnapshot();
   });
   it('should be able to determine types accurately when selecting columns from multiple tables, no input variables', async () => {
@@ -24,7 +28,13 @@ describe('defineTypescriptTypesForQuery', () => {
       path: '__PATH__',
       sql,
     });
-    const code = defineTypescriptTypesForQuery({ definition: def });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [
+        new TypeDefinitionOfResourceTable({ name: 'suggestion', columns: [] }),
+        new TypeDefinitionOfResourceTable({ name: 'suggestion_version', columns: [] }),
+      ],
+    });
     expect(code).toMatchSnapshot();
   });
   it('should be able to determine types accurately an upsert query', async () => {
@@ -36,10 +46,13 @@ describe('defineTypescriptTypesForQuery', () => {
       path: '__PATH__',
       sql,
     });
-    const code = defineTypescriptTypesForQuery({ definition: def });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [],
+    });
     expect(code).toMatchSnapshot();
   });
-  it('should be able to determine types accurately for this example that selects both from tables and functions', async () => {
+  it('should be able to determine types accurately for this example that selects from tables, functions, and views', async () => {
     const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../__test_assets__/queries/find_users_by_last_name.sql`,
     });
@@ -48,7 +61,18 @@ describe('defineTypescriptTypesForQuery', () => {
       path: '__PATH__',
       sql,
     });
-    const code = defineTypescriptTypesForQuery({ definition: def });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [
+        new TypeDefinitionOfResourceTable({ name: 'user', columns: [] }),
+        new TypeDefinitionOfResourceTable({ name: 'phone', columns: [] }),
+        new TypeDefinitionOfResourceView({
+          name: 'view_user_profile_current',
+          selectExpressions: [],
+          tableReferences: [],
+        }),
+      ],
+    });
     expect(code).toMatchSnapshot();
   });
 });

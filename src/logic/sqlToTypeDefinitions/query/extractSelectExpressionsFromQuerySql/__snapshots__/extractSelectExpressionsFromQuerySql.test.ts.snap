@@ -42,6 +42,13 @@ Array [
       "tableReferencePath": "p.number",
     },
   },
+  TypeDefinitionOfQuerySelectExpression {
+    "alias": "description",
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "up.description",
+    },
+  },
 ]
 `;
 

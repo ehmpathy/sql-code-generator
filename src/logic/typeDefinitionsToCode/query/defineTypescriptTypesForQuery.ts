@@ -1,8 +1,15 @@
 import { TypeDefinitionOfQuery } from '../../../model/valueObjects/TypeDefinitionOfQuery';
 import { castQueryNameToTypescriptTypeName } from '../common/castQueryNameToTypescriptTypeName';
 import { defineTypescriptTypeFromReference } from '../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
+import { TypeDefinition } from '../../../model';
 
-export const defineTypescriptTypesForQuery = ({ definition }: { definition: TypeDefinitionOfQuery }) => {
+export const defineTypescriptTypesForQuery = ({
+  definition,
+  allDefinitions,
+}: {
+  definition: TypeDefinitionOfQuery;
+  allDefinitions: TypeDefinition[];
+}) => {
   // define the typescript type name for the query
   const typescriptTypeName = castQueryNameToTypescriptTypeName({ name: definition.name });
 
@@ -11,6 +18,7 @@ export const defineTypescriptTypesForQuery = ({ definition }: { definition: Type
     const typescriptTypeForReference = defineTypescriptTypeFromReference({
       reference: inputVariable.typeReference,
       queryTableReferences: definition.tableReferences,
+      typeDefinitions: allDefinitions,
     });
     return `${inputVariable.name}: ${typescriptTypeForReference};`;
   });
@@ -25,6 +33,7 @@ export interface ${typescriptTypeName}Input {
     const typescriptTypeForReference = defineTypescriptTypeFromReference({
       reference: selectExpression.typeReference,
       queryTableReferences: definition.tableReferences,
+      typeDefinitions: allDefinitions,
     });
     return `${selectExpression.alias}: ${typescriptTypeForReference};`;
   });

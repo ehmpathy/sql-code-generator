@@ -1,5 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for an example joining to multiple tables 1`] = `
+Array [
+  TypeDefinitionOfQueryTableReference {
+    "alias": "u",
+    "tableName": "user",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "p",
+    "tableName": "phone",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "up",
+    "tableName": "view_user_profile_current",
+  },
+]
+`;
+
 exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for this example 1`] = `
 Array [
   TypeDefinitionOfQueryTableReference {
@@ -16,7 +33,7 @@ Array [
     "tableName": "suggestion",
   },
   TypeDefinitionOfQueryTableReference {
-    "alias": "c",
+    "alias": "cvp",
     "tableName": "suggestion_cvp",
   },
   TypeDefinitionOfQueryTableReference {

@@ -3,6 +3,7 @@ import {
   TypeDefinitionOfResourceFunction,
   TypeDefinitionOfResourceTable,
   TypeDefinitionOfResourceView,
+  TypeDefinition,
 } from '../../model';
 import { defineTypescriptTypesForQuery } from './query/defineTypescriptTypesForQuery';
 import { defineTypescriptTypesForFunction } from './resource/function/defineTypescriptTypesForFunction';
@@ -11,16 +12,15 @@ import { defineTypescriptTypesForView } from './resource/view/defineTypescriptTy
 
 export const getTypescriptTypesFromTypeDefinition = ({
   definition,
+  allDefinitions,
 }: {
-  definition:
-    | TypeDefinitionOfQuery
-    | TypeDefinitionOfResourceTable
-    | TypeDefinitionOfResourceFunction
-    | TypeDefinitionOfResourceView;
+  definition: TypeDefinition;
+  allDefinitions: TypeDefinition[];
 }) => {
   if (definition instanceof TypeDefinitionOfQuery) {
     return defineTypescriptTypesForQuery({
       definition,
+      allDefinitions,
     });
   }
   if (definition instanceof TypeDefinitionOfResourceTable) {
@@ -36,6 +36,7 @@ export const getTypescriptTypesFromTypeDefinition = ({
   if (definition instanceof TypeDefinitionOfResourceView) {
     return defineTypescriptTypesForView({
       definition,
+      allDefinitions,
     });
   }
   throw new Error('unexpected definition type'); // fail fast, this should never occur

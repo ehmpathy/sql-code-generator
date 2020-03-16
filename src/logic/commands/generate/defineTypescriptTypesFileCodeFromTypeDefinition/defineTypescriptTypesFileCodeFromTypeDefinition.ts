@@ -34,7 +34,7 @@ export const defineTypescriptTypesFileCodeFromTypeDefinitions = ({
 
   // define codes
   const typescriptTypesCodes = sortedDefinitions.map((definition) => {
-    const typescriptTypesCodeForDef = getTypescriptTypesFromTypeDefinition({ definition });
+    const typescriptTypesCodeForDef = getTypescriptTypesFromTypeDefinition({ definition, allDefinitions: definitions });
     const definitionTypeCommonName = definition.constructor.name
       .replace('TypeDefinitionOfResource', '')
       .replace('TypeDefinitionOf', '')
