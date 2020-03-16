@@ -50,7 +50,7 @@ export const ${typescriptQueryFunctionName} = async ({
   logDebug('${typescriptQueryFunctionName}.input', { input });
 
   // 3. execute the query
-  const output = await dbExecute({ sql: preparedSql, values: preparedValues });
+  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
 
   // 4. log that we've executed the request
   logDebug('${typescriptQueryFunctionName}.output', { output });
