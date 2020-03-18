@@ -9,7 +9,7 @@ describe('readConfig', () => {
     expect(config).toBeInstanceOf(GeneratorConfig);
     expect(config.language).toEqual('mysql');
     expect(config.dialect).toEqual('5.7');
-    expect(config.declarations.length).toEqual(10);
+    expect(config.declarations.length).toEqual(11);
     expect({ ...config, rootDir: '__DIR__' }).toMatchSnapshot(); // to log an example of the output; note we mask dir to make it machine independent
   });
 });

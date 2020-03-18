@@ -4,6 +4,7 @@ export * from './ResourceDeclaration';
 export * from './TypeDefinitionOfResourceColumn';
 export * from './TypeDefinitionOfResourceTable';
 export * from './TypeDefinitionOfResourceFunction';
+export * from './TypeDefinitionOfResourceInput';
 export * from './TypeDefinitionOfResourceView';
 export * from './TypeDefinitionOfQuery';
 export * from './TypeDefinitionOfQuerySelectExpression';

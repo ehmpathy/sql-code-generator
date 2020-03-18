@@ -1,9 +1,9 @@
 import chalk from 'chalk';
 import { readConfig } from '../../config/getConfig/readConfig';
 import { saveCode } from './saveCode';
-import { getTypeDefinitionFromDeclarationWithHelpfulError } from './getTypeDefinitionFromDeclarationWithHelpfulError';
 import { defineTypescriptTypesFileCodeFromTypeDefinitions } from './defineTypescriptTypesFileCodeFromTypeDefinition/defineTypescriptTypesFileCodeFromTypeDefinition';
 import { defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions } from './defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions/defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions';
+import { extractTypeDefinitionsFromDeclarations } from './extractTypeDefinitionsFromDeclarations/extractTypeDefinitionsFromDeclarations';
 
 export const generate = async ({ configPath }: { configPath: string }) => {
   // 1. read the declarations from config
@@ -11,9 +11,7 @@ export const generate = async ({ configPath }: { configPath: string }) => {
 
   // 2. get type definitions for each resource and query
   console.log(chalk.bold('Parsing sql and extracting type definitions...\n')); // tslint:disable-line no-console
-  const definitions = config.declarations.map((declaration) =>
-    getTypeDefinitionFromDeclarationWithHelpfulError({ declaration }),
-  );
+  const definitions = extractTypeDefinitionsFromDeclarations({ declarations: config.declarations });
 
   // 3. get the typescript types code and client methods code
   console.log(chalk.bold('Generating types and query functions code...\n')); // tslint:disable-line no-console

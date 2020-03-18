@@ -61,6 +61,15 @@ export interface SqlFunctionGetFromDelimiterSplitStringInputByName {
 }
 export type SqlFunctionGetFromDelimiterSplitStringOutput = string;
 
+// types for function 'group_concat'
+export interface SqlFunctionGroupConcatInput {
+  0: string;
+}
+export interface SqlFunctionGroupConcatInputByName {
+  expr: SqlFunctionGroupConcatInput['0'];
+}
+export type SqlFunctionGroupConcatOutput = string;
+
 // types for function 'upsert_image'
 export interface SqlFunctionUpsertImageInput {
   0: string | null;
@@ -92,6 +101,18 @@ export interface SqlQueryFindAllByNameOutput {
   first_name: SqlTableUser['first_name'];
 }
 
+// types for query 'find_ice_cream_by_id'
+export interface SqlQueryFindIceCreamByIdInput {
+  
+}
+export interface SqlQueryFindIceCreamByIdOutput {
+  id: SqlTableIceCream['id'];
+  uuid: SqlTableIceCream['uuid'];
+  name: SqlTableIceCream['name'];
+  ingredient_ids: SqlFunctionGroupConcatOutput;
+  created_at: SqlTableIceCream['created_at'];
+}
+
 // types for query 'select_user_name_from_view'
 export interface SqlQuerySelectUserNameFromViewInput {
   userId: SqlViewViewUserName['id'];
@@ -106,10 +127,13 @@ export interface SqlQuerySelectUserNameFromViewOutput {
 exports[`generate should be able to read the example config provisioned in __test_assets__ 2`] = `
 "import { mysql as prepare } from 'yesql';
 import { sql as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
+import { sql as sqlQueryFindIceCreamByIdSql } from '../../dao/iceCream/findById';
 import { sql as sqlQuerySelectUserNameFromViewSql } from '../../others/queryUserNameView';
 import {
   SqlQueryFindAllByNameInput,
   SqlQueryFindAllByNameOutput,
+  SqlQueryFindIceCreamByIdInput,
+  SqlQueryFindIceCreamByIdOutput,
   SqlQuerySelectUserNameFromViewInput,
   SqlQuerySelectUserNameFromViewOutput,
 } from './types';
@@ -139,6 +163,32 @@ export const sqlQueryFindAllByName = async ({
 
   // 4. log that we've executed the request
   logDebug('sqlQueryFindAllByName.output', { output });
+
+  // 5. return the output
+  return output;
+};
+
+// client method for query 'find_ice_cream_by_id'
+export const sqlQueryFindIceCreamById = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQueryFindIceCreamByIdInput;
+}): Promise<SqlQueryFindIceCreamByIdOutput[]> => {
+  // 1. define the query with yesql
+  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindIceCreamByIdSql)(input);
+
+  // 2. log that we're running the request
+  logDebug('sqlQueryFindIceCreamById.input', { input });
+
+  // 3. execute the query
+  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
+
+  // 4. log that we've executed the request
+  logDebug('sqlQueryFindIceCreamById.output', { output });
 
   // 5. return the output
   return output;

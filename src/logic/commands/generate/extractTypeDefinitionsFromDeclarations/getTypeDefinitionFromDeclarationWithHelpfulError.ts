@@ -1,6 +1,6 @@
 import chalk from 'chalk';
-import { ResourceDeclaration, QueryDeclaration } from '../../../model';
-import { getTypeDefinitionFromDeclaration } from '../../sqlToTypeDefinitions/getTypeDefinitionFromDeclaration';
+import { ResourceDeclaration, QueryDeclaration } from '../../../../model';
+import { getTypeDefinitionFromDeclaration } from '../../../sqlToTypeDefinitions/getTypeDefinitionFromDeclaration';
 
 class ErrorExtractingTypeDefinitionFromDeclaration extends Error {
   constructor({ declaration, error }: { declaration: ResourceDeclaration | QueryDeclaration; error: Error }) {
