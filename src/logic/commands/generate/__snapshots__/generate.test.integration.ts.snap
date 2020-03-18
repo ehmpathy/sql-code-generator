@@ -102,9 +102,7 @@ export interface SqlQueryFindAllByNameOutput {
 }
 
 // types for query 'find_ice_cream_by_id'
-export interface SqlQueryFindIceCreamByIdInput {
-  
-}
+export type SqlQueryFindIceCreamByIdInput = null;
 export interface SqlQueryFindIceCreamByIdOutput {
   id: SqlTableIceCream['id'];
   uuid: SqlTableIceCream['uuid'];
@@ -153,7 +151,7 @@ export const sqlQueryFindAllByName = async ({
   input: SqlQueryFindAllByNameInput;
 }): Promise<SqlQueryFindAllByNameOutput[]> => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindAllByNameSql)(input);
+  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindAllByNameSql)(input || {});
 
   // 2. log that we're running the request
   logDebug('sqlQueryFindAllByName.input', { input });
@@ -179,7 +177,7 @@ export const sqlQueryFindIceCreamById = async ({
   input: SqlQueryFindIceCreamByIdInput;
 }): Promise<SqlQueryFindIceCreamByIdOutput[]> => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindIceCreamByIdSql)(input);
+  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindIceCreamByIdSql)(input || {});
 
   // 2. log that we're running the request
   logDebug('sqlQueryFindIceCreamById.input', { input });
@@ -205,7 +203,7 @@ export const sqlQuerySelectUserNameFromView = async ({
   input: SqlQuerySelectUserNameFromViewInput;
 }): Promise<SqlQuerySelectUserNameFromViewOutput[]> => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQuerySelectUserNameFromViewSql)(input);
+  const { sql: preparedSql, values: preparedValues } = prepare(sqlQuerySelectUserNameFromViewSql)(input || {});
 
   // 2. log that we're running the request
   logDebug('sqlQuerySelectUserNameFromView.input', { input });

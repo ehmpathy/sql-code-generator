@@ -11,7 +11,7 @@ exports[`defineTypescriptQueryFunctionForQuery should define the method accurate
   input: SqlQueryUpsertImageInput;
 }): Promise<SqlQueryUpsertImageOutput[]> => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryUpsertImageSql)(input);
+  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryUpsertImageSql)(input || {});
 
   // 2. log that we're running the request
   logDebug('sqlQueryUpsertImage.input', { input });

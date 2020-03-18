@@ -44,7 +44,7 @@ export const ${typescriptQueryFunctionName} = async ({
   input: ${inputTypeName};
 }): Promise<${outputTypeName}[]> => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(${queryNameAlias})(input);
+  const { sql: preparedSql, values: preparedValues } = prepare(${queryNameAlias})(input || {});
 
   // 2. log that we're running the request
   logDebug('${typescriptQueryFunctionName}.input', { input });

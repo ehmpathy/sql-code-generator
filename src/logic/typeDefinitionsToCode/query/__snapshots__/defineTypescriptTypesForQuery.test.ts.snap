@@ -40,9 +40,7 @@ export interface SqlQueryFindUsersByLastNameOutput {
 `;
 
 exports[`defineTypescriptTypesForQuery should be able to determine types accurately when selecting columns from multiple tables, no input variables 1`] = `
-"export interface SqlQuerySelectSuggestionInput {
-  
-}
+"export type SqlQuerySelectSuggestionInput = null;
 export interface SqlQuerySelectSuggestionOutput {
   id: SqlTableSuggestion['id'];
   uuid: SqlTableSuggestion['uuid'];

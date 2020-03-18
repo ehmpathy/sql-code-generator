@@ -22,11 +22,15 @@ export const defineTypescriptTypesForQuery = ({
     });
     return `${inputVariable.name}: ${typescriptTypeForReference};`;
   });
-  const typescriptInputInterfaceDefinition = `
+  const typescriptInputInterfaceDefinition = typescriptInputInterfacePropertyDefinitions.length // if no inputs, then interface; else, type = null
+    ? `
 export interface ${typescriptTypeName}Input {
   ${typescriptInputInterfacePropertyDefinitions.join('\n  ')}
 }
-  `.trim();
+  `.trim()
+    : `
+export type ${typescriptTypeName}Input = null;
+`.trim();
 
   // define the output interface
   const typescriptOutputInterfacePropertyDefinitions = definition.selectExpressions.map((selectExpression) => {
