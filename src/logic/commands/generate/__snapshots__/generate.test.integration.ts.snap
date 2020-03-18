@@ -30,6 +30,15 @@ export interface SqlTableImage {
   alt_text: string | null;
 }
 
+// types for table 'ingredient'
+export interface SqlTableIngredient {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  name: string;
+  cost: number;
+}
+
 // types for table 'user'
 export interface SqlTableUser {
   id: number;

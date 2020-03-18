@@ -52,6 +52,46 @@ Array [
 ]
 `;
 
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for query with subquery 1`] = `
+Array [
+  TypeDefinitionOfQuerySelectExpression {
+    "alias": "id",
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "s.id",
+    },
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "alias": "uuid",
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "s.uuid",
+    },
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "alias": "name",
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "s.name",
+    },
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "alias": "ingredient_ids",
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": "group_concat.output",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQuerySelectExpression {
+    "alias": "created_at",
+    "typeReference": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "s.created_at",
+    },
+  },
+]
+`;
+
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
 Array [
   TypeDefinitionOfQuerySelectExpression {

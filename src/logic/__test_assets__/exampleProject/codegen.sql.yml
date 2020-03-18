@@ -4,6 +4,7 @@ resources:
   - "schema/**/*.sql"
 queries:
   - "src/dao/**/*.ts"
+  - "!src/dao/iceCream/findById.ts" # todo: uncomment after https://github.com/uladkasach/sql-code-generator/issues/3 is supported
   - "src/others/queryUserNameView.ts"
   - "!src/**/*.test.ts"
   - "!src/**/*.test.integration.ts"

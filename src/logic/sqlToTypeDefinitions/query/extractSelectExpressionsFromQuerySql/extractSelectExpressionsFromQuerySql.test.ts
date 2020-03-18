@@ -36,4 +36,13 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     expect(defs[1].typeReference.functionReferencePath).toEqual('concat.output');
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to determine types accurately for query with subquery', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../__test_assets__/find_with_subselect_in_select_expressions.sql`,
+    });
+    const defs = extractSelectExpressionsFromQuerySql({ sql });
+    expect(defs[3].alias).toEqual('ingredient_ids');
+    expect(defs[3].typeReference.functionReferencePath).toEqual('group_concat.output');
+    expect(defs).toMatchSnapshot();
+  });
 });
