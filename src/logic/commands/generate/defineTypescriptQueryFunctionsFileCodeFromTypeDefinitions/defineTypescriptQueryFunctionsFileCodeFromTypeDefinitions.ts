@@ -3,6 +3,7 @@ import { defineTypescriptCommonExportsForQueryFunctions } from './defineTypescri
 import { defineTypescriptFunctionCodeForQueryFunctions } from './defineTypescriptFunctionCodeForQueryFunctions';
 import { defineTypescriptImportGeneratedTypesCodeForQueryFunctions } from './defineTypescriptImportGeneratedTypesCodeForQueryFunctions';
 import { defineTypescriptImportQuerySqlCodeForQueryFunctions } from './defineTypescriptImportQuerySqlCodeForQueryFunctions';
+import { defineTypescriptExecuteQueryWithBestPracticesFunction } from './defineTypescriptExecuteQueryWithBestPracticesFunction';
 
 export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
   definitions,
@@ -31,6 +32,9 @@ export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
   // define the common exports
   const commonExportsCode = defineTypescriptCommonExportsForQueryFunctions();
 
+  // define the generic executeQuery function
+  const genericExecuteQueryCode = defineTypescriptExecuteQueryWithBestPracticesFunction();
+
   // define code for query functions
   const queryFunctionsCode = defineTypescriptFunctionCodeForQueryFunctions({ queryDefinitions });
 
@@ -41,6 +45,8 @@ ${queryImportCode}
 ${generatedTypesImportCode}
 
 ${commonExportsCode}
+
+${genericExecuteQueryCode}
 
 ${queryFunctionsCode}
   `.trim();

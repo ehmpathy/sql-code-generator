@@ -140,6 +140,36 @@ import {
 export type DatabaseExecuteCommand = (args: { sql: string; values: any[] }) => Promise<any[]>;
 export type LogMethod = (message: string, metadata: any) => void;
 
+// utility used by each query function
+export const executeQueryWithBestPractices = async ({
+  dbExecute,
+  logDebug,
+  name,
+  sql,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  name: string;
+  sql: string;
+  input: object | null;
+}) => {
+  // 1. define the query with yesql
+  const { sql: preparedSql, values: preparedValues } = prepare(sql)(input || {});
+
+  // 2. log that we're running the request
+  logDebug(\`\${name}.input\`, { input });
+
+  // 3. execute the query
+  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
+
+  // 4. log that we've executed the request
+  logDebug(\`\${name}.output\`, { output });
+
+  // 5. return the output
+  return output;
+};
+
 // client method for query 'find_all_by_name'
 export const sqlQueryFindAllByName = async ({
   dbExecute,
@@ -149,22 +179,14 @@ export const sqlQueryFindAllByName = async ({
   dbExecute: DatabaseExecuteCommand;
   logDebug: LogMethod;
   input: SqlQueryFindAllByNameInput;
-}): Promise<SqlQueryFindAllByNameOutput[]> => {
-  // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindAllByNameSql)(input || {});
-
-  // 2. log that we're running the request
-  logDebug('sqlQueryFindAllByName.input', { input });
-
-  // 3. execute the query
-  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
-
-  // 4. log that we've executed the request
-  logDebug('sqlQueryFindAllByName.output', { output });
-
-  // 5. return the output
-  return output;
-};
+}): Promise<SqlQueryFindAllByNameOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQueryFindAllByName',
+    sql: sqlQueryFindAllByNameSql,
+    input,
+  });
 
 // client method for query 'find_ice_cream_by_id'
 export const sqlQueryFindIceCreamById = async ({
@@ -175,22 +197,14 @@ export const sqlQueryFindIceCreamById = async ({
   dbExecute: DatabaseExecuteCommand;
   logDebug: LogMethod;
   input: SqlQueryFindIceCreamByIdInput;
-}): Promise<SqlQueryFindIceCreamByIdOutput[]> => {
-  // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindIceCreamByIdSql)(input || {});
-
-  // 2. log that we're running the request
-  logDebug('sqlQueryFindIceCreamById.input', { input });
-
-  // 3. execute the query
-  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
-
-  // 4. log that we've executed the request
-  logDebug('sqlQueryFindIceCreamById.output', { output });
-
-  // 5. return the output
-  return output;
-};
+}): Promise<SqlQueryFindIceCreamByIdOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQueryFindIceCreamById',
+    sql: sqlQueryFindIceCreamByIdSql,
+    input,
+  });
 
 // client method for query 'select_user_name_from_view'
 export const sqlQuerySelectUserNameFromView = async ({
@@ -201,21 +215,13 @@ export const sqlQuerySelectUserNameFromView = async ({
   dbExecute: DatabaseExecuteCommand;
   logDebug: LogMethod;
   input: SqlQuerySelectUserNameFromViewInput;
-}): Promise<SqlQuerySelectUserNameFromViewOutput[]> => {
-  // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQuerySelectUserNameFromViewSql)(input || {});
-
-  // 2. log that we're running the request
-  logDebug('sqlQuerySelectUserNameFromView.input', { input });
-
-  // 3. execute the query
-  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
-
-  // 4. log that we've executed the request
-  logDebug('sqlQuerySelectUserNameFromView.output', { output });
-
-  // 5. return the output
-  return output;
-};
+}): Promise<SqlQuerySelectUserNameFromViewOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQuerySelectUserNameFromView',
+    sql: sqlQuerySelectUserNameFromViewSql,
+    input,
+  });
 "
 `;

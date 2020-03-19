@@ -9,20 +9,12 @@ exports[`defineTypescriptQueryFunctionForQuery should define the method accurate
   dbExecute: DatabaseExecuteCommand;
   logDebug: LogMethod;
   input: SqlQueryUpsertImageInput;
-}): Promise<SqlQueryUpsertImageOutput[]> => {
-  // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryUpsertImageSql)(input || {});
-
-  // 2. log that we're running the request
-  logDebug('sqlQueryUpsertImage.input', { input });
-
-  // 3. execute the query
-  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
-
-  // 4. log that we've executed the request
-  logDebug('sqlQueryUpsertImage.output', { output });
-
-  // 5. return the output
-  return output;
-};"
+}): Promise<SqlQueryUpsertImageOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQueryUpsertImage',
+    sql: sqlQueryUpsertImageSql,
+    input,
+  });"
 `;

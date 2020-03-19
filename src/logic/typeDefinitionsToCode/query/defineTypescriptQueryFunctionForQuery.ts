@@ -42,22 +42,14 @@ export const ${typescriptQueryFunctionName} = async ({
   dbExecute: DatabaseExecuteCommand;
   logDebug: LogMethod;
   input: ${inputTypeName};
-}): Promise<${outputTypeName}[]> => {
-  // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(${queryNameAlias})(input || {});
-
-  // 2. log that we're running the request
-  logDebug('${typescriptQueryFunctionName}.input', { input });
-
-  // 3. execute the query
-  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
-
-  // 4. log that we've executed the request
-  logDebug('${typescriptQueryFunctionName}.output', { output });
-
-  // 5. return the output
-  return output;
-};
+}): Promise<${outputTypeName}[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: '${typescriptQueryFunctionName}',
+    sql: ${queryNameAlias},
+    input,
+  });
   `.trim();
   return {
     imports: {
