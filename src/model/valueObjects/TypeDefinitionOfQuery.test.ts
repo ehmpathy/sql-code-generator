@@ -19,7 +19,7 @@ const tableReference = new TypeDefinitionOfQueryTableReference({
 
 const inputVariable = new TypeDefinitionOfQueryInputVariable({
   name: 'externalId',
-  typeReference: new TypeDefinitionReference({
+  type: new TypeDefinitionReference({
     tableReferencePath: 'i.external_id',
     functionReferencePath: null,
   }),

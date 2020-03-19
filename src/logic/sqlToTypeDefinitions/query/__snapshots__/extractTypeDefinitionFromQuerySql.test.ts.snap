@@ -5,7 +5,7 @@ TypeDefinitionOfQuery {
   "inputVariables": Array [
     TypeDefinitionOfQueryInputVariable {
       "name": "id",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": null,
         "tableReferencePath": "i.id",
       },
@@ -64,35 +64,35 @@ TypeDefinitionOfQuery {
   "inputVariables": Array [
     TypeDefinitionOfQueryInputVariable {
       "name": "suggestionSource",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": "upsert_suggestion.input.0",
         "tableReferencePath": null,
       },
     },
     TypeDefinitionOfQueryInputVariable {
       "name": "externalId",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": "upsert_suggestion.input.1",
         "tableReferencePath": null,
       },
     },
     TypeDefinitionOfQueryInputVariable {
       "name": "suggestedIdeaId",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": "upsert_suggestion.input.2",
         "tableReferencePath": null,
       },
     },
     TypeDefinitionOfQueryInputVariable {
       "name": "status",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": "upsert_suggestion.input.3",
         "tableReferencePath": null,
       },
     },
     TypeDefinitionOfQueryInputVariable {
       "name": "result",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": "upsert_suggestion.input.4",
         "tableReferencePath": null,
       },
@@ -118,7 +118,7 @@ TypeDefinitionOfQuery {
   "inputVariables": Array [
     TypeDefinitionOfQueryInputVariable {
       "name": "firstName",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": null,
         "tableReferencePath": "u.first_name",
       },
@@ -207,7 +207,7 @@ TypeDefinitionOfQuery {
   "inputVariables": Array [
     TypeDefinitionOfQueryInputVariable {
       "name": "lastName",
-      "typeReference": TypeDefinitionReference {
+      "type": TypeDefinitionReference {
         "functionReferencePath": null,
         "tableReferencePath": "u.last_name",
       },

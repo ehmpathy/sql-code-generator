@@ -4,7 +4,7 @@ exports[`extractSelectExpressionsFromQuerySql should be able to determine types 
 Array [
   TypeDefinitionOfQueryInputVariable {
     "name": "id",
-    "typeReference": TypeDefinitionReference {
+    "type": TypeDefinitionReference {
       "functionReferencePath": null,
       "tableReferencePath": "i.id",
     },
@@ -18,35 +18,35 @@ exports[`extractSelectExpressionsFromQuerySql should be able to determine types 
 Array [
   TypeDefinitionOfQueryInputVariable {
     "name": "suggestionSource",
-    "typeReference": TypeDefinitionReference {
+    "type": TypeDefinitionReference {
       "functionReferencePath": "upsert_suggestion.input.0",
       "tableReferencePath": null,
     },
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "externalId",
-    "typeReference": TypeDefinitionReference {
+    "type": TypeDefinitionReference {
       "functionReferencePath": "upsert_suggestion.input.1",
       "tableReferencePath": null,
     },
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "suggestedIdeaId",
-    "typeReference": TypeDefinitionReference {
+    "type": TypeDefinitionReference {
       "functionReferencePath": "upsert_suggestion.input.2",
       "tableReferencePath": null,
     },
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "status",
-    "typeReference": TypeDefinitionReference {
+    "type": TypeDefinitionReference {
       "functionReferencePath": "upsert_suggestion.input.3",
       "tableReferencePath": null,
     },
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "result",
-    "typeReference": TypeDefinitionReference {
+    "type": TypeDefinitionReference {
       "functionReferencePath": "upsert_suggestion.input.4",
       "tableReferencePath": null,
     },
@@ -58,7 +58,7 @@ exports[`extractSelectExpressionsFromQuerySql should be able to determine types 
 Array [
   TypeDefinitionOfQueryInputVariable {
     "name": "name",
-    "typeReference": TypeDefinitionReference {
+    "type": TypeDefinitionReference {
       "functionReferencePath": "get_id_from_suggestion_source_name.input.0",
       "tableReferencePath": null,
     },

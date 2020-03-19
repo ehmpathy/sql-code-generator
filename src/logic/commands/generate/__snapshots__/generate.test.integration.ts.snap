@@ -101,6 +101,18 @@ export interface SqlQueryFindAllByNameOutput {
   first_name: SqlTableUser['first_name'];
 }
 
+// types for query 'find_all_new_ice_cream'
+export interface SqlQueryFindAllNewIceCreamInput {
+  limit: number;
+}
+export interface SqlQueryFindAllNewIceCreamOutput {
+  id: SqlTableIceCream['id'];
+  uuid: SqlTableIceCream['uuid'];
+  name: SqlTableIceCream['name'];
+  ingredient_ids: SqlFunctionGroupConcatOutput;
+  created_at: SqlTableIceCream['created_at'];
+}
+
 // types for query 'find_ice_cream_by_id'
 export type SqlQueryFindIceCreamByIdInput = null;
 export interface SqlQueryFindIceCreamByIdOutput {
@@ -124,12 +136,15 @@ export interface SqlQuerySelectUserNameFromViewOutput {
 
 exports[`generate should be able to read the example config provisioned in __test_assets__ 2`] = `
 "import { mysql as prepare } from 'yesql';
+import { sql as sqlQueryFindAllNewIceCreamSql } from '../../dao/iceCream/findAllNew';
 import { sql as sqlQueryFindIceCreamByIdSql } from '../../dao/iceCream/findById';
 import { sql as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
 import { sql as sqlQuerySelectUserNameFromViewSql } from '../../others/queryUserNameView';
 import {
   SqlQueryFindAllByNameInput,
   SqlQueryFindAllByNameOutput,
+  SqlQueryFindAllNewIceCreamInput,
+  SqlQueryFindAllNewIceCreamOutput,
   SqlQueryFindIceCreamByIdInput,
   SqlQueryFindIceCreamByIdOutput,
   SqlQuerySelectUserNameFromViewInput,
@@ -185,6 +200,24 @@ export const sqlQueryFindAllByName = async ({
     logDebug,
     name: 'sqlQueryFindAllByName',
     sql: sqlQueryFindAllByNameSql,
+    input,
+  });
+
+// client method for query 'find_all_new_ice_cream'
+export const sqlQueryFindAllNewIceCream = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQueryFindAllNewIceCreamInput;
+}): Promise<SqlQueryFindAllNewIceCreamOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQueryFindAllNewIceCream',
+    sql: sqlQueryFindAllNewIceCreamSql,
     input,
   });
 

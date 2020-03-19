@@ -1,6 +1,7 @@
 import { TypeDefinitionOfQueryInputVariable } from '../../../../model/valueObjects/TypeDefinitionOfQueryInputVariable';
 import { extractTypeDefinitionFromInputVariableSql } from './extractTypeDefinitionFromInputVariableSql';
 import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import { DataType } from '../../../../model';
 
 describe('extractTypeDefinitionFromInputVariableSql', () => {
   const examples = [
@@ -9,11 +10,11 @@ describe('extractTypeDefinitionFromInputVariableSql', () => {
       sql: `
 select i.url
 from image i
-where i.id = :id;
+where i.id = :id
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        typeReference: new TypeDefinitionReference({
+        type: new TypeDefinitionReference({
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
@@ -28,7 +29,7 @@ where i.id=:id;
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        typeReference: new TypeDefinitionReference({
+        type: new TypeDefinitionReference({
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
@@ -43,7 +44,7 @@ where :id = i.id;
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        typeReference: new TypeDefinitionReference({
+        type: new TypeDefinitionReference({
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
@@ -54,11 +55,11 @@ where :id = i.id;
       sql: `
 select i.url
 from image i
-where :id=i.id;
+where :id=i.id
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'id',
-        typeReference: new TypeDefinitionReference({
+        type: new TypeDefinitionReference({
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
@@ -75,7 +76,7 @@ where 1=1
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'externalId',
-        typeReference: new TypeDefinitionReference({
+        type: new TypeDefinitionReference({
           tableReferencePath: 'idea.external_id',
           functionReferencePath: null,
         }),
@@ -94,7 +95,7 @@ SELECT upsert_suggestion(
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'externalId',
-        typeReference: new TypeDefinitionReference({
+        type: new TypeDefinitionReference({
           tableReferencePath: null,
           functionReferencePath: 'upsert_suggestion.input.1', // second arg of function
         }),
@@ -114,10 +115,43 @@ WHERE 1=1
       `.trim(),
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'name',
-        typeReference: new TypeDefinitionReference({
+        type: new TypeDefinitionReference({
           tableReferencePath: null,
           functionReferencePath: 'get_id_from_suggestion_source_name.input.0', // first arg of function
         }),
+      }),
+    },
+    {
+      token: ':limit',
+      sql: `
+SELECT
+  suggestion.id,
+  suggestion.uuid
+FROM suggestions s
+WHERE 1=1
+  AND s.created_at > '2020-01-01 05:55:55'
+LIMIT :limit
+      `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'limit',
+        type: [DataType.NUMBER],
+      }),
+    },
+    {
+      token: ':limit',
+      sql: `
+SELECT
+  suggestion.id,
+  suggestion.uuid
+FROM suggestions s
+WHERE 1=1
+  AND s.status = :status
+  AND s.created_at > '2020-01-01 05:55:55'
+limit :limit;
+      `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'limit',
+        type: [DataType.NUMBER],
       }),
     },
     // TODO: support functions in functions; https://github.com/uladkasach/sql-code-generator/issues/4
@@ -127,6 +161,34 @@ WHERE 1=1
     it(`should be able to determine types accurately for this example: "${example.token}" in "${exampleSqlFlattened}"`, () => {
       const def = extractTypeDefinitionFromInputVariableSql({ token: example.token, sql: example.sql });
       expect(def).toEqual(example.def);
+    });
+  });
+  describe('should not find type if the token were looking for is not present, but is present with suffix, since that is a different token', () => {
+    test('for the resource.column = :token regex, since token is at end of search', () => {
+      const sql = `
+  select i.url
+  from image i
+  where i.id = :identifier;
+      `.trim();
+      try {
+        extractTypeDefinitionFromInputVariableSql({ token: ':id', sql });
+        throw new Error('should not reach here');
+      } catch (error) {
+        expect(error.message).toContain('could not extract type definition for input variable');
+      }
+    });
+    test('for the LIMIT :token regex, since token is at end of search', () => {
+      const sql = `
+select i.url
+from image i
+limit :limits
+      `.trim();
+      try {
+        extractTypeDefinitionFromInputVariableSql({ token: ':limit', sql }); // -- sql has :limits, not :limit
+        throw new Error('should not reach here');
+      } catch (error) {
+        expect(error.message).toContain('could not extract type definition for input variable');
+      }
     });
   });
 });

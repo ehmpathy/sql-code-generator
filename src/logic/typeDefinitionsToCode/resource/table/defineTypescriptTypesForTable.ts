@@ -1,10 +1,11 @@
 import { TypeDefinitionOfResourceTable, ResourceType } from '../../../../model';
 import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
+import { defineTypescriptTypeFromDataTypeArray } from '../../common/defineTypescriptTypeFromDataTypeArray';
 
 export const defineTypescriptTypesForTable = ({ definition }: { definition: TypeDefinitionOfResourceTable }) => {
   // define column types in typescript format
   const typescriptInterfaceColumnDefinitions = definition.columns.map((column) => {
-    return `${column.name}: ${column.type.join(' | ')};`;
+    return `${column.name}: ${defineTypescriptTypeFromDataTypeArray({ type: column.type })};`;
   });
 
   // output

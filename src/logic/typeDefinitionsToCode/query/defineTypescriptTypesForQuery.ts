@@ -1,7 +1,8 @@
+import { TypeDefinition } from '../../../model';
 import { TypeDefinitionOfQuery } from '../../../model/valueObjects/TypeDefinitionOfQuery';
 import { castQueryNameToTypescriptTypeName } from '../common/castQueryNameToTypescriptTypeName';
 import { defineTypescriptTypeFromReference } from '../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
-import { TypeDefinition } from '../../../model';
+import { defineTypescriptTypeFromDataTypeArrayOrReference } from '../common/defineTypescriptTypeFromDataTypeArrayOrReference';
 
 export const defineTypescriptTypesForQuery = ({
   definition,
@@ -15,8 +16,8 @@ export const defineTypescriptTypesForQuery = ({
 
   // define the input interface
   const typescriptInputInterfacePropertyDefinitions = definition.inputVariables.map((inputVariable) => {
-    const typescriptTypeForReference = defineTypescriptTypeFromReference({
-      reference: inputVariable.typeReference,
+    const typescriptTypeForReference = defineTypescriptTypeFromDataTypeArrayOrReference({
+      type: inputVariable.type,
       queryTableReferences: definition.tableReferences,
       typeDefinitions: allDefinitions,
     });

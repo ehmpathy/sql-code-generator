@@ -3,6 +3,7 @@ import {
   TypeDefinitionOfQuery,
   TypeDefinitionOfResourceView,
   TypeDefinitionOfResourceFunction,
+  TypeDefinitionReference,
 } from '../../../../../model';
 import { DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS } from './databaseProvidedFunctionTypeDefinitions';
 
@@ -17,7 +18,9 @@ export const grabTypeDefinitionsForReferencedDatabaseProvidedFunctions = ({
       if (def instanceof TypeDefinitionOfQuery) {
         return [
           ...def.selectExpressions.map((exp) => exp.typeReference),
-          ...def.inputVariables.map((inp) => inp.typeReference),
+          ...def.inputVariables
+            .map((inp) => inp.type)
+            .filter((type): type is TypeDefinitionReference => type instanceof TypeDefinitionReference), // filter out the types that don't reference anything, like when LIMIT type=[DataType.NUMBER]
         ];
       }
       if (def instanceof TypeDefinitionOfResourceView) {
