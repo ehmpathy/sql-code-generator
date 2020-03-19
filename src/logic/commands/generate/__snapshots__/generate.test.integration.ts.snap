@@ -124,8 +124,8 @@ export interface SqlQuerySelectUserNameFromViewOutput {
 
 exports[`generate should be able to read the example config provisioned in __test_assets__ 2`] = `
 "import { mysql as prepare } from 'yesql';
-import { sql as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
 import { sql as sqlQueryFindIceCreamByIdSql } from '../../dao/iceCream/findById';
+import { sql as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
 import { sql as sqlQuerySelectUserNameFromViewSql } from '../../others/queryUserNameView';
 import {
   SqlQueryFindAllByNameInput,

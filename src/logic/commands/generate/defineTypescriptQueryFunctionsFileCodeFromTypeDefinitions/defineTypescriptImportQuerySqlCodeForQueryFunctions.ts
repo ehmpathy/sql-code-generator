@@ -31,7 +31,7 @@ export const defineTypescriptImportQuerySqlCodeForQueryFunctions = ({
 }) => {
   // define all of the imports needed
   const importStatements = queryDefinitions
-    .sort((a, b) => (a.name < b.name ? -1 : 1))
+    .sort((a, b) => (a.path < b.path ? -1 : 1))
     .map((definition) => defineTypescriptImportQuerySqlCodeForAQueryFunction({ definition, generatedOutputPaths }));
 
   // define the import code
