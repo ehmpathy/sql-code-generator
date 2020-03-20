@@ -31,7 +31,7 @@ export interface ${typescriptTypeName}InputByName {
 
   // 3. define the type for the output
   const outputTypeTypescript = `
-export type ${typescriptTypeName}Output = ${definition.output};
+export type ${typescriptTypeName}Output = ${definition.output.join(' | ')};
   `.trim();
 
   // 4. return the combined typescript code

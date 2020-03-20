@@ -68,7 +68,7 @@ export interface SqlFunctionGroupConcatInput {
 export interface SqlFunctionGroupConcatInputByName {
   expr: SqlFunctionGroupConcatInput['0'];
 }
-export type SqlFunctionGroupConcatOutput = string;
+export type SqlFunctionGroupConcatOutput = string | null;
 
 // types for function 'upsert_image'
 export interface SqlFunctionUpsertImageInput {

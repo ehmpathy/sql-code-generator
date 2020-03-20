@@ -33,7 +33,9 @@ TypeDefinitionOfResourceFunction {
     },
   ],
   "name": "upsert_image",
-  "output": "number",
+  "output": Array [
+    "number",
+  ],
 }
 `;
 
@@ -84,7 +86,9 @@ TypeDefinitionOfResourceFunction {
     },
   ],
   "name": "upsert_suggestion",
-  "output": "number",
+  "output": Array [
+    "number",
+  ],
 }
 `;
 
@@ -114,6 +118,8 @@ TypeDefinitionOfResourceFunction {
     },
   ],
   "name": "hash_string",
-  "output": "string",
+  "output": Array [
+    "string",
+  ],
 }
 `;

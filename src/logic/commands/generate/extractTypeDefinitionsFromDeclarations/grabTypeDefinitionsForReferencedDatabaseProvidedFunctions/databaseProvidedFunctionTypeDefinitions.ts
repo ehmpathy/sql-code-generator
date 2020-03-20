@@ -68,7 +68,7 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.NUMBER],
       }),
     ],
-    output: DataType.NUMBER,
+    output: [DataType.NUMBER, DataType.NULL], // null if the input is null
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_avg
@@ -80,21 +80,21 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.STRING],
       }),
     ],
-    output: DataType.NUMBER,
+    output: [DataType.NUMBER, DataType.NULL], // null because if one of the inputs is null or there are no rows its grouping over
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html#function_coalesce
   COALESCE: new TypeDefinitionOfResourceFunction({
     name: 'coalesce',
     inputs: ONE_OR_MORE_VALUES,
-    output: DataType.STRING,
+    output: [DataType.STRING, DataType.NUMBER, DataType.NULL], // null if none of the inputs are not null
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat
   CONCAT: new TypeDefinitionOfResourceFunction({
     name: 'concat',
     inputs: ONE_OR_MORE_STRINGS,
-    output: DataType.STRING,
+    output: [DataType.STRING, DataType.NULL], // null if one of the inputs is null
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_concat
@@ -107,7 +107,7 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
       }),
       ...ONE_OR_MORE_STRINGS,
     ],
-    output: DataType.STRING,
+    output: [DataType.STRING, DataType.NULL], // null if one of the inputs is null
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_count
@@ -119,7 +119,7 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.STRING],
       }),
     ],
-    output: DataType.NUMBER,
+    output: [DataType.NUMBER, DataType.NULL], // null because if one of the inputs is null or there are no rows its grouping over
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_group-concat
@@ -131,7 +131,7 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.STRING],
       }),
     ],
-    output: DataType.STRING,
+    output: [DataType.STRING, DataType.NULL], // null because if one of the inputs is null or there are no rows its grouping over
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_left
@@ -147,7 +147,7 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.NUMBER],
       }),
     ],
-    output: DataType.STRING,
+    output: [DataType.STRING, DataType.NULL], // null if one of the inputs is null
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_max
@@ -159,7 +159,7 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.STRING],
       }),
     ],
-    output: DataType.NUMBER,
+    output: [DataType.NUMBER, DataType.NULL], // null because if one of the inputs is null or there are no rows its grouping over
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/group-by-functions.html#function_min
@@ -171,7 +171,7 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.STRING],
       }),
     ],
-    output: DataType.NUMBER,
+    output: [DataType.NUMBER, DataType.NULL], // null because if one of the inputs is null or there are no rows its grouping over
   }),
 
   // https://dev.mysql.com/doc/refman/8.0/en/string-functions.html#function_right
@@ -187,6 +187,6 @@ export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: Typ
         type: [DataType.NUMBER],
       }),
     ],
-    output: DataType.STRING,
+    output: [DataType.STRING, DataType.NULL], // null if one of the inputs is null
   }),
 };

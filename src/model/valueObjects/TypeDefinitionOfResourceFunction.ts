@@ -9,14 +9,14 @@ const schema = Joi.object().keys({
   inputs: Joi.array()
     .items(TypeDefinitionOfResourceInput.schema)
     .required(),
-  output: Joi.string()
-    .valid(Object.values(DataType))
+  output: Joi.array()
+    .items(Joi.string().valid(Object.values(DataType)))
     .required(),
 });
 export interface TypeDefinitionOfResourceFunction {
   name: string;
   inputs: TypeDefinitionOfResourceInput[];
-  output: DataType; // functions return only one value
+  output: DataType[]; // functions return only one value
 }
 export class TypeDefinitionOfResourceFunction extends SchematicJoiModel<TypeDefinitionOfResourceFunction>
   implements TypeDefinitionOfResourceFunction {

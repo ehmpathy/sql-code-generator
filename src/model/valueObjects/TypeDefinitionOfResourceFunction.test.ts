@@ -16,7 +16,7 @@ describe('TypeDefinitionOfResourceFunction', () => {
           type: [DataType.STRING],
         }),
       ],
-      output: DataType.DATE,
+      output: [DataType.DATE],
     });
     expect(changeDefinition).toMatchObject({
       name: 'image',
@@ -30,7 +30,7 @@ describe('TypeDefinitionOfResourceFunction', () => {
           type: [DataType.STRING],
         }),
       ],
-      output: DataType.DATE,
+      output: [DataType.DATE],
     });
   });
   it('should throw error on invalid input', () => {

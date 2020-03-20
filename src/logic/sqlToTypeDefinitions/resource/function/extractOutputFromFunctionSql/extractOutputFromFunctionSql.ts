@@ -16,5 +16,5 @@ export const extractOutputFromFunctionSql = ({ sql }: { sql: string }) => {
   // 2. grab the return type out of the return statement; NOTE: functions only return one value
   const dataType = extractDataTypeFromColumnOrArgumentDefinitionSql({ sql: ` ${sqlBetweenReturnsAndBegins.trim()}` });
   if (!dataType) throw new Error('data type could not be extracted from function sql');
-  return dataType;
+  return [dataType];
 };
