@@ -36,7 +36,7 @@ export const extractTypeDefinitionReferenceFromSelectExpression = ({
   const [
     ___, // tslint:disable-line no-unused
     referencedFunctionName,
-  ] = new RegExp(/(\w+)(?:\([\w\s\.:,\"\|]+\))/).exec(sql) ?? [];
+  ] = new RegExp(/(\w+)(?:\([\w\s\.:,\"'\|]+\))/).exec(sql) ?? [];
   if (referencedFunctionName) {
     return new TypeDefinitionReference({
       tableReferencePath: null,

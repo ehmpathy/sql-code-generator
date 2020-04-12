@@ -12,7 +12,7 @@ SELECT
     "(
     SELECT GROUP_CONCAT",
     Array [
-      "(ice_cream_to_ingredient.ingredient_id ORDER BY ice_cream_to_ingredient.ingredient_id)",
+      "(ice_cream_to_ingredient.ingredient_id ORDER BY ice_cream_to_ingredient.ingredient_id ASC SEPARATOR ',')",
     ],
     "
     FROM ice_cream_to_ingredient WHERE ice_cream_to_ingredient.ice_cream_id = s.id
