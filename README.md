@@ -52,8 +52,8 @@ This file will define the sql language to extract type definitions from, where y
 
 For example:
 ```yml
-language: mysql
-dialect: 5.7
+language: postgres # note: mysql is supported, too
+dialect: 10.7
 resources: # where to find your tables, functions, views, procedures
   - "schema/**/*.sql"
 queries: # where to find your queries
@@ -78,96 +78,88 @@ generates: # where to output the generated code
 
 Resources should be defined in `.sql` files. We'll extract both the name and the type from the create definition automatically. For example:
 ```sql
-CREATE TABLE `image` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `uuid` char(36) COLLATE utf8mb4_bin NOT NULL,
-  `created_at` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  `url` varchar(190) COLLATE utf8mb4_bin NOT NULL,
-  `caption` varchar(190) COLLATE utf8mb4_bin DEFAULT NULL,
-  `credit` varchar(190) COLLATE utf8mb4_bin,
-  `alt_text` varchar(190) COLLATE utf8mb4_bin,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `image_ux1` (`url`,`caption`,`credit`,`alt_text`)
-)
+CREATE TABLE photo (
+  id bigserial NOT NULL,
+  uuid uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  url varchar NOT NULL,
+  description varchar NULL,
+  CONSTRAINT photo_pk PRIMARY KEY (id),
+  CONSTRAINT photo_ux1 UNIQUE (url, description)
+);
 ```
 
 The above definition would generate the following typescript type definitions:
 ```ts
-// types for table 'image'
-export interface SqlTableImage {
+// types for table 'photo'
+export interface SqlTablePhoto {
   id: number;
   uuid: string;
   created_at: Date;
   url: string;
-  caption: string | null;
-  credit: string | null;
-  alt_text: string | null;
+  description: string | null;
 }
 ```
 
 ## Queries
-Queries can be defined in `.ts` or `.sql` files. If in a `.ts` file, this file should contain a named export called `sql` exporting the sql of your query. We'll extract the name of the query from a specially formatted comment in your sql, e.g.: `-- query_name = find_images_by_url` would resolve a query name of `find_images_by_url`. For example:
+Queries can be defined in `.ts` or `.sql` files. If in a `.ts` file, this file should contain a named export called `sql` exporting the sql of your query. We'll extract the name of the query from a specially formatted comment in your sql, e.g.: `-- query_name = find_photos_by_url` would resolve a query name of `find_photos_by_url`. For example:
 
 ```ts
 export const sql = `
--- query_name = find_images_by_url
+-- query_name = find_photos_by_url
 SELECT
-  i.uuid,
-  i.url,
-  i.caption,
-  i.credit,
-  i.alt_text
-FROM image i
-WHERE i.url = :url
+  p.uuid,
+  p.url,
+  p.description
+FROM photo p
+WHERE p.url = :url
 `.trim();
 ```
 
 The above definition would generate the following typescript type definitions:
 ```ts
-// types for query 'find_images_by_url'
-export interface SqlQueryFindImagesByUrlInput {
-  url: SqlTableImage['url'];
+// types for query 'find_photos_by_url'
+export interface SqlQueryFindPhotosByUrlInput {
+  url: SqlTablePhoto['url'];
 }
-export interface SqlQueryFindImagesByUrlOutput {
-  uuid: SqlTableImage['uuid'];
-  url: SqlTableImage['url'];
-  caption: SqlTableImage['caption'];
-  credit: SqlTableImage['credit'];
-  alt_text: SqlTableImage['alt_text'];
+export interface SqlQueryFindPhotosByUrlOutput {
+  uuid: SqlTablePhoto['uuid'];
+  url: SqlTablePhoto['url'];
+  description: SqlTablePhoto['caption'];
 }
 ```
 
 And that same definition would also generate the following typescript query function:
 ```ts
-import { mysql as prepare } from 'yesql';
-import { sql as sqlQueryFindImagesByUrlSql } from '../../dao/user/findAllByName';
-import { SqlQueryFindImagesByUrlInput, SqlQueryFindImagesByUrlOutput } from './types';
+import { pg as prepare } from 'yesql';
+import { sql as sqlQueryFindPhotosByUrlSql } from '../../dao/user/findAllByName';
+import { SqlQueryFindPhotosByUrlInput, SqlQueryFindPhotosByUrlOutput } from './types';
 
 // typedefs common to each query function
 export type DatabaseExecuteCommand = (args: { sql: string; values: any[] }) => Promise<any[]>;
 export type LogMethod = (message: string, metadata: any) => void;
 
-// client method for query 'find_images_by_url'
-export const sqlQueryFindImagesByUrl = async ({
+// client method for query 'find_photos_by_url'
+export const sqlQueryFindPhotosByUrl = async ({
   dbExecute,
   logDebug,
   input,
 }: {
   dbExecute: DatabaseExecuteCommand;
   logDebug: LogMethod;
-  input: SqlQueryFindImagesByUrlInput;
-}): Promise<SqlQueryFindImagesByUrlOutput[]> => {
+  input: SqlQueryFindPhotosByUrlInput;
+}): Promise<SqlQueryFindPhotosByUrlOutput[]> => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sqlQueryFindImagesByUrlSql)(input);
+  const { text: preparedSql, values: preparedValues } = prepare(sqlQueryFindPhotosByUrlSql)(input);
 
   // 2. log that we're running the request
-  logDebug('sqlQueryFindImagesByUrl.input', { input });
+  logDebug('sqlQueryFindPhotosByUrl.input', { input });
 
   // 3. execute the query
   const output = await dbExecute({ sql: preparedSql, values: preparedValues });
 
   // 4. log that we've executed the request
-  logDebug('sqlQueryFindImagesByUrl.output', { output });
+  logDebug('sqlQueryFindPhotosByUrl.output', { output });
 
   // 5. return the output
   return output;

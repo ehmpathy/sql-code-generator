@@ -84,3 +84,95 @@ TypeDefinitionOfResourceView {
   ],
 }
 `;
+
+exports[`extractTypeDefinitionFromViewSql should be able to extract types in this other example 1`] = `
+TypeDefinitionOfResourceView {
+  "name": "view_suggestion_current",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.uuid",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "title",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.title",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "status",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.status",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "description",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.description",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "location_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.location_id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "photo_ids",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "array_agg.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "created_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.created_at",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "effective_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.effective_at",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "updated_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.created_at",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "s",
+      "tableName": "job",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "cvp",
+      "tableName": "job_cvp",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "v",
+      "tableName": "job_version",
+    },
+  ],
+}
+`;

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`extractInputsFromFunctionSql should extract the inputs accurately in this example 1`] = `
+exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this example 1`] = `
 Array [
   TypeDefinitionOfResourceInput {
     "name": "in_url",
@@ -33,7 +33,7 @@ Array [
 ]
 `;
 
-exports[`extractInputsFromFunctionSql should extract the inputs accurately in this other example 1`] = `
+exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this other example 1`] = `
 Array [
   TypeDefinitionOfResourceInput {
     "name": "in_suggestion_source",
@@ -80,7 +80,7 @@ Array [
 ]
 `;
 
-exports[`extractInputsFromFunctionSql should extract the inputs accurately in this other example again 1`] = `
+exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this other example again 1`] = `
 Array [
   TypeDefinitionOfResourceInput {
     "name": "in_array",
@@ -100,6 +100,74 @@ Array [
     "name": "in_index",
     "type": Array [
       "number",
+      "null",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately in this example 1`] = `
+Array [
+  TypeDefinitionOfResourceInput {
+    "name": "in_url",
+    "type": Array [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_description",
+    "type": Array [
+      "string",
+      "null",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately there is no input args 1`] = `Array []`;
+
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately when one of the inputs is an array type 1`] = `
+Array [
+  TypeDefinitionOfResourceInput {
+    "name": "in_uuid",
+    "type": Array [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_title",
+    "type": Array [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_status",
+    "type": Array [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_description",
+    "type": Array [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_location_id",
+    "type": Array [
+      "number",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_photo_ids",
+    "type": Array [
+      "number[]",
       "null",
     ],
   },

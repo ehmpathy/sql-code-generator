@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`extractTypeDefinitionFromTableSql should be able to extract types in this example 1`] = `
+exports[`extractTypeDefinitionFromTableSql mysql should be able to extract types in this example 1`] = `
 TypeDefinitionOfResourceTable {
   "columns": Array [
     TypeDefinitionOfResourceColumn {
@@ -53,7 +53,7 @@ TypeDefinitionOfResourceTable {
 }
 `;
 
-exports[`extractTypeDefinitionFromTableSql should be able to extract types in this other example 1`] = `
+exports[`extractTypeDefinitionFromTableSql mysql should be able to extract types in this other example 1`] = `
 TypeDefinitionOfResourceTable {
   "columns": Array [
     TypeDefinitionOfResourceColumn {
@@ -88,5 +88,88 @@ TypeDefinitionOfResourceTable {
     },
   ],
   "name": "suggestion_version",
+}
+`;
+
+exports[`extractTypeDefinitionFromTableSql postgres should be able to extract types in this example 1`] = `
+TypeDefinitionOfResourceTable {
+  "columns": Array [
+    TypeDefinitionOfResourceColumn {
+      "name": "id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "uuid",
+      "type": Array [
+        "string",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "created_at",
+      "type": Array [
+        "Date",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "url",
+      "type": Array [
+        "string",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "description",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+  ],
+  "name": "photo",
+}
+`;
+
+exports[`extractTypeDefinitionFromTableSql postgres should be able to extract types in this other example 1`] = `
+TypeDefinitionOfResourceTable {
+  "columns": Array [
+    TypeDefinitionOfResourceColumn {
+      "name": "id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "job_id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "effective_at",
+      "type": Array [
+        "Date",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "created_at",
+      "type": Array [
+        "Date",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "location_id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "photo_ids_hash",
+      "type": Array [
+        "Buffer",
+      ],
+    },
+  ],
+  "name": "job_version",
 }
 `;

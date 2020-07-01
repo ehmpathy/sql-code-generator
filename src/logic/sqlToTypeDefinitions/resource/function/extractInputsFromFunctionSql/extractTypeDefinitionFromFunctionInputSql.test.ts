@@ -25,6 +25,13 @@ describe('extractTypeDefinitionFromFunctionInputSql', () => {
         type: [DataType.STRING, DataType.NULL],
       }),
     },
+    {
+      sql: 'in_photo_ids bigint[]',
+      def: new TypeDefinitionOfResourceColumn({
+        name: 'in_photo_ids',
+        type: [DataType.NUMBER_ARRAY, DataType.NULL],
+      }),
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {

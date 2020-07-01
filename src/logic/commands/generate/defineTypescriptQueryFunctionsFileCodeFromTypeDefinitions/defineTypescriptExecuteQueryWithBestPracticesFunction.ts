@@ -1,4 +1,6 @@
-export const defineTypescriptExecuteQueryWithBestPracticesFunction = () => {
+import { DatabaseLanguage } from '../../../../model';
+
+export const defineTypescriptExecuteQueryWithBestPracticesFunction = ({ language }: { language: DatabaseLanguage }) => {
   return `
 // utility used by each query function
 export const executeQueryWithBestPractices = async ({
@@ -15,7 +17,9 @@ export const executeQueryWithBestPractices = async ({
   input: object | null;
 }) => {
   // 1. define the query with yesql
-  const { sql: preparedSql, values: preparedValues } = prepare(sql)(input || {});
+  const { ${
+    language === DatabaseLanguage.POSTGRES ? 'text' : 'sql' // `prepare` returns { sql, values } or { text, values } depending on `language`
+  }: preparedSql, values: preparedValues } = prepare(sql)(input || {});
 
   // 2. log that we're running the request
   logDebug(\`\${name}.input\`, { input });

@@ -36,6 +36,26 @@ export interface SqlFunctionUpsertSuggestionInputByName {
 export type SqlFunctionUpsertSuggestionOutput = number;"
 `;
 
+exports[`defineTypescriptTypesForFunction should generate accurate looking types for this other function definition, with array inputs 1`] = `
+"export interface SqlFunctionUpsertJobInput {
+  0: string | null;
+  1: string | null;
+  2: string | null;
+  3: string | null;
+  4: number | null;
+  5: number[] | null;
+}
+export interface SqlFunctionUpsertJobInputByName {
+  in_uuid: SqlFunctionUpsertJobInput['0'];
+  in_title: SqlFunctionUpsertJobInput['1'];
+  in_status: SqlFunctionUpsertJobInput['2'];
+  in_description: SqlFunctionUpsertJobInput['3'];
+  in_location_id: SqlFunctionUpsertJobInput['4'];
+  in_photo_ids: SqlFunctionUpsertJobInput['5'];
+}
+export type SqlFunctionUpsertJobOutput = number;"
+`;
+
 exports[`defineTypescriptTypesForFunction should generate accurate looking types for this other other function definition 1`] = `
 "export interface SqlFunctionHashStringInput {
   0: string | null;
@@ -48,4 +68,16 @@ export interface SqlFunctionHashStringInputByName {
   in_index: SqlFunctionHashStringInput['2'];
 }
 export type SqlFunctionHashStringOutput = string;"
+`;
+
+exports[`defineTypescriptTypesForFunction should generate accurate looking types for this other other other function definition 1`] = `
+"export interface SqlFunctionUpsertPhotoInput {
+  0: string | null;
+  1: string | null;
+}
+export interface SqlFunctionUpsertPhotoInputByName {
+  in_url: SqlFunctionUpsertPhotoInput['0'];
+  in_description: SqlFunctionUpsertPhotoInput['1'];
+}
+export type SqlFunctionUpsertPhotoOutput = number;"
 `;

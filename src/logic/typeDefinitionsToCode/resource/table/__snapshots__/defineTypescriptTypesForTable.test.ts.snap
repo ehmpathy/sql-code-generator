@@ -10,6 +10,17 @@ exports[`defineTypescriptTypesForTable should generate an accurate looking inter
 }"
 `;
 
+exports[`defineTypescriptTypesForTable should generate an accurate looking interface for this other table definition, again 1`] = `
+"export interface SqlTableJobVersion {
+  id: number;
+  job_id: number;
+  effective_at: Date;
+  created_at: Date;
+  location_id: number;
+  photo_ids_hash: Buffer;
+}"
+`;
+
 exports[`defineTypescriptTypesForTable should generate an accurate looking interface for this table definition 1`] = `
 "export interface SqlTableImage {
   id: number;

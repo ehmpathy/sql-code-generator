@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`extractTypeDefinitionFromFunctionSql should be able to extract types in this example 1`] = `
+exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this example 1`] = `
 TypeDefinitionOfResourceFunction {
   "inputs": Array [
     TypeDefinitionOfResourceInput {
@@ -39,7 +39,7 @@ TypeDefinitionOfResourceFunction {
 }
 `;
 
-exports[`extractTypeDefinitionFromFunctionSql should be able to extract types in this other example 1`] = `
+exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this other example 1`] = `
 TypeDefinitionOfResourceFunction {
   "inputs": Array [
     TypeDefinitionOfResourceInput {
@@ -92,7 +92,7 @@ TypeDefinitionOfResourceFunction {
 }
 `;
 
-exports[`extractTypeDefinitionFromFunctionSql should be able to extract types in this other other example 1`] = `
+exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this other other example 1`] = `
 TypeDefinitionOfResourceFunction {
   "inputs": Array [
     TypeDefinitionOfResourceInput {
@@ -120,6 +120,84 @@ TypeDefinitionOfResourceFunction {
   "name": "hash_string",
   "output": Array [
     "string",
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types in this example 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": Array [
+    TypeDefinitionOfResourceInput {
+      "name": "in_url",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_description",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_photo",
+  "output": Array [
+    "number",
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types in this other example 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": Array [
+    TypeDefinitionOfResourceInput {
+      "name": "in_uuid",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_title",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_status",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_description",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_location_id",
+      "type": Array [
+        "number",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_photo_ids",
+      "type": Array [
+        "number[]",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_job",
+  "output": Array [
+    "number",
   ],
 }
 `;

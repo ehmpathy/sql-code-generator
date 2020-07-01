@@ -4,12 +4,15 @@ import {
   TypeDefinitionOfResourceView,
   TypeDefinitionOfResourceFunction,
   TypeDefinitionReference,
+  DatabaseLanguage,
 } from '../../../../../model';
 import { DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS } from './databaseProvidedFunctionTypeDefinitions';
 
 export const grabTypeDefinitionsForReferencedDatabaseProvidedFunctions = ({
+  language,
   definitions,
 }: {
+  language: DatabaseLanguage;
   definitions: TypeDefinition[];
 }) => {
   // 1. get names of all referenced functions; functions can be referenced in select expressions && input variables of queries && views
@@ -39,7 +42,7 @@ export const grabTypeDefinitionsForReferencedDatabaseProvidedFunctions = ({
   const databaseProvidedReferencedFunctionTypeDefinitions: TypeDefinitionOfResourceFunction[] = [];
   uniqueReferencedFunctionNames.forEach((referenceFunctionName) => {
     const typeDefinitionOfDatabaseProvidedFunctionForThisReferencedName =
-      DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS[referenceFunctionName];
+      DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS[language][referenceFunctionName];
     if (typeDefinitionOfDatabaseProvidedFunctionForThisReferencedName) {
       databaseProvidedReferencedFunctionTypeDefinitions.push(
         typeDefinitionOfDatabaseProvidedFunctionForThisReferencedName,

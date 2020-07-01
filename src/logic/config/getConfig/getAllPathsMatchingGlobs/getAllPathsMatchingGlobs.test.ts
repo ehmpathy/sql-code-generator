@@ -1,6 +1,6 @@
 import { getAllPathsMatchingGlobs } from './getAllPathsMatchingGlobs';
 
-const root = `${__dirname}/../../../__test_assets__/exampleProject`; // i.e., starting from the "codegen.sql.yml"
+const root = `${__dirname}/../../../__test_assets__/exampleProject/mysql`; // i.e., starting from the "codegen.sql.yml"
 
 describe('getAllPathsMatchingGlobs', () => {
   it('should return paths that match a glob', async () => {

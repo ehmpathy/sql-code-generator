@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generate should be able to read the example config provisioned in __test_assets__ 1`] = `
+exports[`generate mysql should be able to read the example config provisioned in __test_assets__ 1`] = `
 "// types for table 'communication_channel'
 export interface SqlTableCommunicationChannel {
   id: number;
@@ -134,7 +134,7 @@ export interface SqlQuerySelectUserNameFromViewOutput {
 "
 `;
 
-exports[`generate should be able to read the example config provisioned in __test_assets__ 2`] = `
+exports[`generate mysql should be able to read the example config provisioned in __test_assets__ 2`] = `
 "import { mysql as prepare } from 'yesql';
 import { sql as sqlQueryFindAllNewIceCreamSql } from '../../dao/iceCream/findAllNew';
 import { sql as sqlQueryFindIceCreamByIdSql } from '../../dao/iceCream/findById';
@@ -171,6 +171,265 @@ export const executeQueryWithBestPractices = async ({
 }) => {
   // 1. define the query with yesql
   const { sql: preparedSql, values: preparedValues } = prepare(sql)(input || {});
+
+  // 2. log that we're running the request
+  logDebug(\`\${name}.input\`, { input });
+
+  // 3. execute the query
+  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
+
+  // 4. log that we've executed the request
+  logDebug(\`\${name}.output\`, { output });
+
+  // 5. return the output
+  return output;
+};
+
+// client method for query 'find_all_by_name'
+export const sqlQueryFindAllByName = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQueryFindAllByNameInput;
+}): Promise<SqlQueryFindAllByNameOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQueryFindAllByName',
+    sql: sqlQueryFindAllByNameSql,
+    input,
+  });
+
+// client method for query 'find_all_new_ice_cream'
+export const sqlQueryFindAllNewIceCream = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQueryFindAllNewIceCreamInput;
+}): Promise<SqlQueryFindAllNewIceCreamOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQueryFindAllNewIceCream',
+    sql: sqlQueryFindAllNewIceCreamSql,
+    input,
+  });
+
+// client method for query 'find_ice_cream_by_id'
+export const sqlQueryFindIceCreamById = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQueryFindIceCreamByIdInput;
+}): Promise<SqlQueryFindIceCreamByIdOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQueryFindIceCreamById',
+    sql: sqlQueryFindIceCreamByIdSql,
+    input,
+  });
+
+// client method for query 'select_user_name_from_view'
+export const sqlQuerySelectUserNameFromView = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQuerySelectUserNameFromViewInput;
+}): Promise<SqlQuerySelectUserNameFromViewOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQuerySelectUserNameFromView',
+    sql: sqlQuerySelectUserNameFromViewSql,
+    input,
+  });
+"
+`;
+
+exports[`generate postgres should be able to read the example config provisioned in __test_assets__ 1`] = `
+"// types for table 'ice_cream'
+export interface SqlTableIceCream {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  name: string;
+  ingredient_ids_hash: Buffer;
+}
+
+// types for table 'ingredient'
+export interface SqlTableIngredient {
+  id: number | null;
+  uuid: string;
+  created_at: Date;
+  name: string;
+  cost: number;
+}
+
+// types for table 'photo'
+export interface SqlTablePhoto {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  url: string;
+  description: string | null;
+}
+
+// types for table 'user'
+export interface SqlTableUser {
+  id: number | null;
+  uuid: string;
+  created_at: Date | null;
+  first_name: string;
+  last_name: string;
+}
+
+// types for function 'array_agg'
+export interface SqlFunctionArrayAggInput {
+  0: string | number;
+}
+export interface SqlFunctionArrayAggInputByName {
+  any_column: SqlFunctionArrayAggInput['0'];
+}
+export type SqlFunctionArrayAggOutput = string[] | number[] | null;
+
+// types for function 'concat'
+export interface SqlFunctionConcatInput {
+  0: string | undefined;
+  1: string | undefined;
+  2: string | undefined;
+  3: string | undefined;
+  4: string | undefined;
+  5: string | undefined;
+}
+export interface SqlFunctionConcatInputByName {
+  str_0: SqlFunctionConcatInput['0'];
+  str_1: SqlFunctionConcatInput['1'];
+  str_2: SqlFunctionConcatInput['2'];
+  str_3: SqlFunctionConcatInput['3'];
+  str_4: SqlFunctionConcatInput['4'];
+  str_5: SqlFunctionConcatInput['5'];
+}
+export type SqlFunctionConcatOutput = string | null;
+
+// types for function 'get_answer_to_life'
+export interface SqlFunctionGetAnswerToLifeInput {
+  
+}
+export interface SqlFunctionGetAnswerToLifeInputByName {
+  
+}
+export type SqlFunctionGetAnswerToLifeOutput = number;
+
+// types for function 'upsert_photo'
+export interface SqlFunctionUpsertPhotoInput {
+  0: string | null;
+  1: string | null;
+}
+export interface SqlFunctionUpsertPhotoInputByName {
+  in_url: SqlFunctionUpsertPhotoInput['0'];
+  in_description: SqlFunctionUpsertPhotoInput['1'];
+}
+export type SqlFunctionUpsertPhotoOutput = number;
+
+// types for view 'view_user_name'
+export interface SqlViewViewUserName {
+  id: SqlTableUser['id'];
+  first_name: SqlTableUser['first_name'];
+  last_name: SqlTableUser['last_name'];
+}
+
+// types for query 'find_all_by_name'
+export interface SqlQueryFindAllByNameInput {
+  firstName: SqlTableUser['first_name'];
+}
+export interface SqlQueryFindAllByNameOutput {
+  id: SqlTableUser['id'];
+  full_name: SqlFunctionConcatOutput;
+}
+
+// types for query 'find_all_new_ice_cream'
+export interface SqlQueryFindAllNewIceCreamInput {
+  limit: number;
+}
+export interface SqlQueryFindAllNewIceCreamOutput {
+  id: SqlTableIceCream['id'];
+  uuid: SqlTableIceCream['uuid'];
+  name: SqlTableIceCream['name'];
+  ingredient_ids: SqlFunctionArrayAggOutput;
+  created_at: SqlTableIceCream['created_at'];
+}
+
+// types for query 'find_ice_cream_by_id'
+export type SqlQueryFindIceCreamByIdInput = null;
+export interface SqlQueryFindIceCreamByIdOutput {
+  id: SqlTableIceCream['id'];
+  uuid: SqlTableIceCream['uuid'];
+  name: SqlTableIceCream['name'];
+  ingredient_ids: SqlFunctionArrayAggOutput;
+  created_at: SqlTableIceCream['created_at'];
+}
+
+// types for query 'select_user_name_from_view'
+export interface SqlQuerySelectUserNameFromViewInput {
+  userId: SqlViewViewUserName['id'];
+}
+export interface SqlQuerySelectUserNameFromViewOutput {
+  first_name: SqlViewViewUserName['first_name'];
+  last_name: SqlViewViewUserName['last_name'];
+}
+"
+`;
+
+exports[`generate postgres should be able to read the example config provisioned in __test_assets__ 2`] = `
+"import { pg as prepare } from 'yesql';
+import { sql as sqlQueryFindAllNewIceCreamSql } from '../../dao/iceCream/findAllNew';
+import { sql as sqlQueryFindIceCreamByIdSql } from '../../dao/iceCream/findById';
+import { sql as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
+import { sql as sqlQuerySelectUserNameFromViewSql } from '../../others/queryUserNameView';
+import {
+  SqlQueryFindAllByNameInput,
+  SqlQueryFindAllByNameOutput,
+  SqlQueryFindAllNewIceCreamInput,
+  SqlQueryFindAllNewIceCreamOutput,
+  SqlQueryFindIceCreamByIdInput,
+  SqlQueryFindIceCreamByIdOutput,
+  SqlQuerySelectUserNameFromViewInput,
+  SqlQuerySelectUserNameFromViewOutput,
+} from './types';
+
+// typedefs common to each query function
+export type DatabaseExecuteCommand = (args: { sql: string; values: any[] }) => Promise<any[]>;
+export type LogMethod = (message: string, metadata: any) => void;
+
+// utility used by each query function
+export const executeQueryWithBestPractices = async ({
+  dbExecute,
+  logDebug,
+  name,
+  sql,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  name: string;
+  sql: string;
+  input: object | null;
+}) => {
+  // 1. define the query with yesql
+  const { text: preparedSql, values: preparedValues } = prepare(sql)(input || {});
 
   // 2. log that we're running the request
   logDebug(\`\${name}.input\`, { input });
