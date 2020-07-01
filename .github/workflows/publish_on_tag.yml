@@ -1,0 +1,32 @@
+name: deploy_on_tag
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  test_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v1
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '10.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: install
+        run: npm install
+
+      - name: provision:integration-test-db
+        run: npm run provision:integration-test-db
+
+      - name: tests
+        run: npm run test
+
+      - name: publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
