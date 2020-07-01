@@ -10,6 +10,6 @@ module.exports = {
   },
   testMatch: ['**/src/**/?(*.)+(spec|test).(js|ts)'],
   testEnvironment: 'node',
-  setupFiles: [],
+  setupFiles: ['core-js'], // .flat() undefined otherwise; https://stackoverflow.com/a/59285424/3068233
   verbose: true,
 };

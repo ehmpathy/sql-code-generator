@@ -22,17 +22,12 @@ module.exports = {
   testEnvironment: 'node',
 
   // The glob patterns Jest uses to detect test files
-  testMatch: [
-    '**/src/**/?(*.)+(test.integration).(js|ts)',
-    '**/schema/**/?(*.)+(test.integration).(js|ts)',
-  ],
+  testMatch: ['**/src/**/?(*.)+(test.integration).(js|ts)', '**/schema/**/?(*.)+(test.integration).(js|ts)'],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: [
-    '/node_modules/',
-    '/dist/',
-    '/acceptance-tests/',
-  ],
+  testPathIgnorePatterns: ['/node_modules/', '/dist/', '/acceptance-tests/'],
 
   verbose: true, // Indicates whether each individual test should be reported during the run; also, rquired for TTY output to always be displayed
+
+  setupFiles: ['core-js'], // .flat() undefined otherwise; https://stackoverflow.com/a/59285424/3068233
 };
