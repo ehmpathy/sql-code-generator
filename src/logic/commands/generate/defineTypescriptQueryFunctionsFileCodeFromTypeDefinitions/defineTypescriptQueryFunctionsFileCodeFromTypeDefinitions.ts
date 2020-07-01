@@ -1,14 +1,16 @@
-import { GeneratedOutputPaths, TypeDefinition, TypeDefinitionOfQuery } from '../../../../model';
+import { DatabaseLanguage, GeneratedOutputPaths, TypeDefinition, TypeDefinitionOfQuery } from '../../../../model';
 import { defineTypescriptCommonExportsForQueryFunctions } from './defineTypescriptCommonExportsForQueryFunctions';
+import { defineTypescriptExecuteQueryWithBestPracticesFunction } from './defineTypescriptExecuteQueryWithBestPracticesFunction';
 import { defineTypescriptFunctionCodeForQueryFunctions } from './defineTypescriptFunctionCodeForQueryFunctions';
 import { defineTypescriptImportGeneratedTypesCodeForQueryFunctions } from './defineTypescriptImportGeneratedTypesCodeForQueryFunctions';
 import { defineTypescriptImportQuerySqlCodeForQueryFunctions } from './defineTypescriptImportQuerySqlCodeForQueryFunctions';
-import { defineTypescriptExecuteQueryWithBestPracticesFunction } from './defineTypescriptExecuteQueryWithBestPracticesFunction';
 
 export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
+  language,
   definitions,
   generatedOutputPaths,
 }: {
+  language: DatabaseLanguage;
   definitions: TypeDefinition[];
   generatedOutputPaths: GeneratedOutputPaths;
 }) => {
@@ -29,18 +31,25 @@ export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
     generatedOutputPaths,
   });
 
+  // define the "prepare" module (i.e., yesql) import
+  const prepareModuleImportCode = (() => {
+    if (language === DatabaseLanguage.MYSQL) return "import { mysql as prepare } from 'yesql';";
+    if (language === DatabaseLanguage.POSTGRES) return "import { pg as prepare } from 'yesql';";
+    throw new Error('unsupported language');
+  })();
+
   // define the common exports
   const commonExportsCode = defineTypescriptCommonExportsForQueryFunctions();
 
   // define the generic executeQuery function
-  const genericExecuteQueryCode = defineTypescriptExecuteQueryWithBestPracticesFunction();
+  const genericExecuteQueryCode = defineTypescriptExecuteQueryWithBestPracticesFunction({ language });
 
   // define code for query functions
   const queryFunctionsCode = defineTypescriptFunctionCodeForQueryFunctions({ queryDefinitions });
 
   // merge the codes
   const typescriptQueryFunctionCode = `
-import { mysql as prepare } from 'yesql';
+${prepareModuleImportCode}
 ${queryImportCode}
 ${generatedTypesImportCode}
 

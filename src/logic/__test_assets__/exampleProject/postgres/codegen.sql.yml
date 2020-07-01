@@ -1,0 +1,12 @@
+language: postgres
+dialect: 10.7
+resources:
+  - 'schema/**/*.sql'
+queries:
+  - 'src/dao/**/*.ts'
+  - 'src/others/queryUserNameView.ts'
+  - '!src/**/*.test.ts'
+  - '!src/**/*.test.integration.ts'
+generates:
+  types: src/generated/fromSql/types.ts
+  queryFunctions: src/generated/fromSql/queryFunctions.ts

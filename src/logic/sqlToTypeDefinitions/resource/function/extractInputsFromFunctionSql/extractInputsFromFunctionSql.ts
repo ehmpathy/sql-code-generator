@@ -22,7 +22,10 @@ export const extractInputsFromFunctionSql = ({ sql }: { sql: string }) => {
   const parenTokenizedInnerSql = castCommasInParensToPipesForTokenSafety({ sql: innerSql }); // particularly useful for enum typedefs
 
   // 3. grab definition lines, by splitting out properties by commas
-  const functionInputSqlSet = parenTokenizedInnerSql.split(',').map((str) => str.trim());
+  const functionInputSqlSet = parenTokenizedInnerSql
+    .split(',')
+    .map((str) => str.trim()) // trim the line
+    .filter((str) => !!str); // skip blank lines
 
   // 4. get column definition from each property
   return functionInputSqlSet.map((sql) => extractTypeDefinitionFromFunctionInputSql({ sql }));

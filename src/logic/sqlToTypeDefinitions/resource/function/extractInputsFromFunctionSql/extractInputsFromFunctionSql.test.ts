@@ -45,5 +45,13 @@ describe('extractInputsFromFunctionSql', () => {
       });
       expect(defs).toMatchSnapshot();
     });
+    it('should extract the inputs accurately there is no input args', async () => {
+      const defs = extractInputsFromFunctionSql({
+        sql: await extractSqlFromFile({
+          filePath: `${__dirname}/../../../../__test_assets__/functions/get_answer_to_life.postgres.sql`,
+        }),
+      });
+      expect(defs).toMatchSnapshot();
+    });
   });
 });

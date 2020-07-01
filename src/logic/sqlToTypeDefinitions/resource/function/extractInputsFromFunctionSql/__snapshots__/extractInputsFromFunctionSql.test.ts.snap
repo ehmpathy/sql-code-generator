@@ -125,6 +125,8 @@ Array [
 ]
 `;
 
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately there is no input args 1`] = `Array []`;
+
 exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately when one of the inputs is an array type 1`] = `
 Array [
   TypeDefinitionOfResourceInput {

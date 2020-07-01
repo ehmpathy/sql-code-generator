@@ -11,7 +11,10 @@ export const generate = async ({ configPath }: { configPath: string }) => {
 
   // 2. get type definitions for each resource and query
   console.log(chalk.bold('Parsing sql and extracting type definitions...\n')); // tslint:disable-line no-console
-  const definitions = extractTypeDefinitionsFromDeclarations({ declarations: config.declarations });
+  const definitions = extractTypeDefinitionsFromDeclarations({
+    language: config.language,
+    declarations: config.declarations,
+  });
 
   // 3. get the typescript types code and client methods code
   console.log(chalk.bold('Generating types and query functions code...\n')); // tslint:disable-line no-console
@@ -20,6 +23,7 @@ export const generate = async ({ configPath }: { configPath: string }) => {
   });
   const typescriptQueryFunctionsFileCode = defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions({
     definitions,
+    language: config.language,
     generatedOutputPaths: config.generates,
   });
 

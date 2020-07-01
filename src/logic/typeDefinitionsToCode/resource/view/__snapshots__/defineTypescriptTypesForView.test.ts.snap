@@ -13,3 +13,18 @@ exports[`defineTypescriptTypesForView should generate an accurate looking interf
   updated_at: SqlTableSuggestionVersion['created_at'];
 }"
 `;
+
+exports[`defineTypescriptTypesForView should generate an accurate looking interface for another view joining three tables and selecting from two 1`] = `
+"export interface SqlViewImage {
+  id: SqlTableJob['id'];
+  uuid: SqlTableJob['uuid'];
+  title: SqlTableJob['title'];
+  status: SqlTableJob['status'];
+  description: SqlTableJob['description'];
+  location_id: SqlTableJobVersion['location_id'];
+  photo_ids: SqlFunctionArrayAggOutput;
+  created_at: SqlTableJob['created_at'];
+  effective_at: SqlTableJobVersion['effective_at'];
+  updated_at: SqlTableJobVersion['created_at'];
+}"
+`;
