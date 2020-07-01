@@ -23,5 +23,8 @@
     "member-ordering": false,
     "ter-indent": false,
     "array-type": false
+  },
+  "linterOptions": {
+    "exclude": ["src/logic/__test_assets__/exampleProject/postgres/src/generated/fromSql/**/*"]
   }
 }
