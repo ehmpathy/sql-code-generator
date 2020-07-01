@@ -71,4 +71,17 @@ describe('extractTypeDefinitionFromQuerySql', () => {
     expect(defs.selectExpressions.length).toEqual(5);
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to determine types accurately for a query with a postgres fn in the select expressions (as well as subselect)', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/find_job_by_id.sql`,
+    });
+    const defs = extractTypeDefinitionFromQuerySql({
+      name: 'find_job_by_id',
+      path: '__PATH__',
+      sql,
+    });
+    expect(defs.selectExpressions.length).toEqual(10);
+    expect(defs.inputVariables.length).toEqual(1);
+    expect(defs).toMatchSnapshot();
+  });
 });
