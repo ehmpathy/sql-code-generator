@@ -3,6 +3,7 @@ import { extractDataTypeFromColumnOrArgumentDefinitionSql } from './extractDataT
 
 describe('extractDataTypeFromColumnOrArgumentDefinitionSql', () => {
   const examples = [
+    // mysql
     {
       sql: '`id` bigint(20) NOT NULL AUTO_INCREMENT',
       type: DataType.NUMBER,
@@ -29,6 +30,31 @@ describe('extractDataTypeFromColumnOrArgumentDefinitionSql', () => {
     },
     {
       sql: '`ingredient_ids_hash` binary(32) NOT NULL',
+      type: DataType.BUFFER,
+    },
+    // postgres
+    {
+      sql: 'id bigserial NOT NULL',
+      type: DataType.NUMBER,
+    },
+    {
+      sql: 'price numeric(5, 2) DEFAULT NULL',
+      type: DataType.NUMBER,
+    },
+    {
+      sql: 'uuid uuid NOT NULL',
+      type: DataType.STRING,
+    },
+    {
+      sql: 'description text NULL',
+      type: DataType.STRING,
+    },
+    {
+      sql: 'created_at timestamptz NOT NULL DEFAULT now()',
+      type: DataType.DATE,
+    },
+    {
+      sql: 'photo_ids_hash bytea NULL',
       type: DataType.BUFFER,
     },
   ];
