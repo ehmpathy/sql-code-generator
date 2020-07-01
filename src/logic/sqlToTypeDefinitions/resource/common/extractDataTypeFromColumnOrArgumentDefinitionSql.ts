@@ -94,7 +94,9 @@ export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({ sql }: { sql:
   const sqlUpper = sql.toUpperCase();
 
   // 2. one by one try to see which datatype is being defined in this definition
+  if (dbStringTypes.some((dbType) => sqlUpper.includes(` ${dbType}[]`))) return DataType.STRING_ARRAY;
   if (dbStringTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.STRING;
+  if (dbNumberTypes.some((dbType) => sqlUpper.includes(` ${dbType}[]`))) return DataType.NUMBER_ARRAY;
   if (dbNumberTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.NUMBER;
   if (dbDateTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.DATE;
   if (dbBinaryTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.BUFFER;

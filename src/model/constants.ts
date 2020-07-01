@@ -7,6 +7,7 @@ import {
 
 export enum DatabaseLanguage {
   MYSQL = 'mysql',
+  POSTGRES = 'postgres',
 }
 export enum DefinitionType {
   RESOURCE = 'resource',
@@ -14,7 +15,9 @@ export enum DefinitionType {
 }
 export enum DataType {
   STRING = 'string',
+  STRING_ARRAY = 'string[]', // postgres supports arrays
   NUMBER = 'number',
+  NUMBER_ARRAY = 'number[]', // postgres supports arrays
   DATE = 'Date',
   BUFFER = 'Buffer', // e.g., for binary
   NULL = 'null',

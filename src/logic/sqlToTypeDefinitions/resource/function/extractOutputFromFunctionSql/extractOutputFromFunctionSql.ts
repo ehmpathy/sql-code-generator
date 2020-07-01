@@ -10,11 +10,14 @@ export const extractOutputFromFunctionSql = ({ sql }: { sql: string }) => {
   const strippedSql: string = strip(sql);
 
   // 1. grab the insides of the inputs definition
-  const sqlAfterReturns = strippedSql.split(/(?:RETURNS|returns)/g)[1];
-  const sqlBetweenReturnsAndBegins = sqlAfterReturns.split(/(?:BEGIN|begin)/g)[0];
+  const sqlAfterReturns = strippedSql.split(/RETURNS/gi)[1];
+
+  const sqlBetweenReturnsAndNextKeyword = sqlAfterReturns.split(/(?:BEGIN|AS|LANGUAGE)/gi)[0]; // BEGIN is next in mysql, AS or LANGUAGE are next in postgres
 
   // 2. grab the return type out of the return statement; NOTE: functions only return one value
-  const dataType = extractDataTypeFromColumnOrArgumentDefinitionSql({ sql: ` ${sqlBetweenReturnsAndBegins.trim()}` });
+  const dataType = extractDataTypeFromColumnOrArgumentDefinitionSql({
+    sql: ` ${sqlBetweenReturnsAndNextKeyword.trim()}`,
+  });
   if (!dataType) throw new Error('data type could not be extracted from function sql');
   return [dataType];
 };

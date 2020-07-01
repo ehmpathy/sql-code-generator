@@ -50,12 +50,20 @@ describe('extractDataTypeFromColumnOrArgumentDefinitionSql', () => {
       type: DataType.STRING,
     },
     {
+      sql: 'nicknames varchar[] NOT NULL',
+      type: DataType.STRING_ARRAY,
+    },
+    {
       sql: 'created_at timestamptz NOT NULL DEFAULT now()',
       type: DataType.DATE,
     },
     {
       sql: 'photo_ids_hash bytea NULL',
       type: DataType.BUFFER,
+    },
+    {
+      sql: 'in_photo_ids bigint[]',
+      type: DataType.NUMBER_ARRAY,
     },
   ];
   examples.forEach((example) => {
