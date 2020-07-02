@@ -173,3 +173,35 @@ TypeDefinitionOfResourceTable {
   "name": "job_version",
 }
 `;
+
+exports[`extractTypeDefinitionFromTableSql postgres should be able to extract types in this other example, having a check constraint with nested parens 1`] = `
+TypeDefinitionOfResourceTable {
+  "columns": Array [
+    TypeDefinitionOfResourceColumn {
+      "name": "id",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "uuid",
+      "type": Array [
+        "string",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "created_at",
+      "type": Array [
+        "Date",
+      ],
+    },
+    TypeDefinitionOfResourceColumn {
+      "name": "status",
+      "type": Array [
+        "string",
+      ],
+    },
+  ],
+  "name": "job",
+}
+`;

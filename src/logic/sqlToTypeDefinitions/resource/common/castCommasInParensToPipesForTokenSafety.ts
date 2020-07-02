@@ -1,6 +1,7 @@
 export const castCommasInParensToPipesForTokenSafety = ({ sql }: { sql: string }) => {
   // track state of whether we are in parenthesizes or not
-  let areInsideParens = false; // init as false, since havent entered yet
+  let areInsideParensDepth = 0; // init as 0, since not inside parens
+  const areInsideParens = () => areInsideParensDepth > 0; // whenever areInsideParensDepth > 0, we are inside parens
 
   // init object to build up the "casted" string
   let castedString = '';
@@ -9,16 +10,15 @@ export const castCommasInParensToPipesForTokenSafety = ({ sql }: { sql: string }
   [...sql].forEach((char) => {
     // 1. manage "areInsideParens" state
     if (char === '(') {
-      if (areInsideParens) throw new Error('nested parenthesizes found; not supported'); // fail fast for unsupported case
-      areInsideParens = true; // mark that we are in parenthesizes now
+      areInsideParensDepth += 1; // one parens deeper!
     }
     if (char === ')') {
       if (!areInsideParens) throw new Error('exiting parenthesizes without having opened them; not supported'); // fail fast for unsupported case
-      areInsideParens = false; // mark that we've left the parenthesizes now
+      areInsideParensDepth -= 1; // mark that we've dropped off one parens now
     }
 
     // 2. cast the char, considering whether we're in parens or not
-    const castedChar = areInsideParens && char === ',' ? '|' : char; // cast "," if we are inside parens
+    const castedChar = areInsideParens() && char === ',' ? '|' : char; // cast "," if we are inside parens
 
     // 3. add casted char to string
     castedString += castedChar;

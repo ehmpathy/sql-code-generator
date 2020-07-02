@@ -33,5 +33,12 @@ describe('extractTypeDefinitionFromTableSql', () => {
       const typeDef = extractTypeDefinitionFromTableSql({ name: 'job_version', sql: exampleSql });
       expect(typeDef).toMatchSnapshot();
     });
+    it('should be able to extract types in this other example, having a check constraint with nested parens', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../__test_assets__/tables/job.postgres.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromTableSql({ name: 'job', sql: exampleSql });
+      expect(typeDef).toMatchSnapshot();
+    });
   });
 });
