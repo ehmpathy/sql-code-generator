@@ -25,7 +25,9 @@ export const executeQueryWithBestPractices = async ({
   logDebug(\`\${name}.input\`, { input });
 
   // 3. execute the query
-  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
+  const ${
+    language === DatabaseLanguage.POSTGRES ? '{ rows: output }' : '[output]'
+  } = await dbExecute({ sql: preparedSql, values: preparedValues });
 
   // 4. log that we've executed the request
   logDebug(\`\${name}.output\`, { output });

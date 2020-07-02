@@ -39,7 +39,7 @@ export const defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions = ({
   })();
 
   // define the common exports
-  const commonExportsCode = defineTypescriptCommonExportsForQueryFunctions();
+  const commonExportsCode = defineTypescriptCommonExportsForQueryFunctions({ language });
 
   // define the generic executeQuery function
   const genericExecuteQueryCode = defineTypescriptExecuteQueryWithBestPracticesFunction({ language });

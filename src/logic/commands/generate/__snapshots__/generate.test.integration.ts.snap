@@ -411,7 +411,7 @@ import {
 } from './types';
 
 // typedefs common to each query function
-export type DatabaseExecuteCommand = (args: { sql: string; values: any[] }) => Promise<any[]>;
+export type DatabaseExecuteCommand = (args: { sql: string; values: any[] }) => Promise<{ rows: any[] }>;
 export type LogMethod = (message: string, metadata: any) => void;
 
 // utility used by each query function
@@ -435,7 +435,7 @@ export const executeQueryWithBestPractices = async ({
   logDebug(\`\${name}.input\`, { input });
 
   // 3. execute the query
-  const [output] = await dbExecute({ sql: preparedSql, values: preparedValues });
+  const { rows: output } = await dbExecute({ sql: preparedSql, values: preparedValues });
 
   // 4. log that we've executed the request
   logDebug(\`\${name}.output\`, { output });
