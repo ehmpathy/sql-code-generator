@@ -1,5 +1,118 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`extractTypeDefinitionFromViewSql should be able to extract types even when one of the columns has the word "from" in it 1`] = `
+TypeDefinitionOfResourceView {
+  "name": "view_email_current",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.uuid",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "external_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.external_id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "ses_message_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.ses_message_id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "to_address",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.to_address",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "from_address",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.from_address",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "from_name",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.from_name",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "subject",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.subject",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "body",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.body",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "status",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.status",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "created_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "s.created_at",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "effective_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.effective_at",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "updated_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "v.created_at",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "s",
+      "tableName": "email",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "cvp",
+      "tableName": "email_cvp",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "v",
+      "tableName": "email_version",
+    },
+  ],
+}
+`;
+
 exports[`extractTypeDefinitionFromViewSql should be able to extract types in this example 1`] = `
 TypeDefinitionOfResourceView {
   "name": "view_suggestion_current",
@@ -87,7 +200,7 @@ TypeDefinitionOfResourceView {
 
 exports[`extractTypeDefinitionFromViewSql should be able to extract types in this other example 1`] = `
 TypeDefinitionOfResourceView {
-  "name": "view_suggestion_current",
+  "name": "view_job_current",
   "selectExpressions": Array [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",

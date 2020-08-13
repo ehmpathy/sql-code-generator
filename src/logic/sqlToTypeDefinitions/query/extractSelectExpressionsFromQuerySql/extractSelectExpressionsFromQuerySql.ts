@@ -27,7 +27,7 @@ export const extractSelectExpressionsFromQuerySql = ({
     return partsSplitOnSelect[1];
   })();
   const everythingBetweenSelectAndFrom = (() => {
-    const partsSplitOnFromAfterSelect = everythingAfterSelect.split(/(?:FROM|from)/g);
+    const partsSplitOnFromAfterSelect = everythingAfterSelect.split(/[\n\r\s]+from[\n\r\s]+/gi);
     if (partsSplitOnFromAfterSelect.length === 1) return everythingAfterSelect; // if no "FROM" keyword, then expect that the whole query is just the select expressions
     if (partsSplitOnFromAfterSelect.length > 2) {
       throw new Error('more than one "from" keyword found; unexpected'); // should have been flattened out
