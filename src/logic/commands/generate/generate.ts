@@ -6,36 +6,40 @@ import { defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions } from './def
 import { extractTypeDefinitionsFromDeclarations } from './extractTypeDefinitionsFromDeclarations/extractTypeDefinitionsFromDeclarations';
 
 export const generate = async ({ configPath }: { configPath: string }) => {
-  // 1. read the declarations from config
+  //  read the declarations from config
   const config = await readConfig({ filePath: configPath });
 
-  // 2. get type definitions for each resource and query
+  // get type definitions for each resource and query
   console.log(chalk.bold('Parsing sql and extracting type definitions...\n')); // tslint:disable-line no-console
   const definitions = extractTypeDefinitionsFromDeclarations({
     language: config.language,
     declarations: config.declarations,
   });
 
-  // 3. get the typescript types code and client methods code
-  console.log(chalk.bold('Generating types and query functions code...\n')); // tslint:disable-line no-console
+  // begin generating the output code files
+  console.log(chalk.bold('Generating code...\n')); // tslint:disable-line no-console
+
+  // output the type definitions code
   const typescriptTypesFileCode = defineTypescriptTypesFileCodeFromTypeDefinitions({
     definitions,
   });
-  const typescriptQueryFunctionsFileCode = defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions({
-    definitions,
-    language: config.language,
-    generatedOutputPaths: config.generates,
-  });
-
-  // 4. output them to desired files
   await saveCode({
     rootDir: config.rootDir,
     filePath: config.generates.types,
     code: typescriptTypesFileCode,
   });
-  await saveCode({
-    rootDir: config.rootDir,
-    filePath: config.generates.queryFunctions,
-    code: typescriptQueryFunctionsFileCode,
-  });
+
+  // output the query functions (if requested)
+  if (config.generates.queryFunctions) {
+    const typescriptQueryFunctionsFileCode = defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions({
+      definitions,
+      language: config.language,
+      generatedOutputPaths: config.generates,
+    });
+    await saveCode({
+      rootDir: config.rootDir,
+      filePath: config.generates.queryFunctions,
+      code: typescriptQueryFunctionsFileCode,
+    });
+  }
 };

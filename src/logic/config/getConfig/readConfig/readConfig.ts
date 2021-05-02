@@ -1,7 +1,7 @@
-import { readYmlFile } from './utils/readYmlFile';
 import { GeneratorConfig } from '../../../../model';
 import { getAllPathsMatchingGlobs } from '../getAllPathsMatchingGlobs/getAllPathsMatchingGlobs';
-import { extractDeclarationFromGlobedFile, DeclarationType } from './extractDeclarationFromGlobedFile';
+import { DeclarationType, extractDeclarationFromGlobedFile } from './extractDeclarationFromGlobedFile';
+import { readYmlFile } from './utils/readYmlFile';
 
 /*
   1. read the yml file
@@ -20,9 +20,6 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   // get the output dir
   if (!contents.generates) throw new Error('generates key must be defined');
   if (!contents.generates.types) throw new Error('generates.types must specify where to output the generated types');
-  if (!contents.generates.queryFunctions) {
-    throw new Error('generates.queryFunctions must specify where to output the query functions');
-  }
 
   // get the language and dialect
   if (!contents.language) throw new Error('language must be defined');

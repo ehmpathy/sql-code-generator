@@ -8,4 +8,3 @@ queries:
   - '!src/**/*.test.integration.ts'
 generates:
   types: src/generated/fromSql/types.ts
-  queryFunctions: src/generated/fromSql/queryFunctions.ts
