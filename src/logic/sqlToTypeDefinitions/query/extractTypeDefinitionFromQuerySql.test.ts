@@ -84,4 +84,16 @@ describe('extractTypeDefinitionFromQuerySql', () => {
     expect(defs.inputVariables.length).toEqual(1);
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to determine types accurately an upsert query which includes a subquery', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/upsert_profile_with_subselect.sql`,
+    });
+    const defs = extractTypeDefinitionFromQuerySql({
+      name: 'upsert_profile_with_subselect',
+      path: '__PATH__',
+      sql,
+    });
+    expect(defs.tableReferences.length).toBeGreaterThan(0); // should have a table reference to the table in the subquery
+    expect(defs).toMatchSnapshot();
+  });
 });

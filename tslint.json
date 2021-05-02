@@ -22,7 +22,8 @@
     "ter-arrow-parens": false,
     "member-ordering": false,
     "ter-indent": false,
-    "array-type": false
+    "array-type": false,
+    "curly": false
   },
   "linterOptions": {
     "exclude": ["src/logic/__test_assets__/exampleProject/postgres/src/generated/fromSql/**/*"]

@@ -3,7 +3,13 @@ import { throwErrorIfTableReferencePathImpliesTable } from '../common/throwError
 import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
 import { DataType } from '../../../../model';
 
-export const extractTypeDefinitionFromInputVariableSql = ({ token, sql }: { token: string; sql: string }) => {
+export const extractTypeDefinitionFromInputVariableSql = ({
+  token,
+  sql,
+}: {
+  token: string;
+  sql: string;
+}): TypeDefinitionOfQueryInputVariable => {
   // 1. check if this token matches the "resource.column = :token" pattern; if so, then the input type = the resource.column type
   const [
     _, // tslint:disable-line no-unused

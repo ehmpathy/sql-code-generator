@@ -34,4 +34,13 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     expect(defs.length).toEqual(1);
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to determine types accurately for a case where an input variable is defined in a subquery used as an input to a function', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../../__test_assets__/queries/upsert_profile_with_subselect.sql`,
+    });
+    const defs = extractInputVariablesFromQuerySql({ sql });
+
+    expect(defs.length).toEqual(4);
+    expect(defs).toMatchSnapshot();
+  });
 });
