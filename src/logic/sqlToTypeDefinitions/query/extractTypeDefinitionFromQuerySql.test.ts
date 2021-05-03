@@ -84,16 +84,30 @@ describe('extractTypeDefinitionFromQuerySql', () => {
     expect(defs.inputVariables.length).toEqual(1);
     expect(defs).toMatchSnapshot();
   });
-  it('should be able to determine types accurately an upsert query which includes a subquery', async () => {
-    const sql = await extractSqlFromFile({
-      filePath: `${__dirname}/../../__test_assets__/queries/upsert_profile_with_subselect.sql`,
+  describe('subqueries', () => {
+    it('should be able to determine types accurately an upsert query which includes a subquery', async () => {
+      const sql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../__test_assets__/queries/upsert_profile_with_subselect.sql`,
+      });
+      const defs = extractTypeDefinitionFromQuerySql({
+        name: 'upsert_profile_with_subselect',
+        path: '__PATH__',
+        sql,
+      });
+      expect(defs.tableReferences.length).toBeGreaterThan(0); // should have a table reference to the table in the subquery
+      expect(defs).toMatchSnapshot();
     });
-    const defs = extractTypeDefinitionFromQuerySql({
-      name: 'upsert_profile_with_subselect',
-      path: '__PATH__',
-      sql,
+    it('should be able to determine types accurately an upsert query which includes a subquery which calls a function', async () => {
+      const sql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../__test_assets__/queries/upsert_profile_with_subquery_function.sql`,
+      });
+      const defs = extractTypeDefinitionFromQuerySql({
+        name: 'upsert_profile_with_subquery_function',
+        path: '__PATH__',
+        sql,
+      });
+      expect(defs.tableReferences.length).toEqual(0); // no table references, only function references
+      expect(defs).toMatchSnapshot();
     });
-    expect(defs.tableReferences.length).toBeGreaterThan(0); // should have a table reference to the table in the subquery
-    expect(defs).toMatchSnapshot();
   });
 });
