@@ -28,4 +28,13 @@ describe('extractTableReferencesFromQuerySql', () => {
     );
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to determine types accurately for an example with subqueries referencing their own tables', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../../__test_assets__/queries/find_providers_with_work_count.sql`,
+    });
+    const defs = extractTableReferencesFromQuerySql({ sql });
+    expect(defs.length).toEqual(2);
+    expect(defs).toContainEqual(new TypeDefinitionOfQueryTableReference({ alias: 'w', tableName: 'work' })); // has the subqueries definition
+    expect(defs).toMatchSnapshot();
+  });
 });

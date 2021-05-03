@@ -1,5 +1,38 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for a case where an input variable is defined in a subquery used as an input to a function 1`] = `
+Array [
+  TypeDefinitionOfQueryInputVariable {
+    "name": "serviceProviderUuid",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "p.uuid",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "bannerImageUuid",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_provider_profile.input.1",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "pictureImageUuid",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_provider_profile.input.2",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "introduction",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_provider_profile.input.3",
+      "tableReferencePath": null,
+    },
+  },
+]
+`;
+
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
 Array [
   TypeDefinitionOfQueryInputVariable {

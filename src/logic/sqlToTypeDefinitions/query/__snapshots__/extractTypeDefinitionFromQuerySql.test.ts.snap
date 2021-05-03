@@ -211,6 +211,10 @@ TypeDefinitionOfQuery {
       "alias": "v",
       "tableName": "job_version",
     },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "job_version_to_photo",
+      "tableName": "job_version_to_photo",
+    },
   ],
 }
 `;
@@ -299,6 +303,10 @@ TypeDefinitionOfQuery {
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
       "tableName": "ice_cream",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "ice_cream_to_ingredient",
+      "tableName": "ice_cream_to_ingredient",
     },
   ],
 }
@@ -469,5 +477,104 @@ TypeDefinitionOfQuery {
       "tableName": "suggestion_version",
     },
   ],
+}
+`;
+
+exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately an upsert query which includes a subquery 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "serviceProviderUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "p.uuid",
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "bannerImageUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.input.1",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "pictureImageUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.input.2",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "introduction",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.input.3",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "name": "upsert_profile_with_subselect",
+  "path": "__PATH__",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.output",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "p",
+      "tableName": "view_provider_current",
+    },
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately an upsert query which includes a subquery which calls a function 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "providerUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "get_provider_id_by_uuid.input.0",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "bannerImageUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.input.1",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "pictureImageUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.input.2",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "introduction",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.input.3",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "name": "upsert_profile_with_subquery_function",
+  "path": "__PATH__",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "upsert_provider_profile.output",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "tableReferences": Array [],
 }
 `;

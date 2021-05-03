@@ -17,6 +17,19 @@ Array [
 ]
 `;
 
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for an example with subqueries referencing their own tables 1`] = `
+Array [
+  TypeDefinitionOfQueryTableReference {
+    "alias": "p",
+    "tableName": "provider",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "w",
+    "tableName": "work",
+  },
+]
+`;
+
 exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for this example 1`] = `
 Array [
   TypeDefinitionOfQueryTableReference {

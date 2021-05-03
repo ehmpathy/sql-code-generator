@@ -286,6 +286,10 @@ TypeDefinitionOfResourceView {
       "alias": "v",
       "tableName": "job_version",
     },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "job_version_to_photo",
+      "tableName": "job_version_to_photo",
+    },
   ],
 }
 `;

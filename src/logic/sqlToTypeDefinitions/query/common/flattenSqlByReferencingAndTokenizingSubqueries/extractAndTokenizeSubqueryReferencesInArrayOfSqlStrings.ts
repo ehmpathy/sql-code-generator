@@ -11,7 +11,10 @@ export const extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings = ({ sqlPar
     const matchesQueryPattern = new RegExp(/^\(\s*select(?:.|\s)*\)$/i).test(sql);
     // if it matches the pattern for being a "query", then return swap it out with a reference
     if (matchesQueryPattern) {
-      const reference = new SqlSubqueryReference({ id: uuid(), sql });
+      const reference = new SqlSubqueryReference({
+        id: uuid().replace(/-/g, ''), // uuid without dashes, important for downstream logic
+        sql,
+      });
       references.push(reference);
       return getTokenForSqlSubqueryReference({ reference });
     }
