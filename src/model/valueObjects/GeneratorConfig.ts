@@ -10,7 +10,7 @@ const generatorConfigSchema = Joi.object().keys({
   dialect: Joi.string().required(),
   generates: Joi.object().keys({
     types: Joi.string().required(),
-    queryFunctions: Joi.string().required(),
+    queryFunctions: Joi.string().optional(),
   }),
   declarations: Joi.array().items(QueryDeclaration.schema, ResourceDeclaration.schema),
 });

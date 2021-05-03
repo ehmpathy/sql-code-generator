@@ -1,0 +1,10 @@
+language: mysql
+dialect: 5.7
+resources:
+  - 'schema/**/*.sql'
+queries:
+  - 'src/dao/**/*.ts'
+  - '!src/**/*.test.ts'
+  - '!src/**/*.test.integration.ts'
+generates:
+  types: src/generated/fromSql/types.ts

@@ -41,5 +41,5 @@ export type TypeDefinition =
   | TypeDefinitionOfResourceView;
 export interface GeneratedOutputPaths {
   types: string;
-  queryFunctions: string;
+  queryFunctions: string | undefined; // undefined -> user does not want them
 }

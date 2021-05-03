@@ -1,5 +1,6 @@
-import { TypeDefinitionOfQuery, GeneratedOutputPaths } from '../../../../model';
+import { GeneratedOutputPaths, TypeDefinitionOfQuery } from '../../../../model';
 import { defineTypescriptQueryFunctionForQuery } from '../../../typeDefinitionsToCode/query/defineTypescriptQueryFunctionForQuery';
+import { QueryFunctionsOutputPathNotDefinedButRequiredError } from './QueryFunctionsOutputPathNotDefinedError';
 import { getRelativePathFromFileToFile } from './utils/getRelativePathFromFileToFile';
 
 export const defineTypescriptImportGeneratedTypesCodeForQueryFunctions = ({
@@ -9,6 +10,9 @@ export const defineTypescriptImportGeneratedTypesCodeForQueryFunctions = ({
   queryDefinitions: TypeDefinitionOfQuery[];
   generatedOutputPaths: GeneratedOutputPaths;
 }) => {
+  // check that the query functions output path was defined; if it was not, this code path should not have been called so fail fast
+  if (!generatedOutputPaths.queryFunctions) throw new QueryFunctionsOutputPathNotDefinedButRequiredError();
+
   // define all of the imports needed
   const generatedTypesToImport = queryDefinitions
     .map((def) => defineTypescriptQueryFunctionForQuery({ name: def.name }).imports.generatedTypes)
