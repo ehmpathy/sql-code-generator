@@ -1,4 +1,4 @@
-const EXTRACT_INPUT_VARIABLES_REGEX = /(?:[^\w])(\:\w+)/g;
+const EXTRACT_INPUT_VARIABLES_REGEX = /(?:[^\w:])(\:\w+)/g;
 
 export const extractInputVariableTokensFromQuerySql = ({ sql }: { sql: string }) => {
   const regex = new RegExp(EXTRACT_INPUT_VARIABLES_REGEX);

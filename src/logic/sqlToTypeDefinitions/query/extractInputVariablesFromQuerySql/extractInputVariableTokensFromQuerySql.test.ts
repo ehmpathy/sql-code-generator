@@ -21,6 +21,21 @@ where s.created_at > '2020-01-01 05:55:55';
     const tokens = extractInputVariableTokensFromQuerySql({ sql });
     expect(tokens).toEqual([]);
   });
+  it('should not confuse a postgres type casting with tokens - normal', () => {
+    const sql = `
+SELECT 1::boolean;
+    `;
+    const tokens = extractInputVariableTokensFromQuerySql({ sql });
+    expect(tokens).toEqual([]);
+  });
+  it('should not confuse a postgres type casting with tokens - array', () => {
+    const sql = `
+SELECT coalesce(array_agg(train_to_locomotive.locomotive_id ORDER BY train_to_locomotive.array_order_index), array[]::bigint[]) as array_agg
+FROM train_to_locomotive WHERE train_to_locomotive.train_id = s.id
+    `;
+    const tokens = extractInputVariableTokensFromQuerySql({ sql });
+    expect(tokens).toEqual([]);
+  });
   it('should find tokens inside of a function on one line', () => {
     const sql = `
 SELECT get_cool_stuff_from_db(:name, :plane);
