@@ -124,6 +124,85 @@ TypeDefinitionOfResourceFunction {
 }
 `;
 
+exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types from a function that returns a table 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": Array [
+    TypeDefinitionOfResourceInput {
+      "name": "in_uuid",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_title",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_status",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_description",
+      "type": Array [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_location_id",
+      "type": Array [
+        "number",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_photo_ids",
+      "type": Array [
+        "number[]",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_jerb",
+  "output": TypeDefinitionOfResourceTable {
+    "columns": Array [
+      TypeDefinitionOfResourceColumn {
+        "name": "id",
+        "type": Array [
+          "number",
+        ],
+      },
+      TypeDefinitionOfResourceColumn {
+        "name": "uuid",
+        "type": Array [
+          "string",
+        ],
+      },
+      TypeDefinitionOfResourceColumn {
+        "name": "created_at",
+        "type": Array [
+          "Date",
+        ],
+      },
+      TypeDefinitionOfResourceColumn {
+        "name": "effective_at",
+        "type": Array [
+          "Date",
+        ],
+      },
+    ],
+    "name": "function.output",
+  },
+}
+`;
+
 exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types in this example 1`] = `
 TypeDefinitionOfResourceFunction {
   "inputs": Array [

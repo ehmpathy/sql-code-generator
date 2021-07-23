@@ -40,5 +40,12 @@ describe('extractTypeDefinitionFromFunctionSql', () => {
       const typeDef = extractTypeDefinitionFromFunctionSql({ name: 'upsert_job', sql: exampleSql });
       expect(typeDef).toMatchSnapshot();
     });
+    it('should be able to extract types from a function that returns a table', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../__test_assets__/functions/upsert_jerb.postgres.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromFunctionSql({ name: 'upsert_jerb', sql: exampleSql });
+      expect(typeDef).toMatchSnapshot();
+    });
   });
 });

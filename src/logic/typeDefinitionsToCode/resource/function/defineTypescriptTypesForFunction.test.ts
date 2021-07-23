@@ -53,4 +53,14 @@ describe('defineTypescriptTypesForFunction', () => {
     const code = defineTypescriptTypesForFunction({ definition });
     expect(code).toMatchSnapshot();
   });
+  it('should generate accurate looking types for a function that returns a table', async () => {
+    const definition = extractTypeDefinitionFromFunctionSql({
+      name: 'upsert_jerb',
+      sql: await extractSqlFromFile({
+        filePath: `${__dirname}/../../../__test_assets__/functions/upsert_jerb.postgres.sql`,
+      }),
+    });
+    const code = defineTypescriptTypesForFunction({ definition });
+    expect(code).toMatchSnapshot();
+  });
 });

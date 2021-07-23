@@ -1,4 +1,4 @@
-import { DataType } from '../../../../../model';
+import { DataType, TypeDefinitionOfResourceTable } from '../../../../../model';
 import { extractSqlFromFile } from '../../../../common/extractSqlFromFile';
 import { extractOutputFromFunctionSql } from './extractOutputFromFunctionSql';
 
@@ -30,6 +30,35 @@ describe('extractOutputsFromFunctionSql', () => {
       });
       expect(type).toEqual([DataType.NUMBER]);
     });
-    it.todo('should extract output types accurately when output is a table, instead of just a DataType[]'); // https://github.com/uladkasach/sql-code-generator/issues/20
+    it('should extract output types accurately when output is a table, instead of just a DataType[]', async () => {
+      const type = extractOutputFromFunctionSql({
+        sql: await extractSqlFromFile({
+          filePath: `${__dirname}/../../../../__test_assets__/functions/upsert_jerb.postgres.sql`,
+        }),
+      });
+      expect(type).toEqual(
+        new TypeDefinitionOfResourceTable({
+          name: 'function.output',
+          columns: [
+            {
+              name: 'id',
+              type: [DataType.NUMBER],
+            },
+            {
+              name: 'uuid',
+              type: [DataType.STRING],
+            },
+            {
+              name: 'created_at',
+              type: [DataType.DATE],
+            },
+            {
+              name: 'effective_at',
+              type: [DataType.DATE],
+            },
+          ],
+        }),
+      );
+    });
   });
 });

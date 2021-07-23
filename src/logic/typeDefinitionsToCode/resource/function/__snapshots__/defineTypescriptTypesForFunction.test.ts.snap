@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`defineTypescriptTypesForFunction should generate accurate looking types for a function that returns a table 1`] = `
+"export interface SqlFunctionUpsertJerbInput {
+  0: string | null;
+  1: string | null;
+  2: string | null;
+  3: string | null;
+  4: number | null;
+  5: number[] | null;
+}
+export interface SqlFunctionUpsertJerbInputByName {
+  in_uuid: SqlFunctionUpsertJerbInput['0'];
+  in_title: SqlFunctionUpsertJerbInput['1'];
+  in_status: SqlFunctionUpsertJerbInput['2'];
+  in_description: SqlFunctionUpsertJerbInput['3'];
+  in_location_id: SqlFunctionUpsertJerbInput['4'];
+  in_photo_ids: SqlFunctionUpsertJerbInput['5'];
+}
+export type SqlFunctionUpsertJerbOutput = {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  effective_at: Date;
+};"
+`;
+
 exports[`defineTypescriptTypesForFunction should generate accurate looking types for this function definition 1`] = `
 "export interface SqlFunctionUpsertImageInput {
   0: string | null;

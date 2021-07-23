@@ -1,6 +1,7 @@
 import { TypeDefinitionOfResourceFunction } from '../../../../model/valueObjects/TypeDefinitionOfResourceFunction';
 import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
-import { ResourceType } from '../../../../model';
+import { ResourceType, TypeDefinitionOfResourceTable } from '../../../../model';
+import { defineTypescriptTypesForTable } from '../table/defineTypescriptTypesForTable';
 
 export const defineTypescriptTypesForFunction = ({ definition }: { definition: TypeDefinitionOfResourceFunction }) => {
   // 0. define the typescript type namespace for this function
@@ -30,8 +31,12 @@ export interface ${typescriptTypeName}InputByName {
   `.trim();
 
   // 3. define the type for the output
+  const outputTypeTypescriptValue =
+    definition.output instanceof TypeDefinitionOfResourceTable
+      ? defineTypescriptTypesForTable({ definition: definition.output }).replace(/export interface .* {/, '{') // if fn returns a table, then use the table def fn and just strip out the "export interface ${name}" part - that's the def
+      : definition.output.join(' | ');
   const outputTypeTypescript = `
-export type ${typescriptTypeName}Output = ${definition.output.join(' | ')};
+export type ${typescriptTypeName}Output = ${outputTypeTypescriptValue};
   `.trim();
 
   // 4. return the combined typescript code
