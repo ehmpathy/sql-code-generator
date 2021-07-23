@@ -5,6 +5,7 @@ resources:
 queries:
   - 'src/dao/**/*.ts'
   - 'src/others/queryUserNameView.ts'
+  - 'src/others/queryUserWithMatchingIcecream.ts'
   - '!src/**/*.test.ts'
   - '!src/**/*.test.integration.ts'
 generates:

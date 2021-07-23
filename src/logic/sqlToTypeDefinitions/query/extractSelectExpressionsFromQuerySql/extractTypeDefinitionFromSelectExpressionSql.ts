@@ -15,7 +15,7 @@ export const extractTypeDefinitionFromSelectExpressionSql = ({
   const typeReference = extractTypeDefinitionReferenceFromSelectExpression({ sql, subqueries });
 
   // grab the alias, if any
-  const [__, specifiedAlias] = new RegExp(/(?:[\w\.,:\(\)\s]+)(?:\s+)(?:as)(?:\s+)(\w+)/g).exec(sql) ?? []; // tslint:disable-line no-unused
+  const [__, specifiedAlias] = new RegExp(/(?:[\w\.,:\(\)\s\|\']+)(?:\s+)(?:as|AS)(?:\s+)(\w+)/g).exec(sql) ?? []; // tslint:disable-line no-unused
 
   // define the alias, considering whether alias was specified
   if (!specifiedAlias && !!typeReference.functionReferencePath && !inASubquery) {
@@ -24,6 +24,8 @@ export const extractTypeDefinitionFromSelectExpressionSql = ({
       `
 select expressions that reference a function must have an alias defined, per best practice.
   - e.g., \`select concat(n.first, n.last)\` => \`select concat(n.first, n.last) as full_name\`
+
+\`${typeReference.functionReferencePath}\` does not meet this criteria.
 `.trim(),
     );
   }

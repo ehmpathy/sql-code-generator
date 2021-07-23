@@ -109,5 +109,19 @@ describe('extractTypeDefinitionFromQuerySql', () => {
       expect(defs.tableReferences.length).toEqual(0); // no table references, only function references
       expect(defs).toMatchSnapshot();
     });
+    it('should be able to determine types accurately a query with subqueries and unnesting', async () => {
+      const sql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../__test_assets__/queries/find_train_by_id.sql`,
+      });
+      const defs = extractTypeDefinitionFromQuerySql({
+        name: 'find_train_by_id',
+        path: '__PATH__',
+        sql,
+      });
+      expect(defs.selectExpressions.length).toEqual(8); // selecting a bunch of values
+      expect(defs.tableReferences.length).toEqual(8); // references to a bunch of tables (esp from subqueries)
+      expect(defs.inputVariables.length).toEqual(1); // one input var
+      expect(defs).toMatchSnapshot();
+    });
   });
 });

@@ -75,4 +75,28 @@ describe('defineTypescriptTypesForQuery', () => {
     });
     expect(code).toMatchSnapshot();
   });
+  it('should be able to define types accurately a query with subqueries and unnesting', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/find_train_by_id.sql`,
+    });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'find_train_by_id',
+      path: '__PATH__',
+      sql,
+    });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [
+        new TypeDefinitionOfResourceView({
+          name: 'view_train_current',
+          selectExpressions: [],
+          tableReferences: [],
+        }),
+        new TypeDefinitionOfResourceTable({ name: 'locomotive', columns: [] }),
+        new TypeDefinitionOfResourceTable({ name: 'carriage', columns: [] }),
+        new TypeDefinitionOfResourceTable({ name: 'train_engineer', columns: [] }),
+      ],
+    });
+    expect(code).toMatchSnapshot();
+  });
 });

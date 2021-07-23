@@ -5,7 +5,7 @@ import {
   DatabaseLanguage,
 } from '../../../../../model';
 
-const ANY_TRUTHY = [DataType.STRING, DataType.NUMBER, DataType.DATE, DataType.BUFFER];
+const ANY_TRUTHY = [DataType.STRING, DataType.NUMBER, DataType.DATE, DataType.BUFFER, DataType.JSON];
 const ANY = [...ANY_TRUTHY, DataType.NULL, DataType.UNDEFINED];
 
 const ONE_OR_MORE_STRINGS = [
@@ -317,6 +317,16 @@ const POSTGRES_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: TypeDefini
     ],
     output: [DataType.STRING_ARRAY, DataType.NULL], // null if one of the inputs is null
   }),
+  UNNEST: new TypeDefinitionOfResourceFunction({
+    name: 'unnest',
+    inputs: [
+      new TypeDefinitionOfResourceInput({
+        name: 'array',
+        type: [DataType.STRING_ARRAY, DataType.NUMBER_ARRAY],
+      }),
+    ],
+    output: ANY, // not to be used for actually outputting values, this function is mostly used for inputs
+  }),
 
   // https://www.postgresql.org/docs/10/functions-aggregate.html
   ARRAY_AGG: new TypeDefinitionOfResourceFunction({
@@ -328,6 +338,16 @@ const POSTGRES_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: TypeDefini
       }),
     ],
     output: [DataType.STRING_ARRAY, DataType.NUMBER_ARRAY, DataType.NULL], // null if one of the inputs is null
+  }),
+  JSON_AGG: new TypeDefinitionOfResourceFunction({
+    name: 'array_agg',
+    inputs: [
+      new TypeDefinitionOfResourceInput({
+        name: 'any_column',
+        type: ANY_TRUTHY,
+      }),
+    ],
+    output: [DataType.JSON_ARRAY, DataType.NULL], // null if one of the inputs is null
   }),
   AVG: new TypeDefinitionOfResourceFunction({
     name: 'avg',
@@ -378,6 +398,18 @@ const POSTGRES_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: TypeDefini
       }),
     ],
     output: [DataType.NUMBER, DataType.NULL], // null because if one of the inputs is null or there are no rows its grouping over
+  }),
+
+  // https://www.postgresql.org/docs/10/functions-json.html
+  JSON_BUILD_OBJECT: new TypeDefinitionOfResourceFunction({
+    name: 'json_build_object',
+    inputs: [
+      new TypeDefinitionOfResourceInput({
+        name: 'expr',
+        type: [DataType.STRING],
+      }),
+    ],
+    output: [DataType.JSON, DataType.NULL], // null if input is null
   }),
 };
 

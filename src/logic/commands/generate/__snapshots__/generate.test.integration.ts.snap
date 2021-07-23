@@ -333,6 +333,15 @@ export interface SqlFunctionGetAnswerToLifeInputByName {
 }
 export type SqlFunctionGetAnswerToLifeOutput = number;
 
+// types for function 'json_build_object'
+export interface SqlFunctionJsonBuildObjectInput {
+  0: string;
+}
+export interface SqlFunctionJsonBuildObjectInputByName {
+  expr: SqlFunctionJsonBuildObjectInput['0'];
+}
+export type SqlFunctionJsonBuildObjectOutput = Record<string, any> | null;
+
 // types for function 'upsert_photo'
 export interface SqlFunctionUpsertPhotoInput {
   0: string | null;
@@ -390,6 +399,16 @@ export interface SqlQuerySelectUserNameFromViewOutput {
   first_name: SqlViewViewUserName['first_name'];
   last_name: SqlViewViewUserName['last_name'];
 }
+
+// types for query 'select_user_with_matching_ice_cream'
+export interface SqlQuerySelectUserWithMatchingIceCreamInput {
+  userId: SqlTableUser['id'];
+}
+export interface SqlQuerySelectUserWithMatchingIceCreamOutput {
+  first_name: SqlTableUser['first_name'];
+  last_name: SqlTableUser['last_name'];
+  ice_cream: SqlFunctionJsonBuildObjectOutput;
+}
 "
 `;
 
@@ -399,6 +418,7 @@ import { sql as sqlQueryFindAllNewIceCreamSql } from '../../dao/iceCream/findAll
 import { sql as sqlQueryFindIceCreamByIdSql } from '../../dao/iceCream/findById';
 import { sql as sqlQueryFindAllByNameSql } from '../../dao/user/findAllByName';
 import { sql as sqlQuerySelectUserNameFromViewSql } from '../../others/queryUserNameView';
+import { sql as sqlQuerySelectUserWithMatchingIceCreamSql } from '../../others/queryUserWithMatchingIcecream';
 import {
   SqlQueryFindAllByNameInput,
   SqlQueryFindAllByNameOutput,
@@ -408,6 +428,8 @@ import {
   SqlQueryFindIceCreamByIdOutput,
   SqlQuerySelectUserNameFromViewInput,
   SqlQuerySelectUserNameFromViewOutput,
+  SqlQuerySelectUserWithMatchingIceCreamInput,
+  SqlQuerySelectUserWithMatchingIceCreamOutput,
 } from './types';
 
 // typedefs common to each query function
@@ -513,6 +535,24 @@ export const sqlQuerySelectUserNameFromView = async ({
     logDebug,
     name: 'sqlQuerySelectUserNameFromView',
     sql: sqlQuerySelectUserNameFromViewSql,
+    input,
+  });
+
+// client method for query 'select_user_with_matching_ice_cream'
+export const sqlQuerySelectUserWithMatchingIceCream = async ({
+  dbExecute,
+  logDebug,
+  input,
+}: {
+  dbExecute: DatabaseExecuteCommand;
+  logDebug: LogMethod;
+  input: SqlQuerySelectUserWithMatchingIceCreamInput;
+}): Promise<SqlQuerySelectUserWithMatchingIceCreamOutput[]> =>
+  executeQueryWithBestPractices({
+    dbExecute,
+    logDebug,
+    name: 'sqlQuerySelectUserWithMatchingIceCream',
+    sql: sqlQuerySelectUserWithMatchingIceCreamSql,
     input,
   });
 "

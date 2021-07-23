@@ -18,6 +18,8 @@ export enum DataType {
   STRING_ARRAY = 'string[]', // postgres supports arrays
   NUMBER = 'number',
   NUMBER_ARRAY = 'number[]', // postgres supports arrays
+  JSON = 'Record<string, any>',
+  JSON_ARRAY = 'Record<string, any>[]', // postgres supports arrays
   DATE = 'Date',
   BUFFER = 'Buffer', // e.g., for binary
   NULL = 'null',

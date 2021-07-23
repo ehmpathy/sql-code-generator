@@ -1,5 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`defineTypescriptTypesForQuery should be able to define types accurately a query with subqueries and unnesting 1`] = `
+"export interface SqlQueryFindTrainByIdInput {
+  id: SqlViewViewTrainCurrent['id'];
+}
+export interface SqlQueryFindTrainByIdOutput {
+  id: SqlViewViewTrainCurrent['id'];
+  uuid: SqlViewViewTrainCurrent['uuid'];
+  home_station_geocode: SqlFunctionJsonBuildObjectOutput;
+  combination_id: SqlViewViewTrainCurrent['combination_id'];
+  locomotive_uuids: SqlFunctionArrayAggOutput;
+  carriage_uuids: SqlFunctionArrayAggOutput;
+  engineer_uuids: SqlFunctionArrayAggOutput;
+  status: SqlViewViewTrainCurrent['status'];
+}"
+`;
+
 exports[`defineTypescriptTypesForQuery should be able to determine types accurately an example of selecting columns a single table by id 1`] = `
 "export interface SqlQueryFindImageByIdInput {
   id: SqlTableImage['id'];

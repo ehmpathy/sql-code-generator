@@ -480,6 +480,114 @@ TypeDefinitionOfQuery {
 }
 `;
 
+exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately a query with subqueries and unnesting 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "id",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.id",
+      },
+    },
+  ],
+  "name": "find_train_by_id",
+  "path": "__PATH__",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.uuid",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "home_station_geocode",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "json_build_object.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "combination_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.combination_id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "locomotive_uuids",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "array_agg.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "carriage_uuids",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "array_agg.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "engineer_uuids",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "array_agg.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "status",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.status",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "train",
+      "tableName": "view_train_current",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "geocode",
+      "tableName": "geocode",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "locomotive",
+      "tableName": "locomotive",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "tableName": "unnest",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "carriage",
+      "tableName": "carriage",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "tableName": "unnest",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "train_engineer",
+      "tableName": "train_engineer",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "tableName": "unnest",
+    },
+  ],
+}
+`;
+
 exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately an upsert query which includes a subquery 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [
