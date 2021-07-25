@@ -10,11 +10,16 @@ export const extractTypeDefinitionFromInputVariableSql = ({
   token: string;
   sql: string;
 }): TypeDefinitionOfQueryInputVariable => {
+  // define regex for token w/ optional type casting
+  const tokenWithOptionalTypecastingRegexString = `${token}(?:\\:\\:\\w+(?:\\[\\])?)?`;
+
   // 1. check if this token matches the "resource.column = :token" pattern; if so, then the input type = the resource.column type
   const [
     _, // tslint:disable-line no-unused
     leftEqualsTableReferencePath, // check if "resource.column = :token"
-  ] = new RegExp(`(\\w+\\.?\\w*)\\s?=\\s?(?:${token})(?:[^\\w]|$)`, 'g').exec(sql) ?? [];
+  ] =
+    new RegExp(`(\\w+\\.?\\w*)\\s?=\\s?(?:${tokenWithOptionalTypecastingRegexString})(?:[^\\w]|$)`, 'g').exec(sql) ??
+    [];
   if (leftEqualsTableReferencePath) {
     throwErrorIfTableReferencePathImpliesTable({ referencePath: leftEqualsTableReferencePath });
     return new TypeDefinitionOfQueryInputVariable({
@@ -30,7 +35,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
   const [
     __, // tslint:disable-line no-unused
     rightEqualsTableReferencePath, // check if ":token = resource.column"
-  ] = new RegExp(`(?:${token})\\s?=\\s?(\\w+\\.?\\w*)`).exec(sql) ?? [];
+  ] = new RegExp(`(?:${tokenWithOptionalTypecastingRegexString})\\s?=\\s?(\\w+\\.?\\w*)`).exec(sql) ?? [];
   if (rightEqualsTableReferencePath) {
     throwErrorIfTableReferencePathImpliesTable({ referencePath: rightEqualsTableReferencePath });
     return new TypeDefinitionOfQueryInputVariable({
@@ -43,7 +48,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
   }
 
   // 3. check if this token is used in a function. If so, its equivalent to whatever is at that index of the function params
-  const reg = `\\s+(\\w+\\((?:\\s*[:\\w]+,)*(?:\\s*${token},?)(?:\\s*[:\\w]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
+  const reg = `\\s+(\\w+\\((?:\\s*[:\\w]+,)*(?:\\s*${tokenWithOptionalTypecastingRegexString},?)(?:\\s*[:\\w]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
   const [
     ___, // tslint:disable-line no-unused
     tokenInsideFunctionMatch, // check if "functionName(arg1?, :token, arg2?)"
@@ -56,7 +61,9 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     const sqlAfterOpen = tokenInsideFunctionMatch.split('(')[1];
     const sqlBetweenOpenAndClose = sqlAfterOpen.split(')')[0];
     const parametersArray = sqlBetweenOpenAndClose.split(',').map((str) => str.trim());
-    const index = parametersArray.indexOf(token);
+    const index = parametersArray.findIndex((parameter) =>
+      new RegExp(tokenWithOptionalTypecastingRegexString).test(parameter),
+    );
     if (index === -1) throw new Error('unexpected'); // this should never occur if the regex is working correctly; fail fast though
 
     // return the function path

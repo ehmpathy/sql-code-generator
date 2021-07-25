@@ -123,5 +123,33 @@ describe('extractTypeDefinitionFromQuerySql', () => {
       expect(defs.inputVariables.length).toEqual(1); // one input var
       expect(defs).toMatchSnapshot();
     });
+    it('should be able to determine types accurately a query which has type casting on inputs expressions', async () => {
+      const sql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../__test_assets__/queries/upsert_train_with_unnesting_uuids.sql`,
+      });
+      const defs = extractTypeDefinitionFromQuerySql({
+        name: 'upsert_train',
+        path: '__PATH__',
+        sql,
+      });
+      expect(defs.selectExpressions.length).toEqual(2); // selecting a bunch of values
+      expect(defs.tableReferences.length).toEqual(8); // references to a bunch of tables (esp from subqueries)
+      expect(defs.inputVariables.length).toEqual(7); // one input var
+      expect(defs).toMatchSnapshot();
+    });
+    it('should be able to determine types accurately a query which has type casting in select expressions', async () => {
+      const sql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../__test_assets__/queries/find_train_by_uuid.sql`,
+      });
+      const defs = extractTypeDefinitionFromQuerySql({
+        name: 'find_train_by_uuid',
+        path: '__PATH__',
+        sql,
+      });
+      expect(defs.selectExpressions.length).toEqual(9); // selecting a bunch of values
+      expect(defs.tableReferences.length).toEqual(9); // references to a bunch of tables (esp from subqueries)
+      expect(defs.inputVariables.length).toEqual(1); // one input var
+      expect(defs).toMatchSnapshot();
+    });
   });
 });

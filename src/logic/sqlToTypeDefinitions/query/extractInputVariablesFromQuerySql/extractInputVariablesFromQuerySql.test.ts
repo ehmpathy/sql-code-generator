@@ -43,4 +43,13 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     expect(defs.length).toEqual(4);
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to extract input variables from a function that postgres::typecasts some of the input variables', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../../__test_assets__/queries/upsert_train_with_unnesting_uuids.sql`,
+    });
+    const defs = extractInputVariablesFromQuerySql({ sql });
+
+    expect(defs.length).toEqual(7);
+    expect(defs).toMatchSnapshot();
+  });
 });

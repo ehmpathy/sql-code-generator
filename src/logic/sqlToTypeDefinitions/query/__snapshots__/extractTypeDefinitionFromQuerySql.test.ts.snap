@@ -494,6 +494,250 @@ TypeDefinitionOfQuery {
 }
 `;
 
+exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately a query which has type casting in select expressions 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "uuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.uuid",
+      },
+    },
+  ],
+  "name": "find_train_by_uuid",
+  "path": "__PATH__",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.uuid",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "home_station_geocode",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "json_build_object.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "combination_id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.combination_id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "locomotive_uuids",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "array_agg.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "carriage_uuids",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "array_agg.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "engineer_uuids",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": "array_agg.output",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "lead_engineer_uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train_engineer.uuid",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "status",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train.status",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "train",
+      "functionName": null,
+      "tableName": "view_train_current",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "train_engineer",
+      "functionName": null,
+      "tableName": "train_engineer",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "geocode",
+      "functionName": null,
+      "tableName": "geocode",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "locomotive",
+      "functionName": null,
+      "tableName": "locomotive",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "carriage",
+      "functionName": null,
+      "tableName": "carriage",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "train_engineer",
+      "functionName": null,
+      "tableName": "train_engineer",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
+    },
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately a query which has type casting on inputs expressions 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "homeStationGeocodeId",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_train.input.0",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "combinationId",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_train.input.1",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "locomotiveUuids",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "unnest.input.0",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "carriageUuids",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "unnest.input.0",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "engineerUuids",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "unnest.input.0",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "leadEngineerUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "train_engineer.uuid",
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "status",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_train.input.6",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "name": "upsert_train",
+  "path": "__PATH__",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "dgv.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "dgv.uuid",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "dgv",
+      "functionName": "upsert_train",
+      "tableName": null,
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "train_engineer",
+      "functionName": null,
+      "tableName": "train_engineer",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "locomotive",
+      "functionName": null,
+      "tableName": "locomotive",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "carriage",
+      "functionName": null,
+      "tableName": "carriage",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "train_engineer",
+      "functionName": null,
+      "tableName": "train_engineer",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
+    },
+  ],
+}
+`;
+
 exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately a query with subqueries and unnesting 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [

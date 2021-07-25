@@ -33,7 +33,9 @@ export const extractInputVariablesFromQuerySql = ({ sql }: { sql: string }) => {
   // define the type definition for each variable
   const definitions = inputVariableTokens.map((token) => {
     // check if the token is actually in a subquery; run it on the subquery if so
-    const foundSubqueryContainingToken = subqueries.find((subquery) => subquery.sql.includes(token));
+    const foundSubqueryContainingToken = subqueries.find((subquery) =>
+      new RegExp(`(?:[^\\w:])${token}`).test(subquery.sql),
+    );
     if (foundSubqueryContainingToken)
       return extractTypeDefinitionFromInputVariableSql({ token, sql: foundSubqueryContainingToken.sql });
 

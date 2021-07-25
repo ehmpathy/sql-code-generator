@@ -98,3 +98,57 @@ Array [
   },
 ]
 `;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to extract input variables from a function that postgres::typecasts some of the input variables 1`] = `
+Array [
+  TypeDefinitionOfQueryInputVariable {
+    "name": "homeStationGeocodeId",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_train.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "combinationId",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_train.input.1",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "locomotiveUuids",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "unnest.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "carriageUuids",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "unnest.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "engineerUuids",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "unnest.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "leadEngineerUuid",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "train_engineer.uuid",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "status",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_train.input.6",
+      "tableReferencePath": null,
+    },
+  },
+]
+`;
