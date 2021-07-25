@@ -99,14 +99,17 @@ TypeDefinitionOfResourceView {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
+      "functionName": null,
       "tableName": "email",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "cvp",
+      "functionName": null,
       "tableName": "email_cvp",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "v",
+      "functionName": null,
       "tableName": "email_version",
     },
   ],
@@ -184,14 +187,17 @@ TypeDefinitionOfResourceView {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
+      "functionName": null,
       "tableName": "suggestion",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "cvp",
+      "functionName": null,
       "tableName": "suggestion_cvp",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "v",
+      "functionName": null,
       "tableName": "suggestion_version",
     },
   ],
@@ -276,18 +282,22 @@ TypeDefinitionOfResourceView {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
+      "functionName": null,
       "tableName": "job",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "cvp",
+      "functionName": null,
       "tableName": "job_cvp",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "v",
+      "functionName": null,
       "tableName": "job_version",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "job_version_to_photo",
+      "functionName": null,
       "tableName": "job_version_to_photo",
     },
   ],

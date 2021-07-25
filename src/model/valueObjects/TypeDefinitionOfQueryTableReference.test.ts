@@ -5,10 +5,23 @@ describe('TypeDefinitionOfQueryTableReference', () => {
     const def = new TypeDefinitionOfQueryTableReference({
       alias: 'u',
       tableName: 'user',
+      functionName: null,
     });
     expect(def).toMatchObject({
       alias: 'u',
       tableName: 'user',
+    });
+  });
+  it('should initialize for alt valid inputs', () => {
+    const def = new TypeDefinitionOfQueryTableReference({
+      alias: 'dgv',
+      tableName: null,
+      functionName: 'upsert_user',
+    });
+    expect(def).toMatchObject({
+      alias: 'dgv',
+      tableName: null,
+      functionName: 'upsert_user',
     });
   });
   it('should throw error on invalid input', () => {

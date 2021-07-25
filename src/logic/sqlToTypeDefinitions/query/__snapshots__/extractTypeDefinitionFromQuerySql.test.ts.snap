@@ -53,6 +53,7 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "i",
+      "functionName": null,
       "tableName": "image",
     },
   ],
@@ -201,18 +202,22 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
+      "functionName": null,
       "tableName": "job",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "cvp",
+      "functionName": null,
       "tableName": "job_cvp",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "v",
+      "functionName": null,
       "tableName": "job_version",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "job_version_to_photo",
+      "functionName": null,
       "tableName": "job_version_to_photo",
     },
   ],
@@ -251,6 +256,7 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "u",
+      "functionName": null,
       "tableName": "user",
     },
   ],
@@ -302,10 +308,12 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
+      "functionName": null,
       "tableName": "ice_cream",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "ice_cream_to_ingredient",
+      "functionName": null,
       "tableName": "ice_cream_to_ingredient",
     },
   ],
@@ -365,14 +373,17 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "u",
+      "functionName": null,
       "tableName": "user",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "p",
+      "functionName": null,
       "tableName": "phone",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "up",
+      "functionName": null,
       "tableName": "view_user_profile_current",
     },
   ],
@@ -466,14 +477,17 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
+      "functionName": null,
       "tableName": "suggestion",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "cvp",
+      "functionName": null,
       "tableName": "suggestion_cvp",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "v",
+      "functionName": null,
       "tableName": "suggestion_version",
     },
   ],
@@ -554,35 +568,43 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "train",
+      "functionName": null,
       "tableName": "view_train_current",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "geocode",
+      "functionName": null,
       "tableName": "geocode",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "locomotive",
+      "functionName": null,
       "tableName": "locomotive",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "unnest",
-      "tableName": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "carriage",
+      "functionName": null,
       "tableName": "carriage",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "unnest",
-      "tableName": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "train_engineer",
+      "functionName": null,
       "tableName": "train_engineer",
     },
     TypeDefinitionOfQueryTableReference {
       "alias": "unnest",
-      "tableName": "unnest",
+      "functionName": "unnest",
+      "tableName": null,
     },
   ],
 }
@@ -634,6 +656,7 @@ TypeDefinitionOfQuery {
   "tableReferences": Array [
     TypeDefinitionOfQueryTableReference {
       "alias": "p",
+      "functionName": null,
       "tableName": "view_provider_current",
     },
   ],

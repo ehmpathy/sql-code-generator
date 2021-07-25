@@ -24,7 +24,11 @@ describe('extractTableReferencesFromQuerySql', () => {
     const defs = extractTableReferencesFromQuerySql({ sql });
     expect(defs.length).toEqual(3);
     expect(defs).toContainEqual(
-      new TypeDefinitionOfQueryTableReference({ alias: 'up', tableName: 'view_user_profile_current' }),
+      new TypeDefinitionOfQueryTableReference({
+        alias: 'up',
+        tableName: 'view_user_profile_current',
+        functionName: null,
+      }),
     );
     expect(defs).toMatchSnapshot();
   });
@@ -34,7 +38,20 @@ describe('extractTableReferencesFromQuerySql', () => {
     });
     const defs = extractTableReferencesFromQuerySql({ sql });
     expect(defs.length).toEqual(2);
-    expect(defs).toContainEqual(new TypeDefinitionOfQueryTableReference({ alias: 'w', tableName: 'work' })); // has the subqueries definition
+    expect(defs).toContainEqual(
+      new TypeDefinitionOfQueryTableReference({ alias: 'w', tableName: 'work', functionName: null }),
+    ); // has the subqueries definition
+    expect(defs).toMatchSnapshot();
+  });
+  it('should be able to determine types accurately for queries that select from a function that returns a table', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../../__test_assets__/queries/upsert_jerb.sql`,
+    });
+    const defs = extractTableReferencesFromQuerySql({ sql });
+    expect(defs.length).toEqual(1);
+    expect(defs).toContainEqual(
+      new TypeDefinitionOfQueryTableReference({ alias: 'dgv', tableName: null, functionName: 'upsert_jerb' }),
+    ); // has the subqueries definition
     expect(defs).toMatchSnapshot();
   });
 });

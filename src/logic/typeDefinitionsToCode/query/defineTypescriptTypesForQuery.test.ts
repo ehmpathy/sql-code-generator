@@ -1,7 +1,11 @@
 import { extractSqlFromFile } from '../../common/extractSqlFromFile';
 import { extractTypeDefinitionFromQuerySql } from '../../sqlToTypeDefinitions/query/extractTypeDefinitionFromQuerySql';
 import { defineTypescriptTypesForQuery } from './defineTypescriptTypesForQuery';
-import { TypeDefinitionOfResourceTable, TypeDefinitionOfResourceView } from '../../../model';
+import {
+  TypeDefinitionOfResourceFunction,
+  TypeDefinitionOfResourceTable,
+  TypeDefinitionOfResourceView,
+} from '../../../model';
 
 describe('defineTypescriptTypesForQuery', () => {
   it('should be able to determine types accurately an example of selecting columns a single table by id', async () => {
@@ -95,6 +99,27 @@ describe('defineTypescriptTypesForQuery', () => {
         new TypeDefinitionOfResourceTable({ name: 'locomotive', columns: [] }),
         new TypeDefinitionOfResourceTable({ name: 'carriage', columns: [] }),
         new TypeDefinitionOfResourceTable({ name: 'train_engineer', columns: [] }),
+      ],
+    });
+    expect(code).toMatchSnapshot();
+  });
+  it('should be able to define types accurately for a query which selects from the table output of a function', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/upsert_jerb.sql`,
+    });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'upsert_jerb',
+      path: '__PATH__',
+      sql,
+    });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [
+        new TypeDefinitionOfResourceFunction({
+          name: 'upsert_jerb',
+          inputs: [],
+          output: new TypeDefinitionOfResourceTable({ name: 'function.output', columns: [] }),
+        }),
       ],
     });
     expect(code).toMatchSnapshot();

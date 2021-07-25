@@ -4,14 +4,17 @@ exports[`extractTableReferencesFromQuerySql should be able to determine types ac
 Array [
   TypeDefinitionOfQueryTableReference {
     "alias": "u",
+    "functionName": null,
     "tableName": "user",
   },
   TypeDefinitionOfQueryTableReference {
     "alias": "p",
+    "functionName": null,
     "tableName": "phone",
   },
   TypeDefinitionOfQueryTableReference {
     "alias": "up",
+    "functionName": null,
     "tableName": "view_user_profile_current",
   },
 ]
@@ -21,11 +24,23 @@ exports[`extractTableReferencesFromQuerySql should be able to determine types ac
 Array [
   TypeDefinitionOfQueryTableReference {
     "alias": "p",
+    "functionName": null,
     "tableName": "provider",
   },
   TypeDefinitionOfQueryTableReference {
     "alias": "w",
+    "functionName": null,
     "tableName": "work",
+  },
+]
+`;
+
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for queries that select from a function that returns a table 1`] = `
+Array [
+  TypeDefinitionOfQueryTableReference {
+    "alias": "dgv",
+    "functionName": "upsert_jerb",
+    "tableName": null,
   },
 ]
 `;
@@ -34,6 +49,7 @@ exports[`extractTableReferencesFromQuerySql should be able to determine types ac
 Array [
   TypeDefinitionOfQueryTableReference {
     "alias": "i",
+    "functionName": null,
     "tableName": "image",
   },
 ]
@@ -43,14 +59,17 @@ exports[`extractTableReferencesFromQuerySql should be able to determine types ac
 Array [
   TypeDefinitionOfQueryTableReference {
     "alias": "s",
+    "functionName": null,
     "tableName": "suggestion",
   },
   TypeDefinitionOfQueryTableReference {
     "alias": "cvp",
+    "functionName": null,
     "tableName": "suggestion_cvp",
   },
   TypeDefinitionOfQueryTableReference {
     "alias": "v",
+    "functionName": null,
     "tableName": "suggestion_version",
   },
 ]

@@ -16,6 +16,19 @@ export interface SqlQueryFindTrainByIdOutput {
 }"
 `;
 
+exports[`defineTypescriptTypesForQuery should be able to define types accurately for a query which selects from the table output of a function 1`] = `
+"export interface SqlQueryUpsertJerbInput {
+  ownerUuid: SqlFunctionUpsertJerbInput['0'];
+  title: SqlFunctionUpsertJerbInput['1'];
+  details: SqlFunctionUpsertJerbInput['2'];
+  dueDate: SqlFunctionUpsertJerbInput['3'];
+}
+export interface SqlQueryUpsertJerbOutput {
+  id: SqlFunctionUpsertJerbOutput['id'];
+  uuid: SqlFunctionUpsertJerbOutput['uuid'];
+}"
+`;
+
 exports[`defineTypescriptTypesForQuery should be able to determine types accurately an example of selecting columns a single table by id 1`] = `
 "export interface SqlQueryFindImageByIdInput {
   id: SqlTableImage['id'];

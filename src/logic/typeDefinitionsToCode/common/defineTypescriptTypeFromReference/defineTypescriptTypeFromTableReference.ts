@@ -4,6 +4,7 @@ import {
   TypeDefinitionOfResourceTable,
   TypeDefinitionOfResourceView,
   TypeDefinition,
+  TypeDefinitionOfResourceFunction,
 } from '../../../../model';
 import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
 import { castResourceNameToTypescriptTypeName } from '../castResourceNameToTypescriptTypeName';
@@ -32,24 +33,42 @@ export const defineTypescriptTypeFromTableReference = ({
   const [sourceTableAlias, sourceTableColumnName] = reference.tableReferencePath.split('.'); // note: we guarantee this format in the sqlToTypeDef layer
 
   // resolve alias => table name
-  const sourceTableName = queryTableReferences.find((ref) => ref.alias === sourceTableAlias)?.tableName;
-  if (!sourceTableName) {
+  const tableReference = queryTableReferences.find((ref) => ref.alias === sourceTableAlias);
+  const sourceTableName = tableReference?.tableName ?? tableReference?.functionName;
+  if (!tableReference || !sourceTableName)
     throw new Error(
       `table alias for of select expression "${reference.tableReferencePath}" not found in query table references`,
     );
-  }
 
   // determine if this table reference is referencing a table or a view
   const referencedResource = typeDefinitions.find(
-    (def): def is TypeDefinitionOfResourceTable | TypeDefinitionOfResourceView =>
+    (def): def is TypeDefinitionOfResourceTable | TypeDefinitionOfResourceView | TypeDefinitionOfResourceFunction =>
       def.name === sourceTableName &&
-      (def instanceof TypeDefinitionOfResourceTable || def instanceof TypeDefinitionOfResourceView),
+      (def instanceof TypeDefinitionOfResourceTable ||
+        def instanceof TypeDefinitionOfResourceView ||
+        def instanceof TypeDefinitionOfResourceFunction),
   );
   if (!referencedResource) {
-    throw new Error(`type definition was not found for referenced table or view '${sourceTableName}'`);
+    if (tableReference.tableName)
+      throw new Error(`type definition was not found for referenced table or view '${sourceTableName}'`);
+    if (tableReference.functionName)
+      throw new Error(`type definition was not found for referenced function '${sourceTableName}'`);
   }
-  const resourceTypeReferenced =
-    referencedResource instanceof TypeDefinitionOfResourceTable ? ResourceType.TABLE : ResourceType.VIEW;
+  const resourceTypeReferenced = (() => {
+    if (referencedResource instanceof TypeDefinitionOfResourceTable) return ResourceType.TABLE;
+    if (referencedResource instanceof TypeDefinitionOfResourceView) return ResourceType.VIEW;
+    if (referencedResource instanceof TypeDefinitionOfResourceFunction) return ResourceType.FUNCTION;
+    throw new Error('unexpected condition, indicates bug within sql-code-generator'); // this should not occur
+  })();
+
+  // check that if its a function, the output of the function is a table
+  if (
+    referencedResource instanceof TypeDefinitionOfResourceFunction &&
+    !(referencedResource.output instanceof TypeDefinitionOfResourceTable)
+  )
+    throw new Error(
+      `function being used as a query table reference but does not return a table. '${sourceTableName}' can't be used as a table reference.`,
+    );
 
   // grab the interface name for this table
   const sourceTableInterfaceName = castResourceNameToTypescriptTypeName({
@@ -58,5 +77,7 @@ export const defineTypescriptTypeFromTableReference = ({
   });
 
   // merge the typescript table name + column name into the full typescript type
-  return `${sourceTableInterfaceName}['${sourceTableColumnName}']`;
+  return `${sourceTableInterfaceName}${
+    resourceTypeReferenced === ResourceType.FUNCTION ? 'Output' : '' // if its referencing a function, then its referencing the function's output
+  }['${sourceTableColumnName}']`;
 };

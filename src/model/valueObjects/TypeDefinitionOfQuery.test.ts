@@ -15,6 +15,7 @@ const selectExpression = new TypeDefinitionOfQuerySelectExpression({
 const tableReference = new TypeDefinitionOfQueryTableReference({
   alias: 'u',
   tableName: 'user',
+  functionName: null,
 });
 
 const inputVariable = new TypeDefinitionOfQueryInputVariable({

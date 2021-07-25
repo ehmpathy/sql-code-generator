@@ -14,6 +14,7 @@ const selectExpression = new TypeDefinitionOfQuerySelectExpression({
 const tableReference = new TypeDefinitionOfQueryTableReference({
   alias: 'u',
   tableName: 'user',
+  functionName: null,
 });
 
 describe('TypeDefinitionOfResourceView', () => {
