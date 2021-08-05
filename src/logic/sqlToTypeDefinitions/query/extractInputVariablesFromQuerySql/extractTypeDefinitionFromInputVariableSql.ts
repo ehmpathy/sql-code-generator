@@ -76,9 +76,18 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     });
   }
 
-  // 4. check if this token is used in a limit. If so, type = a number  const reg = `\\s+(\\w+\\((?:\\s*[:\\w]+,)*(?:\\s*${token},?)(?:\\s*[:\\w]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
+  // 4. check if this token is used in a limit. If so, type = a number
   const tokenUsedForLimit = new RegExp(`(?:LIMIT|limit)\\s+${token}(?:[^\\w]|$)`).test(sql); // check if "LIMIT :token"
   if (tokenUsedForLimit) {
+    return new TypeDefinitionOfQueryInputVariable({
+      name: token.replace(':', ''),
+      type: [DataType.NUMBER],
+    });
+  }
+
+  // 5. check if this token is used in an offset. If so, type = a number
+  const tokenUsedForOffset = new RegExp(`(?:OFFSET|offset)\\s+${token}(?:[^\\w]|$)`).test(sql); // check if "OFFSET :token"
+  if (tokenUsedForOffset) {
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
       type: [DataType.NUMBER],

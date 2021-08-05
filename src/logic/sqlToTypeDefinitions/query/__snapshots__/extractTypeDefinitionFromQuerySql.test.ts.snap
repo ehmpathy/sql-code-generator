@@ -224,6 +224,88 @@ TypeDefinitionOfQuery {
 }
 `;
 
+exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for a query with limit and offset input variables 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "threadUuid",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "chat_thread.uuid",
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "limit",
+      "type": Array [
+        "number",
+      ],
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "offset",
+      "type": Array [
+        "number",
+      ],
+    },
+  ],
+  "name": "find_all_chat_messages_by_thread",
+  "path": "__PATH__",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "chat_message.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "chat_message.uuid",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "thread_uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "chat_thread.uuid",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "sent_at",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "chat_message.sent_at",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "text",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "chat_message.text",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "chat_message",
+      "functionName": null,
+      "tableName": "view_chat_message_current",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "chat_thread",
+      "functionName": null,
+      "tableName": "chat_thread",
+    },
+    TypeDefinitionOfQueryTableReference {
+      "alias": "chat_thread",
+      "functionName": null,
+      "tableName": "chat_thread",
+    },
+  ],
+}
+`;
+
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for query which comments out one of the select expressions 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [

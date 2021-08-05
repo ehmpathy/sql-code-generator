@@ -152,4 +152,17 @@ describe('extractTypeDefinitionFromQuerySql', () => {
       expect(defs).toMatchSnapshot();
     });
   });
+  it('should be able to determine types accurately for a query with limit and offset input variables', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/find_all_chat_messages_by_thread.sql`,
+    });
+    const defs = extractTypeDefinitionFromQuerySql({
+      name: 'find_all_chat_messages_by_thread',
+      path: '__PATH__',
+      sql,
+    });
+    expect(defs.selectExpressions.length).toEqual(5);
+    expect(defs.inputVariables.length).toEqual(3);
+    expect(defs).toMatchSnapshot();
+  });
 });
