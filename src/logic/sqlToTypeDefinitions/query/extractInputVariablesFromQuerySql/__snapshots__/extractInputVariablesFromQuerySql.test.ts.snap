@@ -99,6 +99,38 @@ Array [
 ]
 `;
 
+exports[`extractSelectExpressionsFromQuerySql should be able to extract input variables from a function that compares a timestamp with less-than-or-equals-to and null 1`] = `
+Array [
+  TypeDefinitionOfQueryInputVariable {
+    "name": "threadUuid",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "chat_thread.uuid",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "until",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "chat_message.created_at",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "until",
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "chat_message.created_at",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "limit",
+    "type": Array [
+      "number",
+    ],
+  },
+]
+`;
+
 exports[`extractSelectExpressionsFromQuerySql should be able to extract input variables from a function that postgres::typecasts some of the input variables 1`] = `
 Array [
   TypeDefinitionOfQueryInputVariable {

@@ -52,4 +52,14 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     expect(defs.length).toEqual(7);
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to extract input variables from a function that compares a timestamp with less-than-or-equals-to and null', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../../__test_assets__/queries/find_all_chat_messages_by_thread.lessthan_or_equalsto_or_null.sql`,
+    });
+    const defs = extractInputVariablesFromQuerySql({ sql });
+
+    console.log(defs);
+    expect(defs.length).toEqual(4);
+    expect(defs).toMatchSnapshot();
+  });
 });

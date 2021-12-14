@@ -13,13 +13,14 @@ export const extractTypeDefinitionFromInputVariableSql = ({
   // define regex for token w/ optional type casting
   const tokenWithOptionalTypecastingRegexString = `${token}(?:\\:\\:\\w+(?:\\[\\])?)?`;
 
-  // 1. check if this token matches the "resource.column = :token" pattern; if so, then the input type = the resource.column type
+  // check if this token matches the "resource.column =,<=,>= :token" pattern; if so, then the input type = the resource.column type
   const [
     _, // tslint:disable-line no-unused
-    leftEqualsTableReferencePath, // check if "resource.column = :token"
+    leftEqualsTableReferencePath, // check if "resource.column = :token" or "resource.column <= :token" or "resource.column <= :token"
   ] =
-    new RegExp(`(\\w+\\.?\\w*)\\s?=\\s?(?:${tokenWithOptionalTypecastingRegexString})(?:[^\\w]|$)`, 'g').exec(sql) ??
-    [];
+    new RegExp(`(\\w+\\.?\\w*)\\s?(?:<|>)?=\\s?(?:${tokenWithOptionalTypecastingRegexString})(?:[^\\w]|$)`, 'g').exec(
+      sql,
+    ) ?? [];
   if (leftEqualsTableReferencePath) {
     throwErrorIfTableReferencePathImpliesTable({ referencePath: leftEqualsTableReferencePath });
     return new TypeDefinitionOfQueryInputVariable({
@@ -31,11 +32,11 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     });
   }
 
-  // 2. check if this token matches the ":token = resource.column" pattern; same as above, but flipped
+  // check if this token matches the ":token =,<=,>= resource.column" pattern; same as above, but flipped
   const [
     __, // tslint:disable-line no-unused
-    rightEqualsTableReferencePath, // check if ":token = resource.column"
-  ] = new RegExp(`(?:${tokenWithOptionalTypecastingRegexString})\\s?=\\s?(\\w+\\.?\\w*)`).exec(sql) ?? [];
+    rightEqualsTableReferencePath, // check if ":token = resource.column" or ":token <= resource.column" or ":token >= resource.column"
+  ] = new RegExp(`(?:${tokenWithOptionalTypecastingRegexString})\\s?(?:<|>)?=\\s?(\\w+\\.?\\w*)`).exec(sql) ?? [];
   if (rightEqualsTableReferencePath) {
     throwErrorIfTableReferencePathImpliesTable({ referencePath: rightEqualsTableReferencePath });
     return new TypeDefinitionOfQueryInputVariable({
@@ -47,17 +48,17 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     });
   }
 
-  // 3. check if this token is used in a function. If so, its equivalent to whatever is at that index of the function params
+  // check if this token is used in a function. If so, its equivalent to whatever is at that index of the function params
   const reg = `\\s+(\\w+\\((?:\\s*[:\\w]+,)*(?:\\s*${tokenWithOptionalTypecastingRegexString},?)(?:\\s*[:\\w]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
   const [
     ___, // tslint:disable-line no-unused
     tokenInsideFunctionMatch, // check if "functionName(arg1?, :token, arg2?)"
   ] = new RegExp(reg).exec(sql) ?? [];
   if (tokenInsideFunctionMatch) {
-    // 1. grab the function name
+    // grab the function name
     const functionName = tokenInsideFunctionMatch.split('(')[0].trim();
 
-    // 2. figure out where in the array the token is
+    // figure out where in the array the token is
     const sqlAfterOpen = tokenInsideFunctionMatch.split('(')[1];
     const sqlBetweenOpenAndClose = sqlAfterOpen.split(')')[0];
     const parametersArray = sqlBetweenOpenAndClose.split(',').map((str) => str.trim());
@@ -76,7 +77,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     });
   }
 
-  // 4. check if this token is used in a limit. If so, type = a number
+  // check if this token is used in a limit. If so, type = a number
   const tokenUsedForLimit = new RegExp(`(?:LIMIT|limit)\\s+${token}(?:[^\\w]|$)`).test(sql); // check if "LIMIT :token"
   if (tokenUsedForLimit) {
     return new TypeDefinitionOfQueryInputVariable({
@@ -85,7 +86,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     });
   }
 
-  // 5. check if this token is used in an offset. If so, type = a number
+  // check if this token is used in an offset. If so, type = a number
   const tokenUsedForOffset = new RegExp(`(?:OFFSET|offset)\\s+${token}(?:[^\\w]|$)`).test(sql); // check if "OFFSET :token"
   if (tokenUsedForOffset) {
     return new TypeDefinitionOfQueryInputVariable({
