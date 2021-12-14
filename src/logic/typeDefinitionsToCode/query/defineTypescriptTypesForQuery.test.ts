@@ -124,4 +124,28 @@ describe('defineTypescriptTypesForQuery', () => {
     });
     expect(code).toMatchSnapshot();
   });
+  it.only('should be able to define types correctly for a query which uses an input variable in an or condition (union)', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/find_all_chat_messages_by_thread.lessthan_or_equalsto_or_null.sql`,
+    });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'find_all_chat_messages_by_thread',
+      path: '__PATH__',
+      sql,
+    });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [
+        new TypeDefinitionOfResourceTable({ name: 'chat_thread', columns: [] }),
+        new TypeDefinitionOfResourceView({
+          name: 'view_chat_message_current',
+          selectExpressions: [],
+          tableReferences: [],
+        }),
+      ],
+    });
+    expect(code).toContain("until: null | SqlViewViewChatMessageCurrent['created_at'];"); // should have union-ed the two types
+    console.log(code);
+    // expect(code).toMatchSnapshot();
+  });
 });

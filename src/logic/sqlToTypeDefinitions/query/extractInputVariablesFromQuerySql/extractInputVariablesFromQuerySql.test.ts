@@ -58,7 +58,6 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     });
     const defs = extractInputVariablesFromQuerySql({ sql });
 
-    console.log(defs);
     expect(defs.length).toEqual(4);
     expect(defs).toMatchSnapshot();
   });

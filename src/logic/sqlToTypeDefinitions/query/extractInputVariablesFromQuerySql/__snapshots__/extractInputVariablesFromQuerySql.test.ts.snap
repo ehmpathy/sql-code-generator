@@ -110,10 +110,9 @@ Array [
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "until",
-    "type": TypeDefinitionReference {
-      "functionReferencePath": null,
-      "tableReferencePath": "chat_message.created_at",
-    },
+    "type": Array [
+      "null",
+    ],
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "until",

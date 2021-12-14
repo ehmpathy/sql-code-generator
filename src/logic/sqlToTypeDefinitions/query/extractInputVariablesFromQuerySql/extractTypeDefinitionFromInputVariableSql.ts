@@ -49,7 +49,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
   }
 
   // check if this token is used in a function. If so, its equivalent to whatever is at that index of the function params
-  const reg = `\\s+(\\w+\\((?:\\s*[:\\w]+,)*(?:\\s*${tokenWithOptionalTypecastingRegexString},?)(?:\\s*[:\\w]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
+  const reg = `\\s+(\\w+\\((?:\\s*[:\\w#]+,)*(?:\\s*${tokenWithOptionalTypecastingRegexString},?)(?:\\s*[:\\w#]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
   const [
     ___, // tslint:disable-line no-unused
     tokenInsideFunctionMatch, // check if "functionName(arg1?, :token, arg2?)"
@@ -92,6 +92,17 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
       type: [DataType.NUMBER],
+    });
+  }
+
+  // check if this token is used in a null comparison. if so, type = null
+  const tokenUsedForNullComparison = new RegExp(
+    `(?:${tokenWithOptionalTypecastingRegexString})\\s+(?:IS|is)\\s+(?:NULL|null)(?:[^\\w]|$)`,
+  ).test(sql); // check if "OFFSET :token"
+  if (tokenUsedForNullComparison) {
+    return new TypeDefinitionOfQueryInputVariable({
+      name: token.replace(':', ''),
+      type: [DataType.NULL],
     });
   }
 

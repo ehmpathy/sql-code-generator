@@ -3,6 +3,7 @@ import { TypeDefinitionOfQuery } from '../../../model/valueObjects/TypeDefinitio
 import { castQueryNameToTypescriptTypeName } from '../common/castQueryNameToTypescriptTypeName';
 import { defineTypescriptTypeFromReference } from '../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
 import { defineTypescriptTypeFromDataTypeArrayOrReference } from '../common/defineTypescriptTypeFromDataTypeArrayOrReference';
+import { TypeDefinitionOfQueryInputVariable } from '../../../model/valueObjects/TypeDefinitionOfQueryInputVariable';
 
 export const defineTypescriptTypesForQuery = ({
   definition,
@@ -15,14 +16,29 @@ export const defineTypescriptTypesForQuery = ({
   const typescriptTypeName = castQueryNameToTypescriptTypeName({ name: definition.name });
 
   // define the input interface
-  const typescriptInputInterfacePropertyDefinitions = definition.inputVariables.map((inputVariable) => {
-    const typescriptTypeForReference = defineTypescriptTypeFromDataTypeArrayOrReference({
-      type: inputVariable.type,
-      queryTableReferences: definition.tableReferences,
-      typeDefinitions: allDefinitions,
-    });
-    return `${inputVariable.name}: ${typescriptTypeForReference};`;
-  });
+  const inputVariableNameToTypeDefinitionsMap = definition.inputVariables.reduce((summary, thisDefinition) => {
+    if (!summary[thisDefinition.name]) summary[thisDefinition.name] = [];
+    summary[thisDefinition.name].push(thisDefinition);
+    return summary;
+  }, {} as Record<string, TypeDefinitionOfQueryInputVariable[]>);
+  const typescriptInputInterfacePropertyDefinitions = Object.keys(inputVariableNameToTypeDefinitionsMap).map(
+    (inputVariableName) => {
+      // grab all the types for this input variable (there can be more than one, because an input variable can be used more than once in the same query. e.g., `WHERE x is null OR x = y`)
+      const types = inputVariableNameToTypeDefinitionsMap[inputVariableName].map((def) => def.type);
+
+      // cast each of those to their typescript-type
+      const typescriptTypesForReference = types.map((type) =>
+        defineTypescriptTypeFromDataTypeArrayOrReference({
+          type,
+          queryTableReferences: definition.tableReferences,
+          typeDefinitions: allDefinitions,
+        }),
+      );
+
+      // and define the typescript property definition for this input variable as a union of all of those types; // TODO(#50): support intersection; https://github.com/uladkasach/sql-code-generator/issues/50
+      return `${inputVariableName}: ${typescriptTypesForReference.join(' | ')};`;
+    },
+  );
   const typescriptInputInterfaceDefinition = typescriptInputInterfacePropertyDefinitions.length // if no inputs, then interface; else, type = null
     ? `
 export interface ${typescriptTypeName}Input {
