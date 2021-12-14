@@ -1,0 +1,17 @@
+name: pr-release-on-main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: GoogleCloudPlatform/release-please-action@v2
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
+          release-type: node
+          pull-request-title-pattern: 'chore(release): v${version} ${component}${scope}🎉'
+          changelog-path: changelog.md
