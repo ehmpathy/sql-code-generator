@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.9.1](https://www.github.com/uladkasach/sql-code-generator/compare/v0.9.0...v0.9.1) (2022-02-03)
+
+
+### Bug Fixes
+
+* **query:** ensure input variable names with special substrings do not affect parsing of table refs ([#58](https://www.github.com/uladkasach/sql-code-generator/issues/58)) ([50629ed](https://www.github.com/uladkasach/sql-code-generator/commit/50629edcb2eabeea63abf9b384d5ea0d2be49487))
+
 ## [0.9.0](https://www.github.com/uladkasach/sql-code-generator/compare/v0.8.2...v0.9.0) (2021-12-14)
 
 
