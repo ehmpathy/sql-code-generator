@@ -114,6 +114,87 @@ TypeDefinitionOfQuery {
 }
 `;
 
+exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for a query uses an input variable containing the substring "from" 1`] = `
+TypeDefinitionOfQuery {
+  "inputVariables": Array [
+    TypeDefinitionOfQueryInputVariable {
+      "name": "externalId",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_email.input.0",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "sesMessageId",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_email.input.1",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "toReceiverId",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_email.input.2",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "fromSenderId",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_email.input.3",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "subject",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_email.input.4",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "body",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_email.input.5",
+        "tableReferencePath": null,
+      },
+    },
+    TypeDefinitionOfQueryInputVariable {
+      "name": "status",
+      "type": TypeDefinitionReference {
+        "functionReferencePath": "upsert_email.input.6",
+        "tableReferencePath": null,
+      },
+    },
+  ],
+  "name": "upsert_email",
+  "path": "__PATH__",
+  "selectExpressions": Array [
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "id",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "dgv.id",
+      },
+    },
+    TypeDefinitionOfQuerySelectExpression {
+      "alias": "uuid",
+      "typeReference": TypeDefinitionReference {
+        "functionReferencePath": null,
+        "tableReferencePath": "dgv.uuid",
+      },
+    },
+  ],
+  "tableReferences": Array [
+    TypeDefinitionOfQueryTableReference {
+      "alias": "dgv",
+      "functionName": "upsert_email",
+      "tableName": null,
+    },
+  ],
+}
+`;
+
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for a query with a postgres fn in the select expressions (as well as subselect) 1`] = `
 TypeDefinitionOfQuery {
   "inputVariables": Array [

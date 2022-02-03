@@ -165,4 +165,19 @@ describe('extractTypeDefinitionFromQuerySql', () => {
     expect(defs.inputVariables.length).toEqual(3);
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to determine types accurately for a query uses an input variable containing the substring "from"', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/upsert_email.sql`,
+    });
+    const defs = extractTypeDefinitionFromQuerySql({
+      name: 'upsert_email',
+      path: '__PATH__',
+      sql,
+    });
+    // console.log(defs);
+    expect(defs.selectExpressions.length).toEqual(2);
+    expect(defs.tableReferences.length).toEqual(1);
+    expect(defs.inputVariables.length).toEqual(7);
+    expect(defs).toMatchSnapshot();
+  });
 });
