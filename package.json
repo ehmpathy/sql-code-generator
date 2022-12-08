@@ -75,8 +75,7 @@
     "tslint": "5.11.0",
     "tslint-config-airbnb": "5.11.0",
     "tslint-consistent-codestyle": "1.13.3",
-    "typescript": "3.9.5",
-    "uuid": "3.3.2"
+    "typescript": "3.9.5"
   },
   "dependencies": {
     "@oclif/command": "1.7.0",
@@ -95,6 +94,7 @@
     "simple-sha256": "1.0.0",
     "sql-strip-comments": "0.0.23",
     "ts-node": "8.6.2",
+    "uuid": "3.3.2",
     "yaml": "1.6.0",
     "yesql": "3.2.2"
   }
