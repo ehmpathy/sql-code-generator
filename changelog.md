@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.9.2](https://www.github.com/uladkasach/sql-code-generator/compare/v0.9.1...v0.9.2) (2022-12-08)
+
+
+### Bug Fixes
+
+* **deps:** ensure uuid package is a direct dependency ([359029b](https://www.github.com/uladkasach/sql-code-generator/commit/359029b769baf2a59d695875d31797d833c119ba))
+
 ### [0.9.1](https://www.github.com/uladkasach/sql-code-generator/compare/v0.9.0...v0.9.1) (2022-02-03)
 
 
