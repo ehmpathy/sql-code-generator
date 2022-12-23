@@ -89,7 +89,7 @@
     "joi": "14.3.1",
     "listr": "0.14.3",
     "mysql2": "1.6.5",
-    "oclif": "1.16.1",
+    "oclif": "3.4.2",
     "schematic-joi-model": "1.2.2",
     "simple-sha256": "1.0.0",
     "sql-strip-comments": "0.0.23",
