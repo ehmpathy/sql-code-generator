@@ -28,6 +28,9 @@ jobs:
       - name: install
         run: npm ci
 
+      - name: provision:integration-test-db
+        run: npm run provision:integration-test-db
+
       - name: tests
         run: npm run test
         env:
