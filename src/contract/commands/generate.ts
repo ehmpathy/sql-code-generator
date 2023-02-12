@@ -1,12 +1,12 @@
-import { Command, flags } from '@oclif/command';
+import { Command, Flags } from '@oclif/core';
 import { generate } from '../../logic/commands/generate/generate';
 
 export default class Generate extends Command {
   public static description = 'generate typescript code by parsing sql definitions for types and usage';
 
   public static flags = {
-    help: flags.help({ char: 'h' }),
-    config: flags.string({
+    help: Flags.help({ char: 'h' }),
+    config: Flags.string({
       char: 'c',
       description: 'path to config yml',
       required: true,
@@ -15,7 +15,7 @@ export default class Generate extends Command {
   };
 
   public async run() {
-    const { flags } = this.parse(Generate);
+    const { flags } = await this.parse(Generate);
     const config = flags.config!;
 
     // generate the code

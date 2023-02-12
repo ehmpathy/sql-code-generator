@@ -78,8 +78,7 @@
     "typescript": "3.9.5"
   },
   "dependencies": {
-    "@oclif/command": "1.7.0",
-    "@oclif/config": "1.16.0",
+    "@oclif/core": "2.0.11",
     "@oclif/plugin-help": "3.1.0",
     "chalk": "2.4.2",
     "change-case": "4.1.1",
@@ -89,7 +88,7 @@
     "joi": "14.3.1",
     "listr": "0.14.3",
     "mysql2": "1.6.5",
-    "oclif": "1.16.1",
+    "oclif": "3.3.1",
     "schematic-joi-model": "1.2.2",
     "simple-sha256": "1.0.0",
     "sql-strip-comments": "0.0.23",

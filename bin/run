@@ -2,7 +2,7 @@
 
 require('ts-node').register(); // register typescript REPL so that require() method can import typescript files as well as js
 
-require('@oclif/command')
+require('@oclif/core')
   .run()
-  .then(require('@oclif/command/flush'))
-  .catch(require('@oclif/errors/handle'));
+  .then(require('@oclif/core/flush'))
+  .catch(require('@oclif/core/handle'));
