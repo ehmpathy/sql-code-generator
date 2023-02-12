@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for query selecting function output 1`] = `
-Array [
+[
   TypeDefinitionOfQuerySelectExpression {
     "alias": "id",
     "typeReference": TypeDefinitionReference {
@@ -13,7 +13,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for query selecting function output and normal table columns 1`] = `
-Array [
+[
   TypeDefinitionOfQuerySelectExpression {
     "alias": "id",
     "typeReference": TypeDefinitionReference {
@@ -53,7 +53,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for query with subquery 1`] = `
-Array [
+[
   TypeDefinitionOfQuerySelectExpression {
     "alias": "id",
     "typeReference": TypeDefinitionReference {
@@ -93,7 +93,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
-Array [
+[
   TypeDefinitionOfQuerySelectExpression {
     "alias": "id",
     "typeReference": TypeDefinitionReference {
@@ -133,7 +133,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other example 1`] = `
-Array [
+[
   TypeDefinitionOfQuerySelectExpression {
     "alias": "id",
     "typeReference": TypeDefinitionReference {

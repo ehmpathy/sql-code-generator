@@ -1,10 +1,9 @@
+import { uuid } from '../../../../../deps';
 import { extractSqlFromFile } from '../../../../common/extractSqlFromFile';
 import { breakSqlIntoNestedSqlArraysAtParentheses } from './breakSqlIntoNestedSqlArraysAtParentheses';
 import { flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive } from './flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive';
 
-import uuid = require('uuid');
-
-jest.mock('uuid');
+jest.mock('../../../../../deps');
 const uuidMock = uuid as any as jest.Mock;
 uuidMock.mockReturnValue('__UUID__');
 

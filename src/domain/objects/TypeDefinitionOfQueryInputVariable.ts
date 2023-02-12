@@ -8,7 +8,7 @@ const schema = Joi.object().keys({
   name: Joi.string().required(),
   type: Joi.alternatives([
     TypeDefinitionReference.schema.required(),
-    Joi.array().items(Joi.string().allow(Object.keys(DataType))),
+    Joi.array().items(Joi.string().valid(...Object.values(DataType))),
   ]),
 });
 export interface TypeDefinitionOfQueryInputVariable {

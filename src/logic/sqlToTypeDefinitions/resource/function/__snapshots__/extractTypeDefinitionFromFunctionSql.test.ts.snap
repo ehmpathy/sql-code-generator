@@ -2,38 +2,38 @@
 
 exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this example 1`] = `
 TypeDefinitionOfResourceFunction {
-  "inputs": Array [
+  "inputs": [
     TypeDefinitionOfResourceInput {
       "name": "in_url",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_caption",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_credit",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_alt_text",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
   ],
   "name": "upsert_image",
-  "output": Array [
+  "output": [
     "number",
   ],
 }
@@ -41,52 +41,52 @@ TypeDefinitionOfResourceFunction {
 
 exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this other example 1`] = `
 TypeDefinitionOfResourceFunction {
-  "inputs": Array [
+  "inputs": [
     TypeDefinitionOfResourceInput {
       "name": "in_suggestion_source",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_external_id",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_suggested_idea_id",
-      "type": Array [
+      "type": [
         "number",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_status",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_result",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_resultant_curated_idea_id",
-      "type": Array [
+      "type": [
         "number",
         "null",
       ],
     },
   ],
   "name": "upsert_suggestion",
-  "output": Array [
+  "output": [
     "number",
   ],
 }
@@ -94,31 +94,31 @@ TypeDefinitionOfResourceFunction {
 
 exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this other other example 1`] = `
 TypeDefinitionOfResourceFunction {
-  "inputs": Array [
+  "inputs": [
     TypeDefinitionOfResourceInput {
       "name": "in_array",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_delimiter",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_index",
-      "type": Array [
+      "type": [
         "number",
         "null",
       ],
     },
   ],
   "name": "hash_string",
-  "output": Array [
+  "output": [
     "string",
   ],
 }
@@ -126,45 +126,45 @@ TypeDefinitionOfResourceFunction {
 
 exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types from a function that returns a table 1`] = `
 TypeDefinitionOfResourceFunction {
-  "inputs": Array [
+  "inputs": [
     TypeDefinitionOfResourceInput {
       "name": "in_uuid",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_title",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_status",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_description",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_location_id",
-      "type": Array [
+      "type": [
         "number",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_photo_ids",
-      "type": Array [
+      "type": [
         "number[]",
         "null",
       ],
@@ -172,28 +172,28 @@ TypeDefinitionOfResourceFunction {
   ],
   "name": "upsert_jerb",
   "output": TypeDefinitionOfResourceTable {
-    "columns": Array [
+    "columns": [
       TypeDefinitionOfResourceColumn {
         "name": "id",
-        "type": Array [
+        "type": [
           "number",
         ],
       },
       TypeDefinitionOfResourceColumn {
         "name": "uuid",
-        "type": Array [
+        "type": [
           "string",
         ],
       },
       TypeDefinitionOfResourceColumn {
         "name": "created_at",
-        "type": Array [
+        "type": [
           "Date",
         ],
       },
       TypeDefinitionOfResourceColumn {
         "name": "effective_at",
-        "type": Array [
+        "type": [
           "Date",
         ],
       },
@@ -205,24 +205,24 @@ TypeDefinitionOfResourceFunction {
 
 exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types in this example 1`] = `
 TypeDefinitionOfResourceFunction {
-  "inputs": Array [
+  "inputs": [
     TypeDefinitionOfResourceInput {
       "name": "in_url",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_description",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
   ],
   "name": "upsert_photo",
-  "output": Array [
+  "output": [
     "number",
   ],
 }
@@ -230,52 +230,52 @@ TypeDefinitionOfResourceFunction {
 
 exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types in this other example 1`] = `
 TypeDefinitionOfResourceFunction {
-  "inputs": Array [
+  "inputs": [
     TypeDefinitionOfResourceInput {
       "name": "in_uuid",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_title",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_status",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_description",
-      "type": Array [
+      "type": [
         "string",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_location_id",
-      "type": Array [
+      "type": [
         "number",
         "null",
       ],
     },
     TypeDefinitionOfResourceInput {
       "name": "in_photo_ids",
-      "type": Array [
+      "type": [
         "number[]",
         "null",
       ],
     },
   ],
   "name": "upsert_job",
-  "output": Array [
+  "output": [
     "number",
   ],
 }

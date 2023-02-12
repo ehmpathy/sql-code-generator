@@ -9,7 +9,9 @@ import { DataType } from '../constants';
 const schema = Joi.object().keys({
   name: Joi.string().required(),
   type: Joi.array().items(
-    Joi.string().valid(Object.values(DataType)).required(),
+    Joi.string()
+      .valid(...Object.values(DataType))
+      .required(),
   ),
 });
 export interface TypeDefinitionOfResourceColumn {

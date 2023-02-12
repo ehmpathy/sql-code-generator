@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`readConfig should be able to read the example config provisioned in __test_assets__ 1`] = `
-Object {
-  "declarations": Array [
+{
+  "declarations": [
     ResourceDeclaration {
       "path": "schema/functions/hash_string.sql",
       "sql": "CREATE FUNCTION \`get_from_delimiter_split_string\`(
@@ -82,8 +82,8 @@ CREATE TABLE \`communication_channel\` (
   \`created_at\` DATETIME DEFAULT CURRENT_TIMESTAMP,
 
   -- static data
-  \`type\` ENUM('APP', 'SMS', 'EMAIL') NOT NULL, -- e.g., \\"how do we send this\\"
-  \`address\` VARCHAR(36) NOT NULL, -- e.g., \\"where do we send this\\"
+  \`type\` ENUM('APP', 'SMS', 'EMAIL') NOT NULL, -- e.g., "how do we send this"
+  \`address\` VARCHAR(36) NOT NULL, -- e.g., "where do we send this"
 
   -- meta meta
   UNIQUE (\`type\`, \`address\`) -- type + address uniquely identify a communication channel
@@ -111,7 +111,7 @@ CREATE TABLE \`communication_channel\` (
   \`created_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   \`url\` varchar(190) COLLATE utf8mb4_bin NOT NULL,
   \`caption\` varchar(190) COLLATE utf8mb4_bin DEFAULT NULL,
-  \`credit\` varchar(190) COLLATE utf8mb4_bin, -- note: we strip \\"DEFAULT NULL\\" here for testing
+  \`credit\` varchar(190) COLLATE utf8mb4_bin, -- note: we strip "DEFAULT NULL" here for testing
   \`alt_text\` varchar(190) COLLATE utf8mb4_bin,
   PRIMARY KEY (\`id\`),
   UNIQUE KEY \`image_ux1\` (\`url\`,\`caption\`,\`credit\`,\`alt_text\`)
@@ -219,7 +219,7 @@ WHERE u.id = :userId
     },
   ],
   "dialect": "5.7",
-  "generates": Object {
+  "generates": {
     "queryFunctions": "src/generated/fromSql/queryFunctions.ts",
     "types": "src/generated/fromSql/types.ts",
   },

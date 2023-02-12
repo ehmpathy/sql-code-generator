@@ -7,7 +7,7 @@ import { ResourceDeclaration } from './ResourceDeclaration';
 
 const generatorConfigSchema = Joi.object().keys({
   rootDir: Joi.string().required(), // dir of config file, to which all config paths are relative
-  language: Joi.string().valid(Object.values(DatabaseLanguage)),
+  language: Joi.string().valid(...Object.values(DatabaseLanguage)),
   dialect: Joi.string().required(),
   generates: Joi.object().keys({
     types: Joi.string().required(),

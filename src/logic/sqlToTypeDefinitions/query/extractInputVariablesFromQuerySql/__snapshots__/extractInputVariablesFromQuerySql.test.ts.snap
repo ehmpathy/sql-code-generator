@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for a case where an input variable is defined in a subquery used as an input to a function 1`] = `
-Array [
+[
   TypeDefinitionOfQueryInputVariable {
     "name": "serviceProviderUuid",
     "type": TypeDefinitionReference {
@@ -34,7 +34,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
-Array [
+[
   TypeDefinitionOfQueryInputVariable {
     "name": "id",
     "type": TypeDefinitionReference {
@@ -45,10 +45,10 @@ Array [
 ]
 `;
 
-exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other example 1`] = `Array []`;
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other example 1`] = `[]`;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other other example 1`] = `
-Array [
+[
   TypeDefinitionOfQueryInputVariable {
     "name": "suggestionSource",
     "type": TypeDefinitionReference {
@@ -88,7 +88,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for yet another example 1`] = `
-Array [
+[
   TypeDefinitionOfQueryInputVariable {
     "name": "name",
     "type": TypeDefinitionReference {
@@ -100,7 +100,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to extract input variables from a function that compares a timestamp with less-than-or-equals-to and null 1`] = `
-Array [
+[
   TypeDefinitionOfQueryInputVariable {
     "name": "threadUuid",
     "type": TypeDefinitionReference {
@@ -110,7 +110,7 @@ Array [
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "until",
-    "type": Array [
+    "type": [
       "null",
     ],
   },
@@ -123,7 +123,7 @@ Array [
   },
   TypeDefinitionOfQueryInputVariable {
     "name": "limit",
-    "type": Array [
+    "type": [
       "number",
     ],
   },
@@ -131,7 +131,7 @@ Array [
 `;
 
 exports[`extractSelectExpressionsFromQuerySql should be able to extract input variables from a function that postgres::typecasts some of the input variables 1`] = `
-Array [
+[
   TypeDefinitionOfQueryInputVariable {
     "name": "homeStationGeocodeId",
     "type": TypeDefinitionReference {

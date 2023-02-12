@@ -39,6 +39,7 @@
   "scripts": {
     "generate:cli-readme": "npm run build && oclif-dev readme",
     "build:ts": "tsc -p ./tsconfig.build.json",
+    "build:artifact": "echo 'no artifact'",
     "prepublish": "npm run build",
     "commit:with-cli": "npx cz",
     "fix:format:terraform": "echo 'no terraform'",

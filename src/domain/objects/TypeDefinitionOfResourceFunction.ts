@@ -10,7 +10,7 @@ const schema = Joi.object().keys({
   inputs: Joi.array().items(TypeDefinitionOfResourceInput.schema).required(),
   output: Joi.alternatives(
     Joi.array()
-      .items(Joi.string().valid(Object.values(DataType)))
+      .items(Joi.string().valid(...Object.values(DataType)))
       .required(),
     TypeDefinitionOfResourceTable.schema,
   ),

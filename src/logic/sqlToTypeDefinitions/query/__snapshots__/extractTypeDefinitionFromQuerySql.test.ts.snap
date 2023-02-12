@@ -2,7 +2,7 @@
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately an example of selecting columns a single table by id 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "id",
       "type": TypeDefinitionReference {
@@ -13,7 +13,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "find_image_by_id",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -50,7 +50,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "i",
       "functionName": null,
@@ -62,7 +62,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately an upsert query 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "suggestionSource",
       "type": TypeDefinitionReference {
@@ -101,7 +101,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "upsert_suggestion",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -110,13 +110,13 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [],
+  "tableReferences": [],
 }
 `;
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for a query uses an input variable containing the substring "from" 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "externalId",
       "type": TypeDefinitionReference {
@@ -169,7 +169,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "upsert_email",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -185,7 +185,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "dgv",
       "functionName": "upsert_email",
@@ -197,7 +197,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for a query with a postgres fn in the select expressions (as well as subselect) 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "id",
       "type": TypeDefinitionReference {
@@ -208,7 +208,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "find_job_by_id",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -280,7 +280,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
       "functionName": null,
@@ -307,7 +307,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for a query with limit and offset input variables 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "threadUuid",
       "type": TypeDefinitionReference {
@@ -317,20 +317,20 @@ TypeDefinitionOfQuery {
     },
     TypeDefinitionOfQueryInputVariable {
       "name": "limit",
-      "type": Array [
+      "type": [
         "number",
       ],
     },
     TypeDefinitionOfQueryInputVariable {
       "name": "offset",
-      "type": Array [
+      "type": [
         "number",
       ],
     },
   ],
   "name": "find_all_chat_messages_by_thread",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -367,7 +367,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "chat_message",
       "functionName": null,
@@ -389,7 +389,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for query which comments out one of the select expressions 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "firstName",
       "type": TypeDefinitionReference {
@@ -400,7 +400,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "find_all_by_name_excluding_one_field",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -416,7 +416,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "u",
       "functionName": null,
@@ -428,10 +428,10 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for query with a subquery in the select expressions 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [],
+  "inputVariables": [],
   "name": "find_with_subselect_in_select_expressions",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -468,7 +468,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
       "functionName": null,
@@ -485,7 +485,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately for this example that selects both from tables and functions 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "lastName",
       "type": TypeDefinitionReference {
@@ -496,7 +496,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "find_users_by_last_name",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -533,7 +533,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "u",
       "functionName": null,
@@ -555,10 +555,10 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql should be able to determine types accurately when selecting columns from multiple tables, no input variables 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [],
+  "inputVariables": [],
   "name": "select_suggestion",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -637,7 +637,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
       "functionName": null,
@@ -659,7 +659,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately a query which has type casting in select expressions 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "uuid",
       "type": TypeDefinitionReference {
@@ -670,7 +670,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "find_train_by_uuid",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -735,7 +735,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "train",
       "functionName": null,
@@ -787,7 +787,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately a query which has type casting on inputs expressions 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "homeStationGeocodeId",
       "type": TypeDefinitionReference {
@@ -840,7 +840,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "upsert_train",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -856,7 +856,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "dgv",
       "functionName": "upsert_train",
@@ -903,7 +903,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately a query with subqueries and unnesting 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "id",
       "type": TypeDefinitionReference {
@@ -914,7 +914,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "find_train_by_id",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -972,7 +972,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "train",
       "functionName": null,
@@ -1019,7 +1019,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately an upsert query which includes a subquery 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "serviceProviderUuid",
       "type": TypeDefinitionReference {
@@ -1051,7 +1051,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "upsert_profile_with_subselect",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -1060,7 +1060,7 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "p",
       "functionName": null,
@@ -1072,7 +1072,7 @@ TypeDefinitionOfQuery {
 
 exports[`extractTypeDefinitionFromQuerySql subqueries should be able to determine types accurately an upsert query which includes a subquery which calls a function 1`] = `
 TypeDefinitionOfQuery {
-  "inputVariables": Array [
+  "inputVariables": [
     TypeDefinitionOfQueryInputVariable {
       "name": "providerUuid",
       "type": TypeDefinitionReference {
@@ -1104,7 +1104,7 @@ TypeDefinitionOfQuery {
   ],
   "name": "upsert_profile_with_subquery_function",
   "path": "__PATH__",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -1113,6 +1113,6 @@ TypeDefinitionOfQuery {
       },
     },
   ],
-  "tableReferences": Array [],
+  "tableReferences": [],
 }
 `;

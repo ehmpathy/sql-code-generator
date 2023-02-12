@@ -1,31 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this example 1`] = `
-Array [
+[
   TypeDefinitionOfResourceInput {
     "name": "in_url",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_caption",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_credit",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_alt_text",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
@@ -34,45 +34,45 @@ Array [
 `;
 
 exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this other example 1`] = `
-Array [
+[
   TypeDefinitionOfResourceInput {
     "name": "in_suggestion_source",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_external_id",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_suggested_idea_id",
-    "type": Array [
+    "type": [
       "number",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_status",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_result",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_resultant_curated_idea_id",
-    "type": Array [
+    "type": [
       "number",
       "null",
     ],
@@ -81,24 +81,24 @@ Array [
 `;
 
 exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this other example again 1`] = `
-Array [
+[
   TypeDefinitionOfResourceInput {
     "name": "in_array",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_delimiter",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_index",
-    "type": Array [
+    "type": [
       "number",
       "null",
     ],
@@ -107,17 +107,17 @@ Array [
 `;
 
 exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately in this example 1`] = `
-Array [
+[
   TypeDefinitionOfResourceInput {
     "name": "in_url",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_description",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
@@ -125,48 +125,48 @@ Array [
 ]
 `;
 
-exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately there is no input args 1`] = `Array []`;
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately there is no input args 1`] = `[]`;
 
 exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately when one of the inputs is an array type 1`] = `
-Array [
+[
   TypeDefinitionOfResourceInput {
     "name": "in_uuid",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_title",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_status",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_description",
-    "type": Array [
+    "type": [
       "string",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_location_id",
-    "type": Array [
+    "type": [
       "number",
       "null",
     ],
   },
   TypeDefinitionOfResourceInput {
     "name": "in_photo_ids",
-    "type": Array [
+    "type": [
       "number[]",
       "null",
     ],

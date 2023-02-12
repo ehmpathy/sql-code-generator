@@ -41,7 +41,7 @@ export const extractTypeDefinitionFromTableReference = ({
     : new RegExp(FUNCTION_NAME_MATCHER_REGEX).exec(sql) ?? []; // tslint:disable-line no-unused
 
   // make sure it matches one of the above
-  if (!tableName || !functionName)
+  if (!tableName && !functionName)
     throw new Error(
       'could not identify the referenced table from table reference sql; unexpected',
     ); // fail fast
@@ -52,7 +52,7 @@ export const extractTypeDefinitionFromTableReference = ({
     new RegExp(SPECIFIED_ALIAS_MATCHER_REGEX).exec(sql) ?? []; // tslint:disable-line no-unused
 
   // define the name, considering whether alias was given
-  const alias: string = specifiedAlias ?? tableName ?? functionName;
+  const alias: string = specifiedAlias ?? tableName ?? functionName!;
 
   // return the full definition
   return new TypeDefinitionOfQueryTableReference({

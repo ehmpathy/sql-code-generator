@@ -3,7 +3,7 @@
 exports[`extractTypeDefinitionFromViewSql should be able to extract types even when one of the columns has the word "from" in it 1`] = `
 TypeDefinitionOfResourceView {
   "name": "view_email_current",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -96,7 +96,7 @@ TypeDefinitionOfResourceView {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
       "functionName": null,
@@ -119,7 +119,7 @@ TypeDefinitionOfResourceView {
 exports[`extractTypeDefinitionFromViewSql should be able to extract types in this example 1`] = `
 TypeDefinitionOfResourceView {
   "name": "view_suggestion_current",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -184,7 +184,7 @@ TypeDefinitionOfResourceView {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
       "functionName": null,
@@ -207,7 +207,7 @@ TypeDefinitionOfResourceView {
 exports[`extractTypeDefinitionFromViewSql should be able to extract types in this other example 1`] = `
 TypeDefinitionOfResourceView {
   "name": "view_job_current",
-  "selectExpressions": Array [
+  "selectExpressions": [
     TypeDefinitionOfQuerySelectExpression {
       "alias": "id",
       "typeReference": TypeDefinitionReference {
@@ -279,7 +279,7 @@ TypeDefinitionOfResourceView {
       },
     },
   ],
-  "tableReferences": Array [
+  "tableReferences": [
     TypeDefinitionOfQueryTableReference {
       "alias": "s",
       "functionName": null,
