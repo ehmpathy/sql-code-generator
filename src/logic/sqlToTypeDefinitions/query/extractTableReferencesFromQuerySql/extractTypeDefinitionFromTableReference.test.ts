@@ -1,4 +1,4 @@
-import { TypeDefinitionOfQueryTableReference } from '../../../../model';
+import { TypeDefinitionOfQueryTableReference } from '../../../../domain';
 import { extractTypeDefinitionFromTableReference } from './extractTypeDefinitionFromTableReference';
 
 describe('extractTypeDefinitionFromTableReference', () => {

@@ -1,4 +1,4 @@
-import { DatabaseLanguage } from '../../../../model';
+import { DatabaseLanguage } from '../../../../domain';
 
 export const defineTypescriptExecuteQueryWithBestPracticesFunction = ({ language }: { language: DatabaseLanguage }) => {
   return `

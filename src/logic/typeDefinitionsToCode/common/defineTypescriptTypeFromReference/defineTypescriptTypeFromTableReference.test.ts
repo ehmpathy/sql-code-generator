@@ -1,47 +1,77 @@
 import { defineTypescriptTypeFromTableReference } from './defineTypescriptTypeFromTableReference';
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import {
   DataType,
   TypeDefinitionOfQueryTableReference,
   TypeDefinitionOfResourceFunction,
   TypeDefinitionOfResourceTable,
   TypeDefinitionOfResourceView,
-} from '../../../../model';
+} from '../../../../domain';
 
 describe('defineTypescriptTypeFromTableReference', () => {
   it('should correctly define the typescript type reference for table', () => {
     const code = defineTypescriptTypeFromTableReference({
-      reference: new TypeDefinitionReference({ tableReferencePath: 'i.url', functionReferencePath: null }),
+      reference: new TypeDefinitionReference({
+        tableReferencePath: 'i.url',
+        functionReferencePath: null,
+      }),
       queryTableReferences: [
-        new TypeDefinitionOfQueryTableReference({ tableName: 'image', alias: 'i', functionName: null }),
+        new TypeDefinitionOfQueryTableReference({
+          tableName: 'image',
+          alias: 'i',
+          functionName: null,
+        }),
       ],
-      typeDefinitions: [new TypeDefinitionOfResourceTable({ name: 'image', columns: [] })],
+      typeDefinitions: [
+        new TypeDefinitionOfResourceTable({ name: 'image', columns: [] }),
+      ],
     });
     expect(code).toEqual("SqlTableImage['url']");
   });
   it('should correctly define the typescript type reference for view', () => {
     const code = defineTypescriptTypeFromTableReference({
-      reference: new TypeDefinitionReference({ tableReferencePath: 'i.url', functionReferencePath: null }),
+      reference: new TypeDefinitionReference({
+        tableReferencePath: 'i.url',
+        functionReferencePath: null,
+      }),
       queryTableReferences: [
-        new TypeDefinitionOfQueryTableReference({ tableName: 'view_image_current', alias: 'i', functionName: null }),
+        new TypeDefinitionOfQueryTableReference({
+          tableName: 'view_image_current',
+          alias: 'i',
+          functionName: null,
+        }),
       ],
       typeDefinitions: [
-        new TypeDefinitionOfResourceView({ name: 'view_image_current', tableReferences: [], selectExpressions: [] }),
+        new TypeDefinitionOfResourceView({
+          name: 'view_image_current',
+          tableReferences: [],
+          selectExpressions: [],
+        }),
       ],
     });
     expect(code).toEqual("SqlViewViewImageCurrent['url']");
   });
   it('should correctly define the typescript type for function output', () => {
     const code = defineTypescriptTypeFromTableReference({
-      reference: new TypeDefinitionReference({ tableReferencePath: 'dgv.id', functionReferencePath: null }),
+      reference: new TypeDefinitionReference({
+        tableReferencePath: 'dgv.id',
+        functionReferencePath: null,
+      }),
       queryTableReferences: [
-        new TypeDefinitionOfQueryTableReference({ tableName: null, alias: 'dgv', functionName: 'upsert_image' }),
+        new TypeDefinitionOfQueryTableReference({
+          tableName: null,
+          alias: 'dgv',
+          functionName: 'upsert_image',
+        }),
       ],
       typeDefinitions: [
         new TypeDefinitionOfResourceFunction({
           name: 'upsert_image',
           inputs: [], // these dont matter for this test
-          output: new TypeDefinitionOfResourceTable({ name: 'function.output', columns: [] }),
+          output: new TypeDefinitionOfResourceTable({
+            name: 'function.output',
+            columns: [],
+          }),
         }),
       ],
     });
@@ -50,49 +80,79 @@ describe('defineTypescriptTypeFromTableReference', () => {
   it('should throw an error if the queryTableReference that this reference is talking about was not defined', () => {
     try {
       defineTypescriptTypeFromTableReference({
-        reference: new TypeDefinitionReference({ tableReferencePath: 'i.url', functionReferencePath: null }),
+        reference: new TypeDefinitionReference({
+          tableReferencePath: 'i.url',
+          functionReferencePath: null,
+        }),
         queryTableReferences: [], // since we never defined what table the alias "i" points to, we cant define the type!
         typeDefinitions: [],
       });
       throw new Error('should not reach here');
     } catch (error) {
-      expect(error.message).toEqual('table alias for of select expression "i.url" not found in query table references');
+      expect(error.message).toEqual(
+        'table alias for of select expression "i.url" not found in query table references',
+      );
     }
   });
   it('should throw an error if the resourceTypeDefinition that this reference is talking about was not defined', () => {
     try {
       defineTypescriptTypeFromTableReference({
-        reference: new TypeDefinitionReference({ tableReferencePath: 'i.url', functionReferencePath: null }),
+        reference: new TypeDefinitionReference({
+          tableReferencePath: 'i.url',
+          functionReferencePath: null,
+        }),
         queryTableReferences: [
-          new TypeDefinitionOfQueryTableReference({ tableName: 'image', alias: 'i', functionName: null }),
+          new TypeDefinitionOfQueryTableReference({
+            tableName: 'image',
+            alias: 'i',
+            functionName: null,
+          }),
         ],
         typeDefinitions: [],
       });
       throw new Error('should not reach here');
     } catch (error) {
-      expect(error.message).toEqual("type definition was not found for referenced table or view 'image'");
+      expect(error.message).toEqual(
+        "type definition was not found for referenced table or view 'image'",
+      );
     }
   });
   it('should throw an error if the resourceTypeDefinition of the referenced function is not defined', () => {
     try {
       defineTypescriptTypeFromTableReference({
-        reference: new TypeDefinitionReference({ tableReferencePath: 'dgv.id', functionReferencePath: null }),
+        reference: new TypeDefinitionReference({
+          tableReferencePath: 'dgv.id',
+          functionReferencePath: null,
+        }),
         queryTableReferences: [
-          new TypeDefinitionOfQueryTableReference({ tableName: null, alias: 'dgv', functionName: 'upsert_image' }),
+          new TypeDefinitionOfQueryTableReference({
+            tableName: null,
+            alias: 'dgv',
+            functionName: 'upsert_image',
+          }),
         ],
         typeDefinitions: [],
       });
       throw new Error('should not reach here');
     } catch (error) {
-      expect(error.message).toEqual("type definition was not found for referenced function 'upsert_image'");
+      expect(error.message).toEqual(
+        "type definition was not found for referenced function 'upsert_image'",
+      );
     }
   });
   it('should throw an error if referencing a function that does not return a table as output', () => {
     try {
       defineTypescriptTypeFromTableReference({
-        reference: new TypeDefinitionReference({ tableReferencePath: 'dgv.id', functionReferencePath: null }),
+        reference: new TypeDefinitionReference({
+          tableReferencePath: 'dgv.id',
+          functionReferencePath: null,
+        }),
         queryTableReferences: [
-          new TypeDefinitionOfQueryTableReference({ tableName: null, alias: 'dgv', functionName: 'upsert_image' }),
+          new TypeDefinitionOfQueryTableReference({
+            tableName: null,
+            alias: 'dgv',
+            functionName: 'upsert_image',
+          }),
         ],
         typeDefinitions: [
           new TypeDefinitionOfResourceFunction({

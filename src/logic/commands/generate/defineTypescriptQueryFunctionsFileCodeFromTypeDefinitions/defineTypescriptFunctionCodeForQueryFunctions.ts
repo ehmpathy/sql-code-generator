@@ -1,4 +1,4 @@
-import { TypeDefinitionOfQuery } from '../../../../model';
+import { TypeDefinitionOfQuery } from '../../../../domain';
 import { defineTypescriptQueryFunctionForQuery } from '../../../typeDefinitionsToCode/query/defineTypescriptQueryFunctionForQuery';
 
 export const defineTypescriptFunctionCodeForQueryFunctions = ({

@@ -1,4 +1,4 @@
-import { DataType, TypeDefinitionReference, TypeDefinition, TypeDefinitionOfQueryTableReference } from '../../../model';
+import { DataType, TypeDefinitionReference, TypeDefinition, TypeDefinitionOfQueryTableReference } from '../../../domain';
 import { defineTypescriptTypeFromReference } from './defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
 import { defineTypescriptTypeFromDataTypeArray } from './defineTypescriptTypeFromDataTypeArray';
 

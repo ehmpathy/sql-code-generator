@@ -1,4 +1,4 @@
-import { ResourceDeclaration, ResourceType } from '../../../model';
+import { ResourceDeclaration, ResourceType } from '../../../domain';
 import { extractResourceTypeAndNameFromDDL } from './extractResourceTypeAndNameFromDDL';
 import { extractTypeDefinitionFromFunctionSql } from './function/extractTypeDefinitionFromFunctionSql';
 import { extractTypeDefinitionFromTableSql } from './table/extractTypeDefinitionFromTableSql';

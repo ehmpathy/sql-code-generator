@@ -1,0 +1,291 @@
+name: test-on-commit
+
+on:
+  push:
+    branches: # run for any branch
+      - '**'
+    tags-ignore: # but not for releases, as deploy_on_tag will trigger for it
+      - '**'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  install:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: install
+        run: npm ci
+
+      - name: cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+  # run tests in parallel
+  test-commits:
+    runs-on: ubuntu-20.04
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # we need all commits to test:commits
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: grab node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+      - name: test:commits
+        run: npm run test:commits
+
+  test-types:
+    runs-on: ubuntu-20.04
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: grab node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+      - name: test:types
+        run: npm run test:types
+
+  test-format:
+    runs-on: ubuntu-20.04
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: grab node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+      - name: test:format
+        run: npm run test:format
+
+  test-lint:
+    runs-on: ubuntu-20.04
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: grab node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+      - name: test:lint
+        run: npm run test:lint
+
+  test-unit:
+    runs-on: ubuntu-20.04
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: grab node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+      - name: test:unit
+        run: npm run test:unit
+        env:
+          FORCE_COLOR: true # ensure colors are saved in jest snapshots, to be consistent with local development
+
+  test-integration:
+    runs-on: ubuntu-20.04
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: grab node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        id: credentials
+        with:
+          aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: provision:integration-test-db
+        run: npm run provision:integration-test-db
+
+      - name: test:integration
+        run: npm run test:integration
+        env:
+          FORCE_COLOR: true # ensure colors are saved in jest snapshots, to be consistent with local development
+
+  test-acceptance-locally:
+    runs-on: ubuntu-20.04
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: read nvmrc
+        id: nvmrc
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvmrc.outputs.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: grab node_modules from cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ github.sha }}
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        id: credentials
+        with:
+          aws-access-key-id: ${{ secrets.DEV_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.DEV_AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: provision:integration-test-db
+        run: npm run provision:integration-test-db
+
+      - name: test:acceptance:locally
+        run: npm run test:acceptance:locally
+        env:
+          FORCE_COLOR: true # ensure colors are saved in jest snapshots, to be consistent with local development
+
+  check-provisions-github:
+    runs-on: ubuntu-20.04
+    defaults:
+      run:
+        working-directory: ./provision/github/environment
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: setup terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        id: credentials
+        with:
+          aws-access-key-id: ${{ secrets.PROD_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.PROD_AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: confirm aws credentials
+        run: |
+          [[ ${{steps.credentials.outputs.aws-account-id}} != '398838478359' ]] \
+            && echo 'wrong aws account' && exit 1 \
+            || echo 'correct aws account';
+
+      - name: terraform init
+        id: init
+        run: terraform init
+
+      - name: terraform validate
+        id: validate
+        run: terraform validate -no-color
+
+      - name: terraform plan
+        id: plan
+        run: terraform plan -no-color -detailed-exitcode
+        env:
+          GITHUB_TOKEN: ${{ secrets.PROVISION_GITHUB_GITHUB_TOKEN }}

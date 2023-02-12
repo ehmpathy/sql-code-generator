@@ -1,4 +1,4 @@
-import { TypeDefinitionOfResourceTable, ResourceType } from '../../../../model';
+import { TypeDefinitionOfResourceTable, ResourceType } from '../../../../domain';
 import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
 import { defineTypescriptTypeFromDataTypeArray } from '../../common/defineTypescriptTypeFromDataTypeArray';
 

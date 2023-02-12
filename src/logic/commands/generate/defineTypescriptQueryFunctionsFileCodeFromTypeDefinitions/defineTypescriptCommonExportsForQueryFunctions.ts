@@ -1,4 +1,4 @@
-import { DatabaseLanguage } from '../../../../model';
+import { DatabaseLanguage } from '../../../../domain';
 
 const LANGUAGE_TO_EXECUTE_RETURN_TYPE: { [index in DatabaseLanguage]: string } = {
   [DatabaseLanguage.MYSQL]: 'any[]', // client.query() => [[],...]

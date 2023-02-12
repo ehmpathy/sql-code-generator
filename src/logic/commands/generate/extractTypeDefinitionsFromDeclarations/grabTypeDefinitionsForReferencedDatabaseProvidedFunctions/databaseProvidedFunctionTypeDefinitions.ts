@@ -3,7 +3,7 @@ import {
   TypeDefinitionOfResourceInput,
   DataType,
   DatabaseLanguage,
-} from '../../../../../model';
+} from '../../../../../domain';
 
 const ANY_TRUTHY = [DataType.STRING, DataType.NUMBER, DataType.DATE, DataType.BUFFER, DataType.JSON];
 const ANY = [...ANY_TRUTHY, DataType.NULL, DataType.UNDEFINED];

@@ -1,4 +1,4 @@
-import { DataType, TypeDefinitionOfResourceColumn } from '../../../../model';
+import { DataType, TypeDefinitionOfResourceColumn } from '../../../../domain';
 import { extractDataTypeFromColumnOrArgumentDefinitionSql } from '../common/extractDataTypeFromColumnOrArgumentDefinitionSql';
 
 export const extractTypeDefinitionFromColumnSql = ({ sql }: { sql: string }) => {

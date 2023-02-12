@@ -1,4 +1,4 @@
-import { TypeDefinitionOfResourceTable } from '../../../../model';
+import { TypeDefinitionOfResourceTable } from '../../../../domain';
 import { extractSqlFromFile } from '../../../common/extractSqlFromFile';
 import { extractTypeDefinitionFromViewSql } from '../../../sqlToTypeDefinitions/resource/view/extractTypeDefinitionFromViewSql';
 import { defineTypescriptTypesForView } from './defineTypescriptTypesForView';

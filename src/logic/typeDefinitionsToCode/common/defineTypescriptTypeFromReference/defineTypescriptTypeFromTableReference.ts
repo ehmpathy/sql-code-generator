@@ -5,8 +5,8 @@ import {
   TypeDefinitionOfResourceView,
   TypeDefinition,
   TypeDefinitionOfResourceFunction,
-} from '../../../../model';
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+} from '../../../../domain';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { castResourceNameToTypescriptTypeName } from '../castResourceNameToTypescriptTypeName';
 
 export const defineTypescriptTypeFromTableReference = ({
@@ -27,14 +27,21 @@ export const defineTypescriptTypeFromTableReference = ({
   typeDefinitions: TypeDefinition[];
 }) => {
   // sanity check what this is called with, to help us debug if needed
-  if (!reference.tableReferencePath) throw new Error('expected table reference to be defined'); // fail fast
+  if (!reference.tableReferencePath)
+    throw new Error('expected table reference to be defined'); // fail fast
 
   // grab the table name and column name from the source path
-  const [sourceTableAlias, sourceTableColumnName] = reference.tableReferencePath.split('.'); // note: we guarantee this format in the sqlToTypeDef layer
+  const [
+    sourceTableAlias,
+    sourceTableColumnName,
+  ] = reference.tableReferencePath.split('.'); // note: we guarantee this format in the sqlToTypeDef layer
 
   // resolve alias => table name
-  const tableReference = queryTableReferences.find((ref) => ref.alias === sourceTableAlias);
-  const sourceTableName = tableReference?.tableName ?? tableReference?.functionName;
+  const tableReference = queryTableReferences.find(
+    ref => ref.alias === sourceTableAlias,
+  );
+  const sourceTableName =
+    tableReference?.tableName ?? tableReference?.functionName;
   if (!tableReference || !sourceTableName)
     throw new Error(
       `table alias for of select expression "${reference.tableReferencePath}" not found in query table references`,
@@ -42,7 +49,12 @@ export const defineTypescriptTypeFromTableReference = ({
 
   // determine if this table reference is referencing a table or a view
   const referencedResource = typeDefinitions.find(
-    (def): def is TypeDefinitionOfResourceTable | TypeDefinitionOfResourceView | TypeDefinitionOfResourceFunction =>
+    (
+      def,
+    ): def is
+      | TypeDefinitionOfResourceTable
+      | TypeDefinitionOfResourceView
+      | TypeDefinitionOfResourceFunction =>
       def.name === sourceTableName &&
       (def instanceof TypeDefinitionOfResourceTable ||
         def instanceof TypeDefinitionOfResourceView ||
@@ -50,15 +62,24 @@ export const defineTypescriptTypeFromTableReference = ({
   );
   if (!referencedResource) {
     if (tableReference.tableName)
-      throw new Error(`type definition was not found for referenced table or view '${sourceTableName}'`);
+      throw new Error(
+        `type definition was not found for referenced table or view '${sourceTableName}'`,
+      );
     if (tableReference.functionName)
-      throw new Error(`type definition was not found for referenced function '${sourceTableName}'`);
+      throw new Error(
+        `type definition was not found for referenced function '${sourceTableName}'`,
+      );
   }
   const resourceTypeReferenced = (() => {
-    if (referencedResource instanceof TypeDefinitionOfResourceTable) return ResourceType.TABLE;
-    if (referencedResource instanceof TypeDefinitionOfResourceView) return ResourceType.VIEW;
-    if (referencedResource instanceof TypeDefinitionOfResourceFunction) return ResourceType.FUNCTION;
-    throw new Error('unexpected condition, indicates bug within sql-code-generator'); // this should not occur
+    if (referencedResource instanceof TypeDefinitionOfResourceTable)
+      return ResourceType.TABLE;
+    if (referencedResource instanceof TypeDefinitionOfResourceView)
+      return ResourceType.VIEW;
+    if (referencedResource instanceof TypeDefinitionOfResourceFunction)
+      return ResourceType.FUNCTION;
+    throw new Error(
+      'unexpected condition, indicates bug within sql-code-generator',
+    ); // this should not occur
   })();
 
   // check that if its a function, the output of the function is a table

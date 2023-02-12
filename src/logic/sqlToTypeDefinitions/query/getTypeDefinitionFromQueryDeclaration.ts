@@ -1,4 +1,4 @@
-import { QueryDeclaration } from '../../../model';
+import { QueryDeclaration } from '../../../domain';
 import { extractTypeDefinitionFromQuerySql } from './extractTypeDefinitionFromQuerySql';
 import { extractNameFromQuerySql } from './extractNameFromQuerySql';
 

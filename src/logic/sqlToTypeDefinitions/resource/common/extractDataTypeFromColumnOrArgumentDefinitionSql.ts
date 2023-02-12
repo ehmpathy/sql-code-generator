@@ -1,4 +1,4 @@
-import { DataType } from '../../../../model';
+import { DataType } from '../../../../domain';
 
 // https://dev.mysql.com/doc/refman/8.0/en/string-types.html
 const mysqlStringTypes = [

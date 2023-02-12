@@ -1,5 +1,5 @@
-import { DataType } from '../../../../../model';
-import { TypeDefinitionOfResourceColumn } from '../../../../../model/valueObjects/TypeDefinitionOfResourceColumn';
+import { DataType } from '../../../../../domain';
+import { TypeDefinitionOfResourceColumn } from '../../../../../domain/objects/TypeDefinitionOfResourceColumn';
 import { extractTypeDefinitionFromFunctionInputSql } from './extractTypeDefinitionFromFunctionInputSql';
 
 describe('extractTypeDefinitionFromFunctionInputSql', () => {
@@ -33,9 +33,11 @@ describe('extractTypeDefinitionFromFunctionInputSql', () => {
       }),
     },
   ];
-  examples.forEach((example) => {
+  examples.forEach(example => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {
-      const def = extractTypeDefinitionFromFunctionInputSql({ sql: example.sql });
+      const def = extractTypeDefinitionFromFunctionInputSql({
+        sql: example.sql,
+      });
       expect(def).toEqual(example.def);
     });
   });

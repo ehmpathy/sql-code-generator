@@ -7,11 +7,11 @@ on:
 
 jobs:
   release-please:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
-      - uses: GoogleCloudPlatform/release-please-action@v2
+      - uses: google-github-actions/release-please-action@v3
         with:
           token: ${{ secrets.RELEASE_PLEASE_GITHUB_TOKEN }}
           release-type: node
-          pull-request-title-pattern: 'chore(release): v${version} ${component}${scope}🎉'
+          pull-request-title-pattern: 'chore(release): v${version} 🎉'
           changelog-path: changelog.md

@@ -1,29 +1,17 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "strict": true,
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "declaration": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
-    "lib": [
-      "dom",
-      "es7",
-      "es2019"
-    ],
+    "rootDir": "src"
   },
-  "include": [
-    "src/**/*.ts",
-    "nontyped_modules"
-  ],
   "exclude": [
-    "src/**/*.test.ts",
-    "src/**/*.test.integration.ts",
-  ],
-  "atom": {
-    "rewriteTsconfig": false
-  }
+    "dist",
+    "coverage",
+    "node_modules",
+    "acceptance",
+    "provision",
+    "jest.*",
+    "prettier.*",
+    "commitlint.*",
+    "src/**/*.test.(ts|js)"
+  ]
 }

@@ -1,4 +1,4 @@
-import { DatabaseLanguage, QueryDeclaration, ResourceDeclaration } from '../../../../model';
+import { DatabaseLanguage, QueryDeclaration, ResourceDeclaration } from '../../../../domain';
 import { getTypeDefinitionFromDeclarationWithHelpfulError } from './getTypeDefinitionFromDeclarationWithHelpfulError';
 import { grabTypeDefinitionsForReferencedDatabaseProvidedFunctions } from './grabTypeDefinitionsForReferencedDatabaseProvidedFunctions/grabTypeDefinitionsForReferencedDatabaseProvidedFunctions';
 

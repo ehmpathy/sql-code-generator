@@ -1,13 +1,22 @@
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { castResourceNameToTypescriptTypeName } from '../castResourceNameToTypescriptTypeName';
-import { ResourceType } from '../../../../model';
+import { ResourceType } from '../../../../domain';
 
-export const defineTypescriptTypeFromFunctionReference = ({ reference }: { reference: TypeDefinitionReference }) => {
+export const defineTypescriptTypeFromFunctionReference = ({
+  reference,
+}: {
+  reference: TypeDefinitionReference;
+}) => {
   // sanity check what this is called with, to help us debug if needed
-  if (!reference.functionReferencePath) throw new Error('expected function reference to be defined'); // fail fast
+  if (!reference.functionReferencePath)
+    throw new Error('expected function reference to be defined'); // fail fast
 
   // grab the function name from the reference definition
-  const [functionName, inputOrOutput, inputPropertyIndex] = reference.functionReferencePath.split('.');
+  const [
+    functionName,
+    inputOrOutput,
+    inputPropertyIndex,
+  ] = reference.functionReferencePath.split('.');
 
   // grab the typescript name for this function
   const functionTypescriptName = castResourceNameToTypescriptTypeName({
@@ -19,8 +28,11 @@ export const defineTypescriptTypeFromFunctionReference = ({ reference }: { refer
   if (inputOrOutput === 'output') return `${functionTypescriptName}Output`;
 
   // if its referencing an input, return that
-  if (inputOrOutput === 'input') return `${functionTypescriptName}Input['${inputPropertyIndex}']`;
+  if (inputOrOutput === 'input')
+    return `${functionTypescriptName}Input['${inputPropertyIndex}']`;
 
   // if was neither, throw an error - it should always be one of the above
-  throw new Error('type definition reference of function was not defined as "input" or "output"'); // fail fast, this is an invalid reference
+  throw new Error(
+    'type definition reference of function was not defined as "input" or "output"',
+  ); // fail fast, this is an invalid reference
 };

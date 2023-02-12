@@ -1,8 +1,14 @@
 import { extractInputsFromFunctionSql } from './extractInputsFromFunctionSql/extractInputsFromFunctionSql';
 import { extractOutputFromFunctionSql } from './extractOutputFromFunctionSql/extractOutputFromFunctionSql';
-import { TypeDefinitionOfResourceFunction } from '../../../../model/valueObjects/TypeDefinitionOfResourceFunction';
+import { TypeDefinitionOfResourceFunction } from '../../../../domain/objects/TypeDefinitionOfResourceFunction';
 
-export const extractTypeDefinitionFromFunctionSql = ({ name, sql }: { name: string; sql: string }) => {
+export const extractTypeDefinitionFromFunctionSql = ({
+  name,
+  sql,
+}: {
+  name: string;
+  sql: string;
+}) => {
   // 1. get the input definition
   const inputs = extractInputsFromFunctionSql({ sql });
 

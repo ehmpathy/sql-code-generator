@@ -1,6 +1,6 @@
-import { ResourceType, TypeDefinition } from '../../../../model';
+import { ResourceType, TypeDefinition } from '../../../../domain';
 import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
-import { TypeDefinitionOfResourceView } from '../../../../model/valueObjects/TypeDefinitionOfResourceView';
+import { TypeDefinitionOfResourceView } from '../../../../domain/objects/TypeDefinitionOfResourceView';
 import { defineTypescriptTypeFromReference } from '../../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
 
 export const defineTypescriptTypesForView = ({
@@ -11,18 +11,23 @@ export const defineTypescriptTypesForView = ({
   allDefinitions: TypeDefinition[];
 }) => {
   // define column types in typescript format
-  const typescriptInterfaceColumnDefinitions = definition.selectExpressions.map((selectExpression) => {
-    const typescriptTypeForReference = defineTypescriptTypeFromReference({
-      reference: selectExpression.typeReference,
-      queryTableReferences: definition.tableReferences,
-      typeDefinitions: allDefinitions,
-    });
-    return `${selectExpression.alias}: ${typescriptTypeForReference};`;
-  });
+  const typescriptInterfaceColumnDefinitions = definition.selectExpressions.map(
+    selectExpression => {
+      const typescriptTypeForReference = defineTypescriptTypeFromReference({
+        reference: selectExpression.typeReference,
+        queryTableReferences: definition.tableReferences,
+        typeDefinitions: allDefinitions,
+      });
+      return `${selectExpression.alias}: ${typescriptTypeForReference};`;
+    },
+  );
 
   // output
   const typescriptInterfaceDefinition = `
-export interface ${castResourceNameToTypescriptTypeName({ name: definition.name, resourceType: ResourceType.VIEW })} {
+export interface ${castResourceNameToTypescriptTypeName({
+    name: definition.name,
+    resourceType: ResourceType.VIEW,
+  })} {
   ${typescriptInterfaceColumnDefinitions.join('\n  ')}
 }
   `.trim();

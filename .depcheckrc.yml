@@ -1,0 +1,10 @@
+ignores:
+  - depcheck
+  - declapract
+  - declapract-typescript-ehmpathy
+  - '@commitlint/config-conventional'
+  - '@trivago/prettier-plugin-sort-imports'
+  - '@tsconfig/node-lts-strictest'
+  - core-js
+  - ts-jest
+  - husky

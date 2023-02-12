@@ -1,4 +1,4 @@
-import { GeneratorConfig } from '../../../../model';
+import { GeneratorConfig } from '../../../../domain';
 import { getAllPathsMatchingGlobs } from '../getAllPathsMatchingGlobs/getAllPathsMatchingGlobs';
 import { DeclarationType, extractDeclarationFromGlobedFile } from './extractDeclarationFromGlobedFile';
 import { readYmlFile } from './utils/readYmlFile';

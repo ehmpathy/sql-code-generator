@@ -1,6 +1,6 @@
 import strip from 'sql-strip-comments';
 
-import { DataType, TypeDefinitionOfResourceColumn, TypeDefinitionOfResourceTable } from '../../../../../model';
+import { DataType, TypeDefinitionOfResourceColumn, TypeDefinitionOfResourceTable } from '../../../../../domain';
 import { extractDataTypeFromColumnOrArgumentDefinitionSql } from '../../common/extractDataTypeFromColumnOrArgumentDefinitionSql';
 import { extractTypeDefinitionFromTableSql } from '../../table/extractTypeDefinitionFromTableSql';
 

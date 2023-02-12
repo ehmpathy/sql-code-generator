@@ -1,8 +1,12 @@
-import { DataType } from '../../../../../model';
-import { TypeDefinitionOfResourceInput } from '../../../../../model/valueObjects/TypeDefinitionOfResourceInput';
+import { DataType } from '../../../../../domain';
+import { TypeDefinitionOfResourceInput } from '../../../../../domain/objects/TypeDefinitionOfResourceInput';
 import { extractDataTypeFromColumnOrArgumentDefinitionSql } from '../../common/extractDataTypeFromColumnOrArgumentDefinitionSql';
 
-export const extractTypeDefinitionFromFunctionInputSql = ({ sql }: { sql: string }) => {
+export const extractTypeDefinitionFromFunctionInputSql = ({
+  sql,
+}: {
+  sql: string;
+}) => {
   // 1. extract the name; its typically the first string
   const name = sql.split(' ')[0].replace(/[^a-zA-Z_]+/gi, '');
 
@@ -13,7 +17,7 @@ export const extractTypeDefinitionFromFunctionInputSql = ({ sql }: { sql: string
   const type = [
     primaryType,
     DataType.NULL, // note: inputs to functions are always nullable ?
-  ].filter((type) => !!type) as DataType[];
+  ].filter(type => !!type) as DataType[];
 
   // 4. return the definition
   return new TypeDefinitionOfResourceInput({

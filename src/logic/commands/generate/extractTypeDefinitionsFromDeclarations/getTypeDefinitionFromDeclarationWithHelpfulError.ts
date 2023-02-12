@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { ResourceDeclaration, QueryDeclaration } from '../../../../model';
+import { ResourceDeclaration, QueryDeclaration } from '../../../../domain';
 import { getTypeDefinitionFromDeclaration } from '../../../sqlToTypeDefinitions/getTypeDefinitionFromDeclaration';
 
 class ErrorExtractingTypeDefinitionFromDeclaration extends Error {

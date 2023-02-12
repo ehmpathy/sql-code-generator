@@ -1,6 +1,6 @@
 import { extractSqlFromFile } from '../../../common/extractSqlFromFile';
 import { extractTableReferencesFromQuerySql } from './extractTableReferencesFromQuerySql';
-import { TypeDefinitionOfQueryTableReference } from '../../../../model';
+import { TypeDefinitionOfQueryTableReference } from '../../../../domain';
 
 describe('extractTableReferencesFromQuerySql', () => {
   it('should be able to determine types accurately for this example', async () => {

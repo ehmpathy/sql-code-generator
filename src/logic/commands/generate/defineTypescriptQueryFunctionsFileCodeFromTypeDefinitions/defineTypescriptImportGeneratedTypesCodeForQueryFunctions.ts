@@ -1,4 +1,4 @@
-import { GeneratedOutputPaths, TypeDefinitionOfQuery } from '../../../../model';
+import { GeneratedOutputPaths, TypeDefinitionOfQuery } from '../../../../domain';
 import { defineTypescriptQueryFunctionForQuery } from '../../../typeDefinitionsToCode/query/defineTypescriptQueryFunctionForQuery';
 import { QueryFunctionsOutputPathNotDefinedButRequiredError } from './QueryFunctionsOutputPathNotDefinedError';
 import { getRelativePathFromFileToFile } from './utils/getRelativePathFromFileToFile';

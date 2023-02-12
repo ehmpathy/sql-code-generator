@@ -1,4 +1,4 @@
-import { GeneratorConfig } from '../../../model';
+import { GeneratorConfig } from '../../../domain';
 import { readConfig } from './readConfig';
 
 /*

@@ -2,7 +2,7 @@ import strip from 'sql-strip-comments';
 
 import { castCommasInParensToPipesForTokenSafety } from '../common/castCommasInParensToPipesForTokenSafety';
 import { extractTypeDefinitionFromColumnSql } from './extractTypeDefinitionFromColumnSql';
-import { TypeDefinitionOfResourceTable } from '../../../../model';
+import { TypeDefinitionOfResourceTable } from '../../../../domain';
 
 /*
   note:

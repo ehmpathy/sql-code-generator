@@ -1,5 +1,5 @@
 import { defineTypescriptTypeFromFunctionReference } from './defineTypescriptTypeFromFunctionReference';
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 
 describe('defineTypescriptTypeFromFunctionReference', () => {
   it('should be able to define type referencing a function input', () => {

@@ -1,7 +1,7 @@
-import { SqlSubqueryReference } from '../../../../model/valueObjects/SqlSubqueryReference';
+import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
 import { getTokenForSqlSubqueryReference } from '../common/flattenSqlByReferencingAndTokenizingSubqueries/getTokenForSubqueryReference';
 import { extractSelectExpressionsFromQuerySql } from './extractSelectExpressionsFromQuerySql';
-import { TypeDefinitionReference } from '../../../../model';
+import { TypeDefinitionReference } from '../../../../domain';
 
 export const extractTypeDefinitionReferenceFromSubqueryReferenceToken = ({
   subqueryReferenceToken,
@@ -12,7 +12,9 @@ export const extractTypeDefinitionReferenceFromSubqueryReferenceToken = ({
 }): TypeDefinitionReference => {
   // 1. find the subquery reference object
   const subquery = subqueries.find(
-    (subquery) => getTokenForSqlSubqueryReference({ reference: subquery }) === subqueryReferenceToken,
+    subquery =>
+      getTokenForSqlSubqueryReference({ reference: subquery }) ===
+      subqueryReferenceToken,
   );
   if (!subquery) {
     throw new Error(
@@ -22,14 +24,21 @@ export const extractTypeDefinitionReferenceFromSubqueryReferenceToken = ({
 
   // 2. get select expressions from subquery sql
   const cleanedSubquerySql = subquery.sql.replace(/^\(/, '').replace(/\)$/, ''); // if it has leading or closing paren, strip em
-  const selectExpressions = extractSelectExpressionsFromQuerySql({ sql: cleanedSubquerySql, inASubquery: true }); // NOTE: this makes this recursive
+  const selectExpressions = extractSelectExpressionsFromQuerySql({
+    sql: cleanedSubquerySql,
+    inASubquery: true,
+  }); // NOTE: this makes this recursive
 
   // 3. check that the subquery returns exactly one select expression, otherwise this is a syntax error and not valid sql
   if (selectExpressions.length < 1) {
-    throw new Error('subquery in select expression must return atleast one value.');
+    throw new Error(
+      'subquery in select expression must return atleast one value.',
+    );
   }
   if (selectExpressions.length > 1) {
-    throw new Error('subquery in select expression may not return more than one value. this is invalid sql');
+    throw new Error(
+      'subquery in select expression may not return more than one value. this is invalid sql',
+    );
   }
 
   // 4. the reference type of this expression is the single reference type of that subquery

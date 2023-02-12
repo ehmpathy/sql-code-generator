@@ -1,4 +1,4 @@
-import { DataType, TypeDefinitionOfResourceTable } from '../../../../../model';
+import { DataType, TypeDefinitionOfResourceTable } from '../../../../../domain';
 import { extractSqlFromFile } from '../../../../common/extractSqlFromFile';
 import { extractOutputFromFunctionSql } from './extractOutputFromFunctionSql';
 

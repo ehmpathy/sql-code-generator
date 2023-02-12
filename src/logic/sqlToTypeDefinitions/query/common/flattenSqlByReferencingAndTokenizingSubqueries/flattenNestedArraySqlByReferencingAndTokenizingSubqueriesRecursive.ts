@@ -1,4 +1,4 @@
-import { SqlSubqueryReference } from '../../../../../model/valueObjects/SqlSubqueryReference';
+import { SqlSubqueryReference } from '../../../../../domain/objects/SqlSubqueryReference';
 import { NestedStringArray } from './breakSqlIntoNestedSqlArraysAtParentheses';
 import { extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings } from './extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings';
 
@@ -22,7 +22,7 @@ export const flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive 
   const references: SqlSubqueryReference[] = [];
 
   // 3. for each element in this array, flatten it. track the nested references
-  const flattenedSqlParts = nestedSqlArray.map((thisSqlOrNestedSqlArray) => {
+  const flattenedSqlParts = nestedSqlArray.map(thisSqlOrNestedSqlArray => {
     const {
       references: nestedReferences,
       flattenedSql: nestedFlattenedSql,
@@ -37,7 +37,9 @@ export const flattenNestedArraySqlByReferencingAndTokenizingSubqueriesRecursive 
   const {
     references: referencesFromFlattenedSqlParts,
     referencedSqlParts,
-  } = extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings({ sqlParts: flattenedSqlParts });
+  } = extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings({
+    sqlParts: flattenedSqlParts,
+  });
   references.push(...referencesFromFlattenedSqlParts); // append the newly found references
 
   // 5. join all of the flattened, referenced strings

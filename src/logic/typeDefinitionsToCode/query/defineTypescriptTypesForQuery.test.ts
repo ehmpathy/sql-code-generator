@@ -5,7 +5,7 @@ import {
   TypeDefinitionOfResourceFunction,
   TypeDefinitionOfResourceTable,
   TypeDefinitionOfResourceView,
-} from '../../../model';
+} from '../../../domain';
 
 describe('defineTypescriptTypesForQuery', () => {
   it('should be able to determine types accurately an example of selecting columns a single table by id', async () => {

@@ -1,4 +1,4 @@
-import { DataType } from '../../../../model';
+import { DataType } from '../../../../domain';
 import { extractDataTypeFromColumnOrArgumentDefinitionSql } from './extractDataTypeFromColumnOrArgumentDefinitionSql';
 
 describe('extractDataTypeFromColumnOrArgumentDefinitionSql', () => {

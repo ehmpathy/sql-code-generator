@@ -1,4 +1,4 @@
-import { QueryDeclaration, ResourceDeclaration } from '../../../../model';
+import { QueryDeclaration, ResourceDeclaration } from '../../../../domain';
 import { extractSqlFromFile } from '../../../common/extractSqlFromFile';
 
 export enum DeclarationType {

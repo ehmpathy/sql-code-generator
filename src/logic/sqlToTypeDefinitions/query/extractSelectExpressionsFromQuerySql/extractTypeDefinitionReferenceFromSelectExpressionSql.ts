@@ -1,5 +1,5 @@
-import { SqlSubqueryReference } from '../../../../model/valueObjects/SqlSubqueryReference';
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { throwErrorIfTableReferencePathImpliesTable } from '../common/throwErrorIfTableReferencePathImpliesTable';
 import { extractTypeDefinitionReferenceFromSubqueryReferenceToken } from './extractTypeDefinitionReferenceFromSubqueryReferenceToken';
 
@@ -16,7 +16,10 @@ export const extractTypeDefinitionReferenceFromSelectExpression = ({
     subqueryReferenceToken,
   ] = new RegExp(/^(__SSQ:[\w-]+__)(?:\s+(?:[\w\s]*))?$/).exec(sql) ?? [];
   if (subqueryReferenceToken) {
-    return extractTypeDefinitionReferenceFromSubqueryReferenceToken({ subqueryReferenceToken, subqueries });
+    return extractTypeDefinitionReferenceFromSubqueryReferenceToken({
+      subqueryReferenceToken,
+      subqueries,
+    });
   }
 
   // 1. try to extract a tableReferencePath, if query references table
@@ -25,7 +28,9 @@ export const extractTypeDefinitionReferenceFromSelectExpression = ({
     tableReferencePath,
   ] = new RegExp(/^(\w+\.?\w*)(?:\s+(?:[\w\s]*))?$/).exec(sql) ?? [];
   if (tableReferencePath) {
-    throwErrorIfTableReferencePathImpliesTable({ referencePath: tableReferencePath }); // check that table reference is explicitly defined, since its best practice
+    throwErrorIfTableReferencePathImpliesTable({
+      referencePath: tableReferencePath,
+    }); // check that table reference is explicitly defined, since its best practice
     return new TypeDefinitionReference({
       tableReferencePath,
       functionReferencePath: null,

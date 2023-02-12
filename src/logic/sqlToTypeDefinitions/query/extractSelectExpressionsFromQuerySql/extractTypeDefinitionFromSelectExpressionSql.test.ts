@@ -1,5 +1,5 @@
-import { TypeDefinitionOfQuerySelectExpression } from '../../../../model';
-import { SqlSubqueryReference } from '../../../../model/valueObjects/SqlSubqueryReference';
+import { TypeDefinitionOfQuerySelectExpression } from '../../../../domain';
+import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
 import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
 import { extractTypeDefinitionFromSelectExpressionSql } from './extractTypeDefinitionFromSelectExpressionSql';
 
@@ -67,8 +67,11 @@ __SSQ:70bebe49-fafa-4d0d-a457-e063b40037f1__ as ingredient_ids
       }),
     },
   ];
-  examples.forEach((example) => {
-    it(`should be able to determine types accurately for this example: "${example.sql.replace(/\s+/g, ' ')}"`, () => {
+  examples.forEach(example => {
+    it(`should be able to determine types accurately for this example: "${example.sql.replace(
+      /\s+/g,
+      ' ',
+    )}"`, () => {
       const def = extractTypeDefinitionFromSelectExpressionSql({
         sql: example.sql,
         subqueries: example.subqueries ?? [],
@@ -79,7 +82,11 @@ __SSQ:70bebe49-fafa-4d0d-a457-e063b40037f1__ as ingredient_ids
   });
   it('should throw an error if table alias is not explicitly defined', () => {
     try {
-      extractTypeDefinitionFromSelectExpressionSql({ sql: 'latitude as lat', subqueries: [], inASubquery: false });
+      extractTypeDefinitionFromSelectExpressionSql({
+        sql: 'latitude as lat',
+        subqueries: [],
+        inASubquery: false,
+      });
       throw new Error('should not reach here');
     } catch (error) {
       expect(error.message).toEqual(

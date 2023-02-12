@@ -1,4 +1,7 @@
-import { SqlSubqueryReference } from '../../../../../model/valueObjects/SqlSubqueryReference';
+import { SqlSubqueryReference } from '../../../../../domain/objects/SqlSubqueryReference';
 
-export const getTokenForSqlSubqueryReference = ({ reference }: { reference: SqlSubqueryReference }) =>
-  `__SSQ:${reference.id}__`;
+export const getTokenForSqlSubqueryReference = ({
+  reference,
+}: {
+  reference: SqlSubqueryReference;
+}) => `__SSQ:${reference.id}__`;

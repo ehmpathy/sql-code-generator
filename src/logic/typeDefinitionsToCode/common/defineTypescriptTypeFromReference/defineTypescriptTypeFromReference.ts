@@ -1,5 +1,8 @@
-import { TypeDefinitionOfQueryTableReference, TypeDefinition } from '../../../../model';
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import {
+  TypeDefinitionOfQueryTableReference,
+  TypeDefinition,
+} from '../../../../domain';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { defineTypescriptTypeFromFunctionReference } from './defineTypescriptTypeFromFunctionReference';
 import { defineTypescriptTypeFromTableReference } from './defineTypescriptTypeFromTableReference';
 
@@ -22,7 +25,11 @@ export const defineTypescriptTypeFromReference = ({
 }) => {
   // if its a table reference, return the table reference
   if (reference.tableReferencePath) {
-    return defineTypescriptTypeFromTableReference({ reference, queryTableReferences, typeDefinitions });
+    return defineTypescriptTypeFromTableReference({
+      reference,
+      queryTableReferences,
+      typeDefinitions,
+    });
   }
 
   // if its a function reference, return the function reference
@@ -31,5 +38,7 @@ export const defineTypescriptTypeFromReference = ({
   }
 
   // otherwise, we don't know how to handle this case
-  throw new Error('type definition reference does not reference a table or function; unexpected'); // fail fast
+  throw new Error(
+    'type definition reference does not reference a table or function; unexpected',
+  ); // fail fast
 };

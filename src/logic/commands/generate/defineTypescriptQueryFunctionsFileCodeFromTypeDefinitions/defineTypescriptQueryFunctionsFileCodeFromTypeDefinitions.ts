@@ -1,4 +1,4 @@
-import { DatabaseLanguage, GeneratedOutputPaths, TypeDefinition, TypeDefinitionOfQuery } from '../../../../model';
+import { DatabaseLanguage, GeneratedOutputPaths, TypeDefinition, TypeDefinitionOfQuery } from '../../../../domain';
 import { defineTypescriptCommonExportsForQueryFunctions } from './defineTypescriptCommonExportsForQueryFunctions';
 import { defineTypescriptExecuteQueryWithBestPracticesFunction } from './defineTypescriptExecuteQueryWithBestPracticesFunction';
 import { defineTypescriptFunctionCodeForQueryFunctions } from './defineTypescriptFunctionCodeForQueryFunctions';

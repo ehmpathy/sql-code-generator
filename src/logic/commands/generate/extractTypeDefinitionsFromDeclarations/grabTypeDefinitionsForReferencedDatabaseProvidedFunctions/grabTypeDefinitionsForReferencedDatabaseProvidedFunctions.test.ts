@@ -4,7 +4,7 @@ import {
   TypeDefinitionOfQuerySelectExpression,
   TypeDefinitionReference,
   DatabaseLanguage,
-} from '../../../../../model';
+} from '../../../../../domain';
 import { DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS } from './databaseProvidedFunctionTypeDefinitions';
 
 describe('grabTypeDefinitionsForReferencedDatabaseProvidedFunctions', () => {

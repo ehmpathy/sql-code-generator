@@ -1,4 +1,4 @@
-import { TypeDefinition } from '../../../../model';
+import { TypeDefinition } from '../../../../domain';
 import { getTypescriptTypesFromTypeDefinition } from '../../../typeDefinitionsToCode/getTypescriptTypesFromTypeDefinition';
 
 const typeDefinitionSortOrder = [

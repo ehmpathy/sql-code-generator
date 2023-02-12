@@ -1,0 +1,5 @@
+declarations: npm:declapract-typescript-ehmpathy
+useCase: npm-package
+variables:
+  organizationName: ehmpathy
+  projectName: sql-code-generator

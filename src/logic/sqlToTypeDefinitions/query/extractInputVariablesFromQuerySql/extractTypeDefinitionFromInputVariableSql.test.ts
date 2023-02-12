@@ -1,6 +1,6 @@
-import { TypeDefinitionOfQueryInputVariable } from '../../../../model/valueObjects/TypeDefinitionOfQueryInputVariable';
+import { TypeDefinitionOfQueryInputVariable } from '../../../../domain/objects/TypeDefinitionOfQueryInputVariable';
 import { extractTypeDefinitionFromInputVariableSql } from './extractTypeDefinitionFromInputVariableSql';
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { DataType } from '../../../../model';
 
 describe('extractTypeDefinitionFromInputVariableSql', () => {
@@ -156,10 +156,13 @@ limit :limit;
     },
     // TODO: support functions in functions; https://github.com/uladkasach/sql-code-generator/issues/4
   ];
-  examples.forEach((example) => {
+  examples.forEach(example => {
     const exampleSqlFlattened = example.sql.replace(/\s+/g, ' ');
     it(`should be able to determine types accurately for this example: "${example.token}" in "${exampleSqlFlattened}"`, () => {
-      const def = extractTypeDefinitionFromInputVariableSql({ token: example.token, sql: example.sql });
+      const def = extractTypeDefinitionFromInputVariableSql({
+        token: example.token,
+        sql: example.sql,
+      });
       expect(def).toEqual(example.def);
     });
   });
@@ -174,7 +177,9 @@ limit :limit;
         extractTypeDefinitionFromInputVariableSql({ token: ':id', sql });
         throw new Error('should not reach here');
       } catch (error) {
-        expect(error.message).toContain('could not extract type definition for input variable');
+        expect(error.message).toContain(
+          'could not extract type definition for input variable',
+        );
       }
     });
     test('for the LIMIT :token regex, since token is at end of search', () => {
@@ -187,7 +192,9 @@ limit :limits
         extractTypeDefinitionFromInputVariableSql({ token: ':limit', sql }); // -- sql has :limits, not :limit
         throw new Error('should not reach here');
       } catch (error) {
-        expect(error.message).toContain('could not extract type definition for input variable');
+        expect(error.message).toContain(
+          'could not extract type definition for input variable',
+        );
       }
     });
   });

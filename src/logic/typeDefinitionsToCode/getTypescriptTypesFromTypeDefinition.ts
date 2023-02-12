@@ -4,7 +4,7 @@ import {
   TypeDefinitionOfResourceTable,
   TypeDefinitionOfResourceView,
   TypeDefinition,
-} from '../../model';
+} from '../../domain';
 import { defineTypescriptTypesForQuery } from './query/defineTypescriptTypesForQuery';
 import { defineTypescriptTypesForFunction } from './resource/function/defineTypescriptTypesForFunction';
 import { defineTypescriptTypesForTable } from './resource/table/defineTypescriptTypesForTable';
