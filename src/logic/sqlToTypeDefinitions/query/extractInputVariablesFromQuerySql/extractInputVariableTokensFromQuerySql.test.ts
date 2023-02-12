@@ -52,6 +52,6 @@ SELECT upsert_plane(
 );
     `.trim();
     const tokens = extractInputVariableTokensFromQuerySql({ sql });
-    expect(tokens).toEqual([':model', ':ownerId', ':pin']);
+    expect(tokens).toEqual([':domain', ':ownerId', ':pin']);
   });
 });

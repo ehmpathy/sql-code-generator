@@ -1,6 +1,3 @@
-import uuid from 'uuid';
-
-// tslint:disable-line no-unused
 // import { dbConnection } from '../../../utils/database';
 // import { sqlQueryFindSuggestionById } from '../generated/queries';
 // import { fromDatabaseObject } from './fromDatabaseObject';

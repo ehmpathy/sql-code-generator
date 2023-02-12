@@ -37,7 +37,7 @@ export const grabTypeDefinitionsForReferencedDatabaseProvidedFunctions = ({
     .flat();
   const referencedFunctionNames = references
     .filter((ref) => !!ref.functionReferencePath)
-    .map((ref) => ref.functionReferencePath!.split('.')[0])
+    .map((ref) => ref.functionReferencePath!.split('.')[0]!)
     .map((str) => str.toUpperCase()); // NOTE: we cast all fn names to UPPER_CASE
   const uniqueReferencedFunctionNames = [...new Set(referencedFunctionNames)];
 

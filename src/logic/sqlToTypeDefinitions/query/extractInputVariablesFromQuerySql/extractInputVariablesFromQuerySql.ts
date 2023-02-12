@@ -29,16 +29,16 @@ export const extractInputVariablesFromQuerySql = ({ sql }: { sql: string }) => {
   const tokenToSuffixedTokensMap: { [index: string]: string[] } = {};
   const suffixedInputVariableTokens = inputVariableTokens.map((token) => {
     if (!tokenToSuffixedTokensMap[token]) tokenToSuffixedTokensMap[token] = [];
-    const tokenOccurrenceIndex = tokenToSuffixedTokensMap[token].length;
+    const tokenOccurrenceIndex = tokenToSuffixedTokensMap[token]!.length;
     const suffixedToken = `${token}#${tokenOccurrenceIndex + 1}`; // note: we use `#` since it does not need to be escaped in regexp and its makes sense for an index due to it meaning "number"
-    tokenToSuffixedTokensMap[token].push(suffixedToken);
+    tokenToSuffixedTokensMap[token]!.push(suffixedToken);
     return suffixedToken;
   });
 
   // now go through the sql and replace each occurrence of a token with its suffixed,ordered identity (e.g., `WHERE (:until is null OR message.created_at <= :until)` => `WHERE (:until#1 is null OR message.created_at <= :until#2)`)
   const suffixedTokenSql = Object.keys(tokenToSuffixedTokensMap).reduce(
     (sqlNow, thisToken) => {
-      const suffixedTokens = tokenToSuffixedTokensMap[thisToken];
+      const suffixedTokens = tokenToSuffixedTokensMap[thisToken]!;
       let sqlToUpdate = sqlNow;
       suffixedTokens.forEach((suffixedToken) => {
         sqlToUpdate = sqlToUpdate.replace(
@@ -93,7 +93,7 @@ export const extractInputVariablesFromQuerySql = ({ sql }: { sql: string }) => {
     (definitionWithSuffixedToken) => {
       const tokenForSuffixedToken = suffixedTokenToTokenMap[
         `:${definitionWithSuffixedToken.name}`
-      ].replace(':', '');
+      ]!.replace(':', '');
       return new TypeDefinitionOfQueryInputVariable({
         ...definitionWithSuffixedToken,
         name: tokenForSuffixedToken,

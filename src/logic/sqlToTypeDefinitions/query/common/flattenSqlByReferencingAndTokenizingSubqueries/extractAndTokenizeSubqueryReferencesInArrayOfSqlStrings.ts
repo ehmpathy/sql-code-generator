@@ -1,5 +1,4 @@
-import uuid from 'uuid';
-
+import { uuid } from '../../../../../deps';
 import { SqlSubqueryReference } from '../../../../../domain/objects/SqlSubqueryReference';
 import { getTokenForSqlSubqueryReference } from './getTokenForSubqueryReference';
 

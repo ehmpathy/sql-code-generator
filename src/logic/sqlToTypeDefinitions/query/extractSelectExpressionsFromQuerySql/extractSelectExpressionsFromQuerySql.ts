@@ -28,7 +28,7 @@ export const extractSelectExpressionsFromQuerySql = ({
       throw new Error('no "select" keyword found; unexpected'); // fail fast
     if (partsSplitOnSelect.length > 2)
       throw new Error('more than one "select" keyword found; unexpected'); // should have been flattened out
-    return partsSplitOnSelect[1];
+    return partsSplitOnSelect[1]!;
   })();
   const everythingBetweenSelectAndFrom = (() => {
     const partsSplitOnFromAfterSelect = everythingAfterSelect.split(
@@ -38,7 +38,7 @@ export const extractSelectExpressionsFromQuerySql = ({
     if (partsSplitOnFromAfterSelect.length > 2) {
       throw new Error('more than one "from" keyword found; unexpected'); // should have been flattened out
     }
-    return partsSplitOnFromAfterSelect[0];
+    return partsSplitOnFromAfterSelect[0]!;
   })();
 
   // 3. cast commas inside of parens into pipes, so that we treat them as unique tokens when splitting "property lines" by comma

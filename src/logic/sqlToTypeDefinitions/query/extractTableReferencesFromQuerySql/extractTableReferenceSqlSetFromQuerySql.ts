@@ -15,7 +15,7 @@ export const extractTableReferenceSqlSetFromQuerySql = ({
       throw new Error('no "from" keyword found'); // fail fast; allow this being caught above
     if (partsSplitOnFrom.length > 2)
       throw new Error('more than one "from" keyword found; not yet supported'); // TODO: https://github.com/uladkasach/sql-code-generator/issues/2
-    return `FROM ${partsSplitOnFrom[1]}`; // inclusive, since we include "from"
+    return `FROM ${partsSplitOnFrom[1]!}`; // inclusive, since we include "from"
   })();
   const everythingBetweenFromAndWhere = (() => {
     const partsSplitOnFromAfterSelect =
@@ -23,7 +23,7 @@ export const extractTableReferenceSqlSetFromQuerySql = ({
     if (partsSplitOnFromAfterSelect.length > 2) {
       throw new Error('more than one "where" keyword found; not yet supported'); // TODO: https://github.com/uladkasach/sql-code-generator/issues/2
     }
-    return partsSplitOnFromAfterSelect[0];
+    return partsSplitOnFromAfterSelect[0]!;
   })();
 
   // 3. split token on each table reference type "FROM", "JOIN", "INNER JOIN", and "LEFT JOIN"

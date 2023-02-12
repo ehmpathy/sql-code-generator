@@ -39,7 +39,7 @@ export const extractResourceTypeAndNameFromDDL = ({ ddl }: { ddl: string }) => {
   const type = regexTypeMatchToTypeEnum[regexTypeMatch];
 
   // extract the name
-  const name = extractionMatches[2];
+  const name = extractionMatches[2]!;
 
   // return type and name
   return {

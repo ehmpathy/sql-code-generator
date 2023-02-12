@@ -31,25 +31,28 @@ export const extractTypeDefinitionFromTableReference = ({
   sql: string;
 }) => {
   // see if it matches a persisted table reference
+  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
   const [_, tableName] = new RegExp(TABLE_NAME_MATCHER_REGEX).exec(sql) ?? []; // tslint:disable-line no-unused
 
   // see if it matches a function output reference
+  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
   const [__, functionName] = tableName
     ? [, null]
     : new RegExp(FUNCTION_NAME_MATCHER_REGEX).exec(sql) ?? []; // tslint:disable-line no-unused
 
   // make sure it matches one of the above
-  if (!tableName && !functionName)
+  if (!tableName || !functionName)
     throw new Error(
       'could not identify the referenced table from table reference sql; unexpected',
     ); // fail fast
 
   // grab the alias, if any
+  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
   const [___, specifiedAlias] =
     new RegExp(SPECIFIED_ALIAS_MATCHER_REGEX).exec(sql) ?? []; // tslint:disable-line no-unused
 
   // define the name, considering whether alias was given
-  const alias = specifiedAlias ?? tableName ?? functionName;
+  const alias: string = specifiedAlias ?? tableName ?? functionName;
 
   // return the full definition
   return new TypeDefinitionOfQueryTableReference({

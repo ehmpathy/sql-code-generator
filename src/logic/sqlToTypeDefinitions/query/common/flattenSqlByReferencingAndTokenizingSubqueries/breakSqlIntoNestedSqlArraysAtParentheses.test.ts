@@ -14,7 +14,7 @@ describe('breakSqlIntoNestedSqlArraysAtParentheses', () => {
     const sql = "SELECT CONCAT('hel', 'lo');";
     const nestedSqlArray = breakSqlIntoNestedSqlArraysAtParentheses({ sql });
     expect(nestedSqlArray).toHaveLength(3);
-    expect(nestedSqlArray[1][0][0]).toEqual('(');
-    expect(nestedSqlArray[1][0].slice(-1)[0]).toEqual(')');
+    expect(nestedSqlArray[1]![0]![0]).toEqual('(');
+    expect(nestedSqlArray[1]![0]!.slice(-1)[0]).toEqual(')');
   });
 });

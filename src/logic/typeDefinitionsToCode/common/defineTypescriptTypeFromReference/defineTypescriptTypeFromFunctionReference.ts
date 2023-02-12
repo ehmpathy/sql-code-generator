@@ -13,7 +13,7 @@ export const defineTypescriptTypeFromFunctionReference = ({
 
   // grab the function name from the reference definition
   const [functionName, inputOrOutput, inputPropertyIndex] =
-    reference.functionReferencePath.split('.');
+    reference.functionReferencePath.split('.') as [string, string, string];
 
   // grab the typescript name for this function
   const functionTypescriptName = castResourceNameToTypescriptTypeName({

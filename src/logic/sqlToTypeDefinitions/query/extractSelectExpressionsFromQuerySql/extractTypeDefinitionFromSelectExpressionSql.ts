@@ -43,7 +43,7 @@ select expressions that reference a function must have an alias defined, per bes
     if (specifiedAlias) return specifiedAlias;
     if (inASubquery) return '__subquery_placeholder_name__'; // we wont use this alias anywhere, since we're in a subquery and subquery just returns one value; therefore, we can give it a fake name as a placeholder
     if (typeReference.tableReferencePath)
-      return typeReference.tableReferencePath.split('.').slice(-1)[0];
+      return typeReference.tableReferencePath.split('.').slice(-1)[0]!;
     throw new Error('could not define alias for sql expression; unexpected');
   })();
 

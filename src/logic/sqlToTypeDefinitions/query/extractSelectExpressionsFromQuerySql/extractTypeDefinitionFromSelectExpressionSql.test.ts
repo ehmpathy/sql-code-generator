@@ -1,6 +1,6 @@
 import { TypeDefinitionOfQuerySelectExpression } from '../../../../domain';
 import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
-import { TypeDefinitionReference } from '../../../../model/valueObjects/TypeDefinitionReference';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { extractTypeDefinitionFromSelectExpressionSql } from './extractTypeDefinitionFromSelectExpressionSql';
 
 describe('extractTypeDefinitionFromSelectExpressionSql', () => {

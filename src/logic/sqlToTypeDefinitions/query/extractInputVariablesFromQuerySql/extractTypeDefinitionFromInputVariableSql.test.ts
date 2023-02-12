@@ -1,6 +1,6 @@
+import { DataType } from '../../../../domain';
 import { TypeDefinitionOfQueryInputVariable } from '../../../../domain/objects/TypeDefinitionOfQueryInputVariable';
 import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
-import { DataType } from '../../../../model';
 import { extractTypeDefinitionFromInputVariableSql } from './extractTypeDefinitionFromInputVariableSql';
 
 describe('extractTypeDefinitionFromInputVariableSql', () => {

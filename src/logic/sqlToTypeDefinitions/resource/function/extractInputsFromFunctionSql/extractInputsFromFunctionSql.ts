@@ -8,7 +8,7 @@ export const extractInputsFromFunctionSql = ({ sql }: { sql: string }) => {
   const strippedSql: string = strip(sql);
 
   // 1. grab the insides of the inputs definition
-  const sqlBeforeReturns = strippedSql.split(/(?:returns|RETURNS)/)[0];
+  const sqlBeforeReturns = strippedSql.split(/(?:returns|RETURNS)/)[0]!;
   const innerSqlAndAfter = sqlBeforeReturns.split('(').slice(1).join('('); // drop the part before the first '('
   const innerSql = innerSqlAndAfter.split(')').slice(0, -1).join(')'); // drop the part after the last ')'
 

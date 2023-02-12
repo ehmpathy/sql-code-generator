@@ -42,5 +42,5 @@ export const extractTypeDefinitionReferenceFromSubqueryReferenceToken = ({
   }
 
   // 4. the reference type of this expression is the single reference type of that subquery
-  return selectExpressions[0].typeReference;
+  return selectExpressions[0]!.typeReference;
 };

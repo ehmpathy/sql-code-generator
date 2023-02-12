@@ -34,7 +34,7 @@ FROM ice_cream s
 
     // should have got the reference
     expect(references.length).toEqual(1);
-    expect(references[0].sql).toEqual(sqlParts[1]);
+    expect(references[0]!.sql).toEqual(sqlParts[1]);
 
     // it should have replaced the sql in the referenced sql parts for the subquery
     expect(referencedSqlParts[1]).toMatch(/__SSQ:[\w-]+__/);

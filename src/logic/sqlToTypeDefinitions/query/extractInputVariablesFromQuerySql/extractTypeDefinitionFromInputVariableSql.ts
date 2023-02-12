@@ -1,6 +1,6 @@
+import { DataType } from '../../../../domain';
 import { TypeDefinitionOfQueryInputVariable } from '../../../../domain/objects/TypeDefinitionOfQueryInputVariable';
 import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
-import { DataType } from '../../../../model';
 import { throwErrorIfTableReferencePathImpliesTable } from '../common/throwErrorIfTableReferencePathImpliesTable';
 
 export const extractTypeDefinitionFromInputVariableSql = ({
@@ -59,16 +59,17 @@ export const extractTypeDefinitionFromInputVariableSql = ({
   // check if this token is used in a function. If so, its equivalent to whatever is at that index of the function params
   const reg = `\\s+(\\w+\\((?:\\s*[:\\w#]+,)*(?:\\s*${tokenWithOptionalTypecastingRegexString},?)(?:\\s*[:\\w#]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
   const [
-    ___, // tslint:disable-line no-unused
+    // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
+    ___,
     tokenInsideFunctionMatch, // check if "functionName(arg1?, :token, arg2?)"
   ] = new RegExp(reg).exec(sql) ?? [];
   if (tokenInsideFunctionMatch) {
     // grab the function name
-    const functionName = tokenInsideFunctionMatch.split('(')[0].trim();
+    const functionName = tokenInsideFunctionMatch.split('(')[0]!.trim();
 
     // figure out where in the array the token is
-    const sqlAfterOpen = tokenInsideFunctionMatch.split('(')[1];
-    const sqlBetweenOpenAndClose = sqlAfterOpen.split(')')[0];
+    const sqlAfterOpen = tokenInsideFunctionMatch.split('(')[1]!;
+    const sqlBetweenOpenAndClose = sqlAfterOpen.split(')')[0]!;
     const parametersArray = sqlBetweenOpenAndClose
       .split(',')
       .map((str) => str.trim());

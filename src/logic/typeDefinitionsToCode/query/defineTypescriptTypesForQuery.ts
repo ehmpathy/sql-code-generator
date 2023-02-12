@@ -1,6 +1,6 @@
 import { TypeDefinition } from '../../../domain';
 import { TypeDefinitionOfQuery } from '../../../domain/objects/TypeDefinitionOfQuery';
-import { TypeDefinitionOfQueryInputVariable } from '../../../model/valueObjects/TypeDefinitionOfQueryInputVariable';
+import { TypeDefinitionOfQueryInputVariable } from '../../../domain/objects/TypeDefinitionOfQueryInputVariable';
 import { castQueryNameToTypescriptTypeName } from '../common/castQueryNameToTypescriptTypeName';
 import { defineTypescriptTypeFromDataTypeArrayOrReference } from '../common/defineTypescriptTypeFromDataTypeArrayOrReference';
 import { defineTypescriptTypeFromReference } from '../common/defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
@@ -21,14 +21,14 @@ export const defineTypescriptTypesForQuery = ({
   const inputVariableNameToTypeDefinitionsMap =
     definition.inputVariables.reduce((summary, thisDefinition) => {
       if (!summary[thisDefinition.name]) summary[thisDefinition.name] = [];
-      summary[thisDefinition.name].push(thisDefinition);
+      summary[thisDefinition.name]!.push(thisDefinition);
       return summary;
     }, {} as Record<string, TypeDefinitionOfQueryInputVariable[]>);
   const typescriptInputInterfacePropertyDefinitions = Object.keys(
     inputVariableNameToTypeDefinitionsMap,
   ).map((inputVariableName) => {
     // grab all the types for this input variable (there can be more than one, because an input variable can be used more than once in the same query. e.g., `WHERE x is null OR x = y`)
-    const types = inputVariableNameToTypeDefinitionsMap[inputVariableName].map(
+    const types = inputVariableNameToTypeDefinitionsMap[inputVariableName]!.map(
       (def) => def.type,
     );
 

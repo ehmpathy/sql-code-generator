@@ -23,7 +23,7 @@ export const extractTypeDefinitionFromTableSql = ({
   const strippedSql: string = strip(sql);
 
   // 1. drop everything after the first `;` - the table ddl does not have `;` inside. (this will make sure we exclude lines like "create index ..." and etc)
-  const sqlBeforeFirstSemiColon = strippedSql.split(';')[0];
+  const sqlBeforeFirstSemiColon = strippedSql.split(';')[0]!;
   // strippedSql.replace(/CREATE INDEX [\w\d_]+ ON [\w\d_]+ USING [\w\d_]+ \([\w\d_,]+\);/gi, '');
 
   // 2. grab the insides of the "create" (i.e., 'CREATE TABLE ... (__INSIDES__) ...' => '__INSIDES__')

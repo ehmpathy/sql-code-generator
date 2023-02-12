@@ -7,7 +7,7 @@ export const extractTypeDefinitionFromColumnSql = ({
   sql: string;
 }) => {
   // 1. extract the name; its typically the first string
-  const name = sql.split(' ')[0].replace(/[^a-zA-Z_]+/gi, '');
+  const name = sql.split(' ')[0]!.replace(/[^a-zA-Z_]+/gi, '');
 
   // 2. extract the root type;
   const primaryType = extractDataTypeFromColumnOrArgumentDefinitionSql({ sql });
@@ -17,7 +17,7 @@ export const extractTypeDefinitionFromColumnSql = ({
 
   // 4. define the full type definition; note: array => union
   const type = [primaryType, isNullable ? DataType.NULL : null].filter(
-    (type) => !!type,
+    (thisType) => !!thisType,
   ) as DataType[];
 
   // 5. return the definition
