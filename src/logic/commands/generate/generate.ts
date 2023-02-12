@@ -1,9 +1,10 @@
 import chalk from 'chalk';
+
 import { readConfig } from '../../config/getConfig/readConfig';
-import { saveCode } from './saveCode';
-import { defineTypescriptTypesFileCodeFromTypeDefinitions } from './defineTypescriptTypesFileCodeFromTypeDefinition/defineTypescriptTypesFileCodeFromTypeDefinition';
 import { defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions } from './defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions/defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions';
+import { defineTypescriptTypesFileCodeFromTypeDefinitions } from './defineTypescriptTypesFileCodeFromTypeDefinition/defineTypescriptTypesFileCodeFromTypeDefinition';
 import { extractTypeDefinitionsFromDeclarations } from './extractTypeDefinitionsFromDeclarations/extractTypeDefinitionsFromDeclarations';
+import { saveCode } from './saveCode';
 
 export const generate = async ({ configPath }: { configPath: string }) => {
   //  read the declarations from config
@@ -20,9 +21,10 @@ export const generate = async ({ configPath }: { configPath: string }) => {
   console.log(chalk.bold('Generating code...\n')); // tslint:disable-line no-console
 
   // output the type definitions code
-  const typescriptTypesFileCode = defineTypescriptTypesFileCodeFromTypeDefinitions({
-    definitions,
-  });
+  const typescriptTypesFileCode =
+    defineTypescriptTypesFileCodeFromTypeDefinitions({
+      definitions,
+    });
   await saveCode({
     rootDir: config.rootDir,
     filePath: config.generates.types,
@@ -31,11 +33,12 @@ export const generate = async ({ configPath }: { configPath: string }) => {
 
   // output the query functions (if requested)
   if (config.generates.queryFunctions) {
-    const typescriptQueryFunctionsFileCode = defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions({
-      definitions,
-      language: config.language,
-      generatedOutputPaths: config.generates,
-    });
+    const typescriptQueryFunctionsFileCode =
+      defineTypescriptQueryFunctionsFileCodeFromTypeDefinitions({
+        definitions,
+        language: config.language,
+        generatedOutputPaths: config.generates,
+      });
     await saveCode({
       rootDir: config.rootDir,
       filePath: config.generates.queryFunctions,

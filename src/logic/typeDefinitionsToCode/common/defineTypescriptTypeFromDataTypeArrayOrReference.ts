@@ -1,6 +1,11 @@
-import { DataType, TypeDefinitionReference, TypeDefinition, TypeDefinitionOfQueryTableReference } from '../../../domain';
-import { defineTypescriptTypeFromReference } from './defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
+import {
+  DataType,
+  TypeDefinitionReference,
+  TypeDefinition,
+  TypeDefinitionOfQueryTableReference,
+} from '../../../domain';
 import { defineTypescriptTypeFromDataTypeArray } from './defineTypescriptTypeFromDataTypeArray';
+import { defineTypescriptTypeFromReference } from './defineTypescriptTypeFromReference/defineTypescriptTypeFromReference';
 
 export const defineTypescriptTypeFromDataTypeArrayOrReference = ({
   type,

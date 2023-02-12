@@ -1,11 +1,11 @@
-import { extractSqlFromFile } from '../../common/extractSqlFromFile';
-import { extractTypeDefinitionFromQuerySql } from '../../sqlToTypeDefinitions/query/extractTypeDefinitionFromQuerySql';
-import { defineTypescriptTypesForQuery } from './defineTypescriptTypesForQuery';
 import {
   TypeDefinitionOfResourceFunction,
   TypeDefinitionOfResourceTable,
   TypeDefinitionOfResourceView,
 } from '../../../domain';
+import { extractSqlFromFile } from '../../common/extractSqlFromFile';
+import { extractTypeDefinitionFromQuerySql } from '../../sqlToTypeDefinitions/query/extractTypeDefinitionFromQuerySql';
+import { defineTypescriptTypesForQuery } from './defineTypescriptTypesForQuery';
 
 describe('defineTypescriptTypesForQuery', () => {
   it('should be able to determine types accurately an example of selecting columns a single table by id', async () => {
@@ -19,7 +19,9 @@ describe('defineTypescriptTypesForQuery', () => {
     });
     const code = defineTypescriptTypesForQuery({
       definition: def,
-      allDefinitions: [new TypeDefinitionOfResourceTable({ name: 'image', columns: [] })],
+      allDefinitions: [
+        new TypeDefinitionOfResourceTable({ name: 'image', columns: [] }),
+      ],
     });
     expect(code).toMatchSnapshot();
   });
@@ -36,7 +38,10 @@ describe('defineTypescriptTypesForQuery', () => {
       definition: def,
       allDefinitions: [
         new TypeDefinitionOfResourceTable({ name: 'suggestion', columns: [] }),
-        new TypeDefinitionOfResourceTable({ name: 'suggestion_version', columns: [] }),
+        new TypeDefinitionOfResourceTable({
+          name: 'suggestion_version',
+          columns: [],
+        }),
       ],
     });
     expect(code).toMatchSnapshot();
@@ -98,7 +103,10 @@ describe('defineTypescriptTypesForQuery', () => {
         }),
         new TypeDefinitionOfResourceTable({ name: 'locomotive', columns: [] }),
         new TypeDefinitionOfResourceTable({ name: 'carriage', columns: [] }),
-        new TypeDefinitionOfResourceTable({ name: 'train_engineer', columns: [] }),
+        new TypeDefinitionOfResourceTable({
+          name: 'train_engineer',
+          columns: [],
+        }),
       ],
     });
     expect(code).toMatchSnapshot();
@@ -118,7 +126,10 @@ describe('defineTypescriptTypesForQuery', () => {
         new TypeDefinitionOfResourceFunction({
           name: 'upsert_jerb',
           inputs: [],
-          output: new TypeDefinitionOfResourceTable({ name: 'function.output', columns: [] }),
+          output: new TypeDefinitionOfResourceTable({
+            name: 'function.output',
+            columns: [],
+          }),
         }),
       ],
     });
@@ -144,7 +155,9 @@ describe('defineTypescriptTypesForQuery', () => {
         }),
       ],
     });
-    expect(code).toContain("until: null | SqlViewViewChatMessageCurrent['created_at'];"); // should have union-ed the two types
+    expect(code).toContain(
+      "until: null | SqlViewViewChatMessageCurrent['created_at'];",
+    ); // should have union-ed the two types
     console.log(code);
     // expect(code).toMatchSnapshot();
   });

@@ -1,6 +1,6 @@
 import { DataType } from '../constants';
-import { TypeDefinitionOfResourceTable } from './TypeDefinitionOfResourceTable';
 import { TypeDefinitionOfResourceColumn } from './TypeDefinitionOfResourceColumn';
+import { TypeDefinitionOfResourceTable } from './TypeDefinitionOfResourceTable';
 
 describe('TypeDefinitionOfResourceTable', () => {
   it('should initialize for valid inputs', () => {

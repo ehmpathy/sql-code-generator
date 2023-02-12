@@ -1,13 +1,9 @@
-import Joi from 'joi';
 import { DomainObject } from 'domain-objects';
+import Joi from 'joi';
 
 const schema = Joi.object().keys({
-  tableReferencePath: Joi.string()
-    .required()
-    .allow(null),
-  functionReferencePath: Joi.string()
-    .required()
-    .allow(null),
+  tableReferencePath: Joi.string().required().allow(null),
+  functionReferencePath: Joi.string().required().allow(null),
 });
 export interface TypeDefinitionReference {
   /**
@@ -20,7 +16,9 @@ export interface TypeDefinitionReference {
    */
   functionReferencePath: string | null;
 }
-export class TypeDefinitionReference extends DomainObject<TypeDefinitionReference>
-  implements TypeDefinitionReference {
+export class TypeDefinitionReference
+  extends DomainObject<TypeDefinitionReference>
+  implements TypeDefinitionReference
+{
   public static schema = schema;
 }

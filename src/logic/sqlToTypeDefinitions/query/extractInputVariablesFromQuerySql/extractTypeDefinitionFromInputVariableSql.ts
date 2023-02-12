@@ -1,7 +1,7 @@
 import { TypeDefinitionOfQueryInputVariable } from '../../../../domain/objects/TypeDefinitionOfQueryInputVariable';
-import { throwErrorIfTableReferencePathImpliesTable } from '../common/throwErrorIfTableReferencePathImpliesTable';
 import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { DataType } from '../../../../model';
+import { throwErrorIfTableReferencePathImpliesTable } from '../common/throwErrorIfTableReferencePathImpliesTable';
 
 export const extractTypeDefinitionFromInputVariableSql = ({
   token,
@@ -71,8 +71,8 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     const sqlBetweenOpenAndClose = sqlAfterOpen.split(')')[0];
     const parametersArray = sqlBetweenOpenAndClose
       .split(',')
-      .map(str => str.trim());
-    const index = parametersArray.findIndex(parameter =>
+      .map((str) => str.trim());
+    const index = parametersArray.findIndex((parameter) =>
       new RegExp(tokenWithOptionalTypecastingRegexString).test(parameter),
     );
     if (index === -1) throw new Error('unexpected'); // this should never occur if the regex is working correctly; fail fast though

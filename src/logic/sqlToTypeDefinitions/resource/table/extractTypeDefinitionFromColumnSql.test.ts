@@ -40,7 +40,7 @@ describe('extractTypeDefinitionFromColumnSql', () => {
       }),
     },
   ];
-  examples.forEach(example => {
+  examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {
       const def = extractTypeDefinitionFromColumnSql({ sql: example.sql });
       expect(def).toEqual(example.def);

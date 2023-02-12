@@ -67,7 +67,9 @@ describe('TypeDefinitionOfResourceFunction', () => {
       }),
     });
     expect(changeDefinition.name).toEqual('upsert_image'); // sanity check
-    expect(changeDefinition.output).toBeInstanceOf(TypeDefinitionOfResourceTable); // sanity check
+    expect(changeDefinition.output).toBeInstanceOf(
+      TypeDefinitionOfResourceTable,
+    ); // sanity check
   });
   it('should throw error on invalid input', () => {
     try {

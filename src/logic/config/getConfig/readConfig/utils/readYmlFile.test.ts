@@ -1,6 +1,7 @@
 import YAML from 'yaml';
-import { readYmlFile } from './readYmlFile';
+
 import { readFileAsync } from '../../../../common/readFileAsync';
+import { readYmlFile } from './readYmlFile';
 
 jest.mock('../../../../common/readFileAsync');
 const readFileAsyncMock = readFileAsync as jest.Mock;
@@ -34,7 +35,9 @@ describe('readDefinitionsFileRecursive', () => {
   it('should attempt to read the file', async () => {
     await readYmlFile({ filePath: 'some.yml' });
     expect(readFileAsyncMock.mock.calls.length).toEqual(1);
-    expect(readFileAsyncMock.mock.calls[0][0]).toEqual({ filePath: 'some.yml' });
+    expect(readFileAsyncMock.mock.calls[0][0]).toEqual({
+      filePath: 'some.yml',
+    });
   });
   it('should parse the contents into yml with the YAML library', async () => {
     const spy = jest.spyOn(YAML, 'parse');

@@ -17,7 +17,7 @@ export const extractTypeDefinitionFromFunctionInputSql = ({
   const type = [
     primaryType,
     DataType.NULL, // note: inputs to functions are always nullable ?
-  ].filter(type => !!type) as DataType[];
+  ].filter((type) => !!type) as DataType[];
 
   // 4. return the definition
   return new TypeDefinitionOfResourceInput({

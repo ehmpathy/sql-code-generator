@@ -1,5 +1,3 @@
-import { defineTypescriptTypeFromTableReference } from './defineTypescriptTypeFromTableReference';
-import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import {
   DataType,
   TypeDefinitionOfQueryTableReference,
@@ -7,6 +5,8 @@ import {
   TypeDefinitionOfResourceTable,
   TypeDefinitionOfResourceView,
 } from '../../../../domain';
+import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
+import { defineTypescriptTypeFromTableReference } from './defineTypescriptTypeFromTableReference';
 
 describe('defineTypescriptTypeFromTableReference', () => {
   it('should correctly define the typescript type reference for table', () => {

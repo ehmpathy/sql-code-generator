@@ -5,7 +5,11 @@ import { readConfig } from './readConfig';
   1. read the config
   2. validate the config
 */
-export const getConfig = async ({ configPath }: { configPath: string }): Promise<GeneratorConfig> => {
+export const getConfig = async ({
+  configPath,
+}: {
+  configPath: string;
+}): Promise<GeneratorConfig> => {
   // 1. read the config
   const config = await readConfig({ filePath: configPath });
 

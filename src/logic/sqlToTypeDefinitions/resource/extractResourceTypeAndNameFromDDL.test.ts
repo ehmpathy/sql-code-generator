@@ -7,7 +7,9 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     try {
       extractResourceTypeAndNameFromDDL({ ddl });
     } catch (error) {
-      expect(error.message).toEqual('resource creation type and name could not be found in ddl');
+      expect(error.message).toEqual(
+        'resource creation type and name could not be found in ddl',
+      );
     }
   });
   it('should be able to find a table resource', () => {
@@ -71,7 +73,8 @@ describe('extractResourceTypeAndNameFromDDL', () => {
     expect(type).toEqual(ResourceType.TABLE);
   });
   it('should be able to find a resource name when DEFINER is defined', () => {
-    const ddl = 'CREATE DEFINER=`root`@`%` PROCEDURE `upsert_super_cool_thing`( ... )';
+    const ddl =
+      'CREATE DEFINER=`root`@`%` PROCEDURE `upsert_super_cool_thing`( ... )';
     const { name, type } = extractResourceTypeAndNameFromDDL({ ddl });
     expect(name).toEqual('upsert_super_cool_thing');
     expect(type).toEqual(ResourceType.PROCEDURE);

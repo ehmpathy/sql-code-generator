@@ -15,7 +15,10 @@ describe('defineTypescriptTypesForView', () => {
       definition,
       allDefinitions: [
         new TypeDefinitionOfResourceTable({ name: 'suggestion', columns: [] }),
-        new TypeDefinitionOfResourceTable({ name: 'suggestion_version', columns: [] }),
+        new TypeDefinitionOfResourceTable({
+          name: 'suggestion_version',
+          columns: [],
+        }),
       ],
     });
     expect(code).toMatchSnapshot();

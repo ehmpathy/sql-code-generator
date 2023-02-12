@@ -6,14 +6,18 @@ describe('castCommasInParensToPipesForTokenSafety', () => {
     const exampleSql = await extractSqlFromFile({
       filePath: `${__dirname}/__test_assets__/suggestion_version.insides.sql`,
     });
-    const castedSql = castCommasInParensToPipesForTokenSafety({ sql: exampleSql });
+    const castedSql = castCommasInParensToPipesForTokenSafety({
+      sql: exampleSql,
+    });
     expect(castedSql).toMatchSnapshot();
   });
   it('should cast correctly for this example with nested parens', async () => {
     const exampleSql = await extractSqlFromFile({
       filePath: `${__dirname}/__test_assets__/job.insides.sql`,
     });
-    const castedSql = castCommasInParensToPipesForTokenSafety({ sql: exampleSql });
+    const castedSql = castCommasInParensToPipesForTokenSafety({
+      sql: exampleSql,
+    });
     expect(castedSql).toMatchSnapshot();
   });
 });

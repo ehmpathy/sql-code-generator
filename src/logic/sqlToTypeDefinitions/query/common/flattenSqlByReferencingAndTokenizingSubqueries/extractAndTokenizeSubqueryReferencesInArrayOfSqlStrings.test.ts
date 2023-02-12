@@ -3,7 +3,8 @@ import { extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings } from './extra
 describe('extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings', () => {
   it('should not do anything if its just a string', () => {
     const sqlParts = ['select u.id from user u where u.id = :id'];
-    const { referencedSqlParts, references } = extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings({ sqlParts });
+    const { referencedSqlParts, references } =
+      extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings({ sqlParts });
     expect(referencedSqlParts).toEqual(sqlParts);
     expect(references.length).toEqual(0);
   });
@@ -28,7 +29,8 @@ FROM ice_cream s
 ;
   `.trim(),
     ];
-    const { referencedSqlParts, references } = extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings({ sqlParts });
+    const { referencedSqlParts, references } =
+      extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings({ sqlParts });
 
     // should have got the reference
     expect(references.length).toEqual(1);

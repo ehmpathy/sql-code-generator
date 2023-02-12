@@ -1,5 +1,6 @@
-import Joi from 'joi';
 import { DomainObject } from 'domain-objects';
+import Joi from 'joi';
+
 import { DataType } from '../constants';
 
 /*
@@ -8,16 +9,16 @@ import { DataType } from '../constants';
 const schema = Joi.object().keys({
   name: Joi.string().required(),
   type: Joi.array().items(
-    Joi.string()
-      .valid(Object.values(DataType))
-      .required(),
+    Joi.string().valid(Object.values(DataType)).required(),
   ),
 });
 export interface TypeDefinitionOfResourceInput {
   name: string;
   type: DataType[];
 }
-export class TypeDefinitionOfResourceInput extends DomainObject<TypeDefinitionOfResourceInput>
-  implements TypeDefinitionOfResourceInput {
+export class TypeDefinitionOfResourceInput
+  extends DomainObject<TypeDefinitionOfResourceInput>
+  implements TypeDefinitionOfResourceInput
+{
   public static schema = schema;
 }

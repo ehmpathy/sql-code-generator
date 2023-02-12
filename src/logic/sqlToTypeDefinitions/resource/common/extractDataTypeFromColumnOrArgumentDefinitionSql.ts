@@ -89,16 +89,26 @@ const postgresBinaryTypes = ['BYTEA'];
 // combine the types so we can search over the union
 const dbBinaryTypes = [...mysqlBinaryTypes, ...postgresBinaryTypes];
 
-export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({ sql }: { sql: string }) => {
+export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({
+  sql,
+}: {
+  sql: string;
+}) => {
   // 1. cast to upper
   const sqlUpper = sql.toUpperCase();
 
   // 2. one by one try to see which datatype is being defined in this definition
-  if (dbStringTypes.some((dbType) => sqlUpper.includes(` ${dbType}[]`))) return DataType.STRING_ARRAY;
-  if (dbStringTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.STRING;
-  if (dbNumberTypes.some((dbType) => sqlUpper.includes(` ${dbType}[]`))) return DataType.NUMBER_ARRAY;
-  if (dbNumberTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.NUMBER;
-  if (dbDateTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.DATE;
-  if (dbBinaryTypes.some((dbType) => sqlUpper.includes(` ${dbType}`))) return DataType.BUFFER;
+  if (dbStringTypes.some((dbType) => sqlUpper.includes(` ${dbType}[]`)))
+    return DataType.STRING_ARRAY;
+  if (dbStringTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
+    return DataType.STRING;
+  if (dbNumberTypes.some((dbType) => sqlUpper.includes(` ${dbType}[]`)))
+    return DataType.NUMBER_ARRAY;
+  if (dbNumberTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
+    return DataType.NUMBER;
+  if (dbDateTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
+    return DataType.DATE;
+  if (dbBinaryTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
+    return DataType.BUFFER;
   throw new Error(`could not extract data type from '${sql}'`);
 };

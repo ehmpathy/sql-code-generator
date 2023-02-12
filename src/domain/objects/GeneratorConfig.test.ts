@@ -1,7 +1,7 @@
+import { DatabaseLanguage } from '../constants';
+import { GeneratorConfig } from './GeneratorConfig';
 import { QueryDeclaration } from './QueryDeclaration';
 import { ResourceDeclaration } from './ResourceDeclaration';
-import { GeneratorConfig } from './GeneratorConfig';
-import { DatabaseLanguage } from '../constants';
 
 describe('GeneratorConfig', () => {
   const queryDec = new QueryDeclaration({
@@ -17,14 +17,20 @@ describe('GeneratorConfig', () => {
       rootDir: '__DIR__',
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
-      generates: { types: '__TYPES_PATH__', queryFunctions: '__QUERY_FUNCTIONS_PATH__' },
+      generates: {
+        types: '__TYPES_PATH__',
+        queryFunctions: '__QUERY_FUNCTIONS_PATH__',
+      },
       declarations: [queryDec, resourceDec],
     });
     expect(config).toMatchObject({
       rootDir: '__DIR__',
       language: DatabaseLanguage.MYSQL,
       dialect: '5.7',
-      generates: { types: '__TYPES_PATH__', queryFunctions: '__QUERY_FUNCTIONS_PATH__' },
+      generates: {
+        types: '__TYPES_PATH__',
+        queryFunctions: '__QUERY_FUNCTIONS_PATH__',
+      },
       declarations: [queryDec, resourceDec],
     });
   });

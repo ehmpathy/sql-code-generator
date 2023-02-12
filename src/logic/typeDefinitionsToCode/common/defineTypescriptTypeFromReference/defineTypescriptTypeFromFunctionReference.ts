@@ -1,6 +1,6 @@
+import { ResourceType } from '../../../../domain';
 import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { castResourceNameToTypescriptTypeName } from '../castResourceNameToTypescriptTypeName';
-import { ResourceType } from '../../../../domain';
 
 export const defineTypescriptTypeFromFunctionReference = ({
   reference,
@@ -12,11 +12,8 @@ export const defineTypescriptTypeFromFunctionReference = ({
     throw new Error('expected function reference to be defined'); // fail fast
 
   // grab the function name from the reference definition
-  const [
-    functionName,
-    inputOrOutput,
-    inputPropertyIndex,
-  ] = reference.functionReferencePath.split('.');
+  const [functionName, inputOrOutput, inputPropertyIndex] =
+    reference.functionReferencePath.split('.');
 
   // grab the typescript name for this function
   const functionTypescriptName = castResourceNameToTypescriptTypeName({

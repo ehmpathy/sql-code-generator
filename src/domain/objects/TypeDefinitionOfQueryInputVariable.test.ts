@@ -1,6 +1,6 @@
+import { DataType } from '../constants';
 import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInputVariable';
 import { TypeDefinitionReference } from './TypeDefinitionReference';
-import { DataType } from '../constants';
 
 describe('TypeDefinitionOfQueryInputVariable', () => {
   it('should initialize for valid inputs', () => {

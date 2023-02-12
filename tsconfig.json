@@ -5,6 +5,8 @@
     "noPropertyAccessFromIndexSignature": false,
     "noImplicitOverride": false,
     "resolveJsonModule": true,
+    "useUnknownInCatchVariables": false,
+    "exactOptionalPropertyTypes": false,
     "declaration": true,
     "sourceMap": true,
     "outDir": "dist",

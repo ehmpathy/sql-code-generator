@@ -1,7 +1,7 @@
 import { TypeDefinitionOfQueryInputVariable } from '../../../../domain/objects/TypeDefinitionOfQueryInputVariable';
-import { extractTypeDefinitionFromInputVariableSql } from './extractTypeDefinitionFromInputVariableSql';
 import { TypeDefinitionReference } from '../../../../domain/objects/TypeDefinitionReference';
 import { DataType } from '../../../../model';
+import { extractTypeDefinitionFromInputVariableSql } from './extractTypeDefinitionFromInputVariableSql';
 
 describe('extractTypeDefinitionFromInputVariableSql', () => {
   const examples = [
@@ -156,7 +156,7 @@ limit :limit;
     },
     // TODO: support functions in functions; https://github.com/uladkasach/sql-code-generator/issues/4
   ];
-  examples.forEach(example => {
+  examples.forEach((example) => {
     const exampleSqlFlattened = example.sql.replace(/\s+/g, ' ');
     it(`should be able to determine types accurately for this example: "${example.token}" in "${exampleSqlFlattened}"`, () => {
       const def = extractTypeDefinitionFromInputVariableSql({

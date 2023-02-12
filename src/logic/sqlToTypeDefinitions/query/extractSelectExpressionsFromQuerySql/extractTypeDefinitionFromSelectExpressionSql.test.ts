@@ -67,7 +67,7 @@ __SSQ:70bebe49-fafa-4d0d-a457-e063b40037f1__ as ingredient_ids
       }),
     },
   ];
-  examples.forEach(example => {
+  examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql.replace(
       /\s+/g,
       ' ',

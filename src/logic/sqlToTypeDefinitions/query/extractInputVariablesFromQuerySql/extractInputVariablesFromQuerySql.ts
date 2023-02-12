@@ -1,6 +1,6 @@
 import strip from 'sql-strip-comments';
-import { TypeDefinitionOfQueryInputVariable } from '../../../../domain/objects/TypeDefinitionOfQueryInputVariable';
 
+import { TypeDefinitionOfQueryInputVariable } from '../../../../domain/objects/TypeDefinitionOfQueryInputVariable';
 import { flattenSqlByReferencingAndTokenizingSubqueries } from '../common/flattenSqlByReferencingAndTokenizingSubqueries';
 import { extractInputVariableTokensFromQuerySql } from './extractInputVariableTokensFromQuerySql';
 import { extractTypeDefinitionFromInputVariableSql } from './extractTypeDefinitionFromInputVariableSql';
@@ -27,7 +27,7 @@ export const extractInputVariablesFromQuerySql = ({ sql }: { sql: string }) => {
 
   // suffix each token with the order in which it was found, since we may have the same token identified more than once
   const tokenToSuffixedTokensMap: { [index: string]: string[] } = {};
-  const suffixedInputVariableTokens = inputVariableTokens.map(token => {
+  const suffixedInputVariableTokens = inputVariableTokens.map((token) => {
     if (!tokenToSuffixedTokensMap[token]) tokenToSuffixedTokensMap[token] = [];
     const tokenOccurrenceIndex = tokenToSuffixedTokensMap[token].length;
     const suffixedToken = `${token}#${tokenOccurrenceIndex + 1}`; // note: we use `#` since it does not need to be escaped in regexp and its makes sense for an index due to it meaning "number"
@@ -40,7 +40,7 @@ export const extractInputVariablesFromQuerySql = ({ sql }: { sql: string }) => {
     (sqlNow, thisToken) => {
       const suffixedTokens = tokenToSuffixedTokensMap[thisToken];
       let sqlToUpdate = sqlNow;
-      suffixedTokens.forEach(suffixedToken => {
+      suffixedTokens.forEach((suffixedToken) => {
         sqlToUpdate = sqlToUpdate.replace(
           new RegExp(`(?<=[^:])(${thisToken})(?!#)`),
           suffixedToken,
@@ -53,18 +53,16 @@ export const extractInputVariablesFromQuerySql = ({ sql }: { sql: string }) => {
 
   // flatten the sql, to avoid subquery syntax interfering with below search patterns
   const strippedSql = strip(suffixedTokenSql);
-  const {
-    flattenedSql,
-    references: subqueries,
-  } = flattenSqlByReferencingAndTokenizingSubqueries({
-    sql: strippedSql,
-  });
+  const { flattenedSql, references: subqueries } =
+    flattenSqlByReferencingAndTokenizingSubqueries({
+      sql: strippedSql,
+    });
 
   // define the type definition for each variable
   const definitionsWithSuffixedTokens = suffixedInputVariableTokens.map(
-    token => {
+    (token) => {
       // check if the token is actually in a subquery; run it on the subquery if so
-      const foundSubqueryContainingToken = subqueries.find(subquery =>
+      const foundSubqueryContainingToken = subqueries.find((subquery) =>
         new RegExp(`(?:[^\\w:])${token}`).test(subquery.sql),
       );
       if (foundSubqueryContainingToken)
@@ -87,12 +85,12 @@ export const extractInputVariablesFromQuerySql = ({ sql }: { sql: string }) => {
   } = Object.fromEntries(
     Object.entries(tokenToSuffixedTokensMap)
       .map(([token, suffixedTokens]) => {
-        return suffixedTokens.map(suffixedToken => [suffixedToken, token]);
+        return suffixedTokens.map((suffixedToken) => [suffixedToken, token]);
       })
       .flat(),
   );
   const definitions = definitionsWithSuffixedTokens.map(
-    definitionWithSuffixedToken => {
+    (definitionWithSuffixedToken) => {
       const tokenForSuffixedToken = suffixedTokenToTokenMap[
         `:${definitionWithSuffixedToken.name}`
       ].replace(':', '');

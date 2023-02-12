@@ -1,4 +1,8 @@
-import { DatabaseLanguage, QueryDeclaration, ResourceDeclaration } from '../../../../domain';
+import {
+  DatabaseLanguage,
+  QueryDeclaration,
+  ResourceDeclaration,
+} from '../../../../domain';
 import { getTypeDefinitionFromDeclarationWithHelpfulError } from './getTypeDefinitionFromDeclarationWithHelpfulError';
 import { grabTypeDefinitionsForReferencedDatabaseProvidedFunctions } from './grabTypeDefinitionsForReferencedDatabaseProvidedFunctions/grabTypeDefinitionsForReferencedDatabaseProvidedFunctions';
 
@@ -15,10 +19,11 @@ export const extractTypeDefinitionsFromDeclarations = ({
   );
 
   // 2. pick out definitions for functions user is using that come built in w/ their language
-  const referencedDbProvidedFunctionDefinintions = grabTypeDefinitionsForReferencedDatabaseProvidedFunctions({
-    definitions,
-    language,
-  });
+  const referencedDbProvidedFunctionDefinintions =
+    grabTypeDefinitionsForReferencedDatabaseProvidedFunctions({
+      definitions,
+      language,
+    });
 
   // 3. return all necessary type definitions
   return [...definitions, ...referencedDbProvidedFunctionDefinintions];

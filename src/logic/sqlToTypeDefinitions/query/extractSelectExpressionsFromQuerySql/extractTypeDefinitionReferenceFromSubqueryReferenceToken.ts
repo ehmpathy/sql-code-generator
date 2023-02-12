@@ -1,7 +1,7 @@
+import { TypeDefinitionReference } from '../../../../domain';
 import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
 import { getTokenForSqlSubqueryReference } from '../common/flattenSqlByReferencingAndTokenizingSubqueries/getTokenForSubqueryReference';
 import { extractSelectExpressionsFromQuerySql } from './extractSelectExpressionsFromQuerySql';
-import { TypeDefinitionReference } from '../../../../domain';
 
 export const extractTypeDefinitionReferenceFromSubqueryReferenceToken = ({
   subqueryReferenceToken,
@@ -12,7 +12,7 @@ export const extractTypeDefinitionReferenceFromSubqueryReferenceToken = ({
 }): TypeDefinitionReference => {
   // 1. find the subquery reference object
   const subquery = subqueries.find(
-    subquery =>
+    (subquery) =>
       getTokenForSqlSubqueryReference({ reference: subquery }) ===
       subqueryReferenceToken,
   );

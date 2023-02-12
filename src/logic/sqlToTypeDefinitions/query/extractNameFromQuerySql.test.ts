@@ -16,7 +16,9 @@ describe('extractNameFromQuerySql', () => {
     try {
       extractNameFromQuerySql({ sql });
     } catch (error) {
-      expect(error.message).toContain('sql for query does not have name defined');
+      expect(error.message).toContain(
+        'sql for query does not have name defined',
+      );
     }
   });
 });

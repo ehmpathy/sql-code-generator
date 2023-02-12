@@ -1,9 +1,9 @@
-import { TypeDefinitionOfResourceFunction } from '../../../../domain/objects/TypeDefinitionOfResourceFunction';
-import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
 import {
   ResourceType,
   TypeDefinitionOfResourceTable,
 } from '../../../../domain';
+import { TypeDefinitionOfResourceFunction } from '../../../../domain/objects/TypeDefinitionOfResourceFunction';
+import { castResourceNameToTypescriptTypeName } from '../../common/castResourceNameToTypescriptTypeName';
 import { defineTypescriptTypesForTable } from '../table/defineTypescriptTypesForTable';
 
 export const defineTypescriptTypesForFunction = ({
@@ -30,11 +30,10 @@ export interface ${typescriptTypeName}Input {
   `.trim();
 
   // 2. define a map of function input name => input index; since we know the name that the function gives to each input variable by index, expose that to users; maybe it will help them with debugging
-  const typescriptInterfaceInputVariableIndexToNameMapDefinitions = definition.inputs.map(
-    (input, index) => {
+  const typescriptInterfaceInputVariableIndexToNameMapDefinitions =
+    definition.inputs.map((input, index) => {
       return `${input.name}: ${typescriptTypeName}Input['${index}'];`;
-    },
-  );
+    });
   const inputByNameInterfaceTypescript = `
 export interface ${typescriptTypeName}InputByName {
   ${typescriptInterfaceInputVariableIndexToNameMapDefinitions.join('\n  ')}

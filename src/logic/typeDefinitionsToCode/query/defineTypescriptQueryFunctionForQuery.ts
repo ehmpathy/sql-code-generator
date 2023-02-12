@@ -1,4 +1,5 @@
 import { camelCase } from 'change-case';
+
 import { castQueryNameToTypescriptTypeName } from '../common/castQueryNameToTypescriptTypeName';
 
 export interface QueryFunctionDefinition {
@@ -20,7 +21,11 @@ export interface QueryFunctionDefinition {
  *   - parses result and extracts output
  *   - logs inputs and output stats
  */
-export const defineTypescriptQueryFunctionForQuery = ({ name }: { name: string }): QueryFunctionDefinition => {
+export const defineTypescriptQueryFunctionForQuery = ({
+  name,
+}: {
+  name: string;
+}): QueryFunctionDefinition => {
   const typescriptTypeName = castQueryNameToTypescriptTypeName({ name });
 
   // define the query name alias, import { query as ... } under

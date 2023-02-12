@@ -1,8 +1,8 @@
 import strip from 'sql-strip-comments';
 
+import { TypeDefinitionOfResourceTable } from '../../../../domain';
 import { castCommasInParensToPipesForTokenSafety } from '../common/castCommasInParensToPipesForTokenSafety';
 import { extractTypeDefinitionFromColumnSql } from './extractTypeDefinitionFromColumnSql';
-import { TypeDefinitionOfResourceTable } from '../../../../domain';
 
 /*
   note:
@@ -12,7 +12,13 @@ import { TypeDefinitionOfResourceTable } from '../../../../domain';
 
 const KEY_OR_CONSTRAINT_LINE_REGEX = /[KEY|CONSTRAINT].*\s\(/gi;
 
-export const extractTypeDefinitionFromTableSql = ({ name, sql }: { name: string; sql: string }) => {
+export const extractTypeDefinitionFromTableSql = ({
+  name,
+  sql,
+}: {
+  name: string;
+  sql: string;
+}) => {
   // 0. strip comments
   const strippedSql: string = strip(sql);
 
@@ -25,13 +31,12 @@ export const extractTypeDefinitionFromTableSql = ({ name, sql }: { name: string;
     .split('(')
     .slice(1)
     .join('('); // drop the part before the first '('
-  const innerSql = innerSqlAndAfter
-    .split(')')
-    .slice(0, -1)
-    .join(')'); // drop the part after the last ')'
+  const innerSql = innerSqlAndAfter.split(')').slice(0, -1).join(')'); // drop the part after the last ')'
 
   // 3. cast commas inside of parens into pipes, so that we treat them as unique tokens when splitting "property lines" by comma
-  const parenTokenizedInnerSql = castCommasInParensToPipesForTokenSafety({ sql: innerSql });
+  const parenTokenizedInnerSql = castCommasInParensToPipesForTokenSafety({
+    sql: innerSql,
+  });
 
   // 4. grab definition lines, by splitting out properties by commas
   const lines = parenTokenizedInnerSql.split(',');
@@ -44,7 +49,9 @@ export const extractTypeDefinitionFromTableSql = ({ name, sql }: { name: string;
     .map((line) => line.trim());
 
   // 6. get column definition from each property
-  const columns = columnDefinitions.map((line) => extractTypeDefinitionFromColumnSql({ sql: line }));
+  const columns = columnDefinitions.map((line) =>
+    extractTypeDefinitionFromColumnSql({ sql: line }),
+  );
 
   // 7. return the table definition
   return new TypeDefinitionOfResourceTable({

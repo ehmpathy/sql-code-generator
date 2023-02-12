@@ -1,4 +1,8 @@
-export const castCommasInParensToPipesForTokenSafety = ({ sql }: { sql: string }) => {
+export const castCommasInParensToPipesForTokenSafety = ({
+  sql,
+}: {
+  sql: string;
+}) => {
   // track state of whether we are in parenthesizes or not
   let areInsideParensDepth = 0; // init as 0, since not inside parens
   const areInsideParens = () => areInsideParensDepth > 0; // whenever areInsideParensDepth > 0, we are inside parens
@@ -13,7 +17,10 @@ export const castCommasInParensToPipesForTokenSafety = ({ sql }: { sql: string }
       areInsideParensDepth += 1; // one parens deeper!
     }
     if (char === ')') {
-      if (!areInsideParens) throw new Error('exiting parenthesizes without having opened them; not supported'); // fail fast for unsupported case
+      if (!areInsideParens)
+        throw new Error(
+          'exiting parenthesizes without having opened them; not supported',
+        ); // fail fast for unsupported case
       areInsideParensDepth -= 1; // mark that we've dropped off one parens now
     }
 

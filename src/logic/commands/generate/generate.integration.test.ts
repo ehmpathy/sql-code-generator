@@ -1,5 +1,5 @@
-import { generate } from './generate';
 import { readFile } from '../utils/fileIO';
+import { generate } from './generate';
 
 describe('generate', () => {
   describe('mysql', () => {
@@ -17,15 +17,21 @@ describe('generate', () => {
       await import(testAssetPaths.generatedTypesCode);
 
       // expect that the query functions code does not have compile errors
-      const queryFunctionExports = await import(testAssetPaths.generatedQueryFunctionsCode);
+      const queryFunctionExports = await import(
+        testAssetPaths.generatedQueryFunctionsCode
+      );
       expect(queryFunctionExports).toHaveProperty('sqlQueryFindAllByName');
 
       // expect the look right
-      const typesCode = (await readFile(testAssetPaths.generatedTypesCode)).toString();
+      const typesCode = (
+        await readFile(testAssetPaths.generatedTypesCode)
+      ).toString();
       expect(typesCode).toMatchSnapshot();
 
       // expect the functions look right
-      const queryFunctionsCode = (await readFile(testAssetPaths.generatedQueryFunctionsCode)).toString();
+      const queryFunctionsCode = (
+        await readFile(testAssetPaths.generatedQueryFunctionsCode)
+      ).toString();
       expect(queryFunctionsCode).toMatchSnapshot();
     });
   });
@@ -44,15 +50,21 @@ describe('generate', () => {
       await import(testAssetPaths.generatedTypesCode);
 
       // expect that the query functions code does not have compile errors
-      const queryFunctionExports = await import(testAssetPaths.generatedQueryFunctionsCode);
+      const queryFunctionExports = await import(
+        testAssetPaths.generatedQueryFunctionsCode
+      );
       expect(queryFunctionExports).toHaveProperty('sqlQueryFindAllByName');
 
       // expect the look right
-      const typesCode = (await readFile(testAssetPaths.generatedTypesCode)).toString();
+      const typesCode = (
+        await readFile(testAssetPaths.generatedTypesCode)
+      ).toString();
       expect(typesCode).toMatchSnapshot();
 
       // expect the functions look right
-      const queryFunctionsCode = (await readFile(testAssetPaths.generatedQueryFunctionsCode)).toString();
+      const queryFunctionsCode = (
+        await readFile(testAssetPaths.generatedQueryFunctionsCode)
+      ).toString();
       expect(queryFunctionsCode).toMatchSnapshot();
     });
   });

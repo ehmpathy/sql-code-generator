@@ -11,7 +11,7 @@ export const extractAndTokenizeSubqueryReferencesInArrayOfSqlStrings = ({
   const references: SqlSubqueryReference[] = [];
 
   // 1. for each part of the sql array, create a reference if it matches "query" pattern
-  const referencedSqlParts = sqlParts.map(sql => {
+  const referencedSqlParts = sqlParts.map((sql) => {
     const matchesQueryPattern = new RegExp(/^\(\s*select(?:.|\s)*\)$/i).test(
       sql,
     );

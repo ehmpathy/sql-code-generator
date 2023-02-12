@@ -6,7 +6,9 @@ describe('defineTypescriptTypesForTable', () => {
   it('should generate an accurate looking interface for this table definition', async () => {
     const definition = extractTypeDefinitionFromTableSql({
       name: 'image',
-      sql: await extractSqlFromFile({ filePath: `${__dirname}/../../../__test_assets__/tables/image.mysql.sql` }),
+      sql: await extractSqlFromFile({
+        filePath: `${__dirname}/../../../__test_assets__/tables/image.mysql.sql`,
+      }),
     });
     const code = defineTypescriptTypesForTable({ definition });
     expect(code).toMatchSnapshot();

@@ -31,14 +31,12 @@ export const defineTypescriptTypeFromTableReference = ({
     throw new Error('expected table reference to be defined'); // fail fast
 
   // grab the table name and column name from the source path
-  const [
-    sourceTableAlias,
-    sourceTableColumnName,
-  ] = reference.tableReferencePath.split('.'); // note: we guarantee this format in the sqlToTypeDef layer
+  const [sourceTableAlias, sourceTableColumnName] =
+    reference.tableReferencePath.split('.'); // note: we guarantee this format in the sqlToTypeDef layer
 
   // resolve alias => table name
   const tableReference = queryTableReferences.find(
-    ref => ref.alias === sourceTableAlias,
+    (ref) => ref.alias === sourceTableAlias,
   );
   const sourceTableName =
     tableReference?.tableName ?? tableReference?.functionName;

@@ -1,9 +1,9 @@
-import Joi from 'joi';
 import { DomainObject } from 'domain-objects';
+import Joi from 'joi';
 
+import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInputVariable';
 import { TypeDefinitionOfQuerySelectExpression } from './TypeDefinitionOfQuerySelectExpression';
 import { TypeDefinitionOfQueryTableReference } from './TypeDefinitionOfQueryTableReference';
-import { TypeDefinitionOfQueryInputVariable } from './TypeDefinitionOfQueryInputVariable';
 
 const schema = Joi.object().keys({
   name: Joi.string().required(),
@@ -25,6 +25,9 @@ export interface TypeDefinitionOfQuery {
   tableReferences: TypeDefinitionOfQueryTableReference[];
   inputVariables: TypeDefinitionOfQueryInputVariable[];
 }
-export class TypeDefinitionOfQuery extends DomainObject<TypeDefinitionOfQuery> implements TypeDefinitionOfQuery {
+export class TypeDefinitionOfQuery
+  extends DomainObject<TypeDefinitionOfQuery>
+  implements TypeDefinitionOfQuery
+{
   public static schema = schema;
 }

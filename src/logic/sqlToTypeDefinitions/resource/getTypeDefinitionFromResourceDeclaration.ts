@@ -4,9 +4,15 @@ import { extractTypeDefinitionFromFunctionSql } from './function/extractTypeDefi
 import { extractTypeDefinitionFromTableSql } from './table/extractTypeDefinitionFromTableSql';
 import { extractTypeDefinitionFromViewSql } from './view/extractTypeDefinitionFromViewSql';
 
-export const getTypeDefinitionFromResourceDeclaration = ({ declaration }: { declaration: ResourceDeclaration }) => {
+export const getTypeDefinitionFromResourceDeclaration = ({
+  declaration,
+}: {
+  declaration: ResourceDeclaration;
+}) => {
   // 1. get name and type of resource
-  const { name, type } = extractResourceTypeAndNameFromDDL({ ddl: declaration.sql });
+  const { name, type } = extractResourceTypeAndNameFromDDL({
+    ddl: declaration.sql,
+  });
 
   // 2. based on type, get the type definition
   if (type === ResourceType.TABLE) {

@@ -33,7 +33,7 @@ describe('extractTypeDefinitionFromFunctionInputSql', () => {
       }),
     },
   ];
-  examples.forEach(example => {
+  examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {
       const def = extractTypeDefinitionFromFunctionInputSql({
         sql: example.sql,

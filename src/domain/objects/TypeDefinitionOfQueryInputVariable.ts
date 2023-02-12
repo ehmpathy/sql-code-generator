@@ -1,7 +1,8 @@
-import Joi from 'joi';
 import { DomainObject } from 'domain-objects';
-import { TypeDefinitionReference } from './TypeDefinitionReference';
+import Joi from 'joi';
+
 import { DataType } from '../constants';
+import { TypeDefinitionReference } from './TypeDefinitionReference';
 
 const schema = Joi.object().keys({
   name: Joi.string().required(),
@@ -21,7 +22,9 @@ export interface TypeDefinitionOfQueryInputVariable {
    */
   type: TypeDefinitionReference | DataType[];
 }
-export class TypeDefinitionOfQueryInputVariable extends DomainObject<TypeDefinitionOfQueryInputVariable>
-  implements TypeDefinitionOfQueryInputVariable {
+export class TypeDefinitionOfQueryInputVariable
+  extends DomainObject<TypeDefinitionOfQueryInputVariable>
+  implements TypeDefinitionOfQueryInputVariable
+{
   public static schema = schema;
 }

@@ -15,7 +15,9 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
     expect(defs.slice(-1)[0].alias).toEqual('updated_at');
-    expect(defs.slice(-1)[0].typeReference.tableReferencePath).toEqual('v.created_at');
+    expect(defs.slice(-1)[0].typeReference.tableReferencePath).toEqual(
+      'v.created_at',
+    );
     expect(defs).toMatchSnapshot();
   });
   it('should be able to determine types accurately for query selecting function output', async () => {
@@ -24,7 +26,9 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
     expect(defs[0].alias).toEqual('id');
-    expect(defs[0].typeReference.functionReferencePath).toEqual('upsert_suggestion.output');
+    expect(defs[0].typeReference.functionReferencePath).toEqual(
+      'upsert_suggestion.output',
+    );
     expect(defs).toMatchSnapshot();
   });
   it('should be able to determine types accurately for query selecting function output and normal table columns', async () => {
@@ -33,7 +37,9 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
     expect(defs[1].alias).toEqual('full_name');
-    expect(defs[1].typeReference.functionReferencePath).toEqual('concat.output');
+    expect(defs[1].typeReference.functionReferencePath).toEqual(
+      'concat.output',
+    );
     expect(defs).toMatchSnapshot();
   });
   it('should be able to determine types accurately for query with subquery', async () => {
@@ -42,7 +48,9 @@ describe('extractSelectExpressionsFromQuerySql', () => {
     });
     const defs = extractSelectExpressionsFromQuerySql({ sql });
     expect(defs[3].alias).toEqual('ingredient_ids');
-    expect(defs[3].typeReference.functionReferencePath).toEqual('group_concat.output');
+    expect(defs[3].typeReference.functionReferencePath).toEqual(
+      'group_concat.output',
+    );
     expect(defs).toMatchSnapshot();
   });
 });

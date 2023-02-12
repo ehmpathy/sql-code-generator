@@ -1,5 +1,6 @@
-import Joi from 'joi';
 import { DomainObject } from 'domain-objects';
+import Joi from 'joi';
+
 import { TypeDefinitionReference } from './TypeDefinitionReference';
 
 const schema = Joi.object().keys({
@@ -10,7 +11,9 @@ export interface TypeDefinitionOfQuerySelectExpression {
   alias: string;
   typeReference: TypeDefinitionReference;
 }
-export class TypeDefinitionOfQuerySelectExpression extends DomainObject<TypeDefinitionOfQuerySelectExpression>
-  implements TypeDefinitionOfQuerySelectExpression {
+export class TypeDefinitionOfQuerySelectExpression
+  extends DomainObject<TypeDefinitionOfQuerySelectExpression>
+  implements TypeDefinitionOfQuerySelectExpression
+{
   public static schema = schema;
 }

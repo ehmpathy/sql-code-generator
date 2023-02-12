@@ -6,7 +6,7 @@ const TABLE_NAME_MATCHER_REGEX = `(?:${
   TABLE_REFERENCE_TYPE.join('|')
 }|${
   // and lowercase (e.g., 'from', 'join', 'left join')
-  TABLE_REFERENCE_TYPE.map(str => str.toLowerCase()).join('|')
+  TABLE_REFERENCE_TYPE.map((str) => str.toLowerCase()).join('|')
 })\\s(?:\\w+\\.)?(\\w+)?(?:\\s|$)`;
 
 const FUNCTION_NAME_MATCHER_REGEX = `(?:${
@@ -14,7 +14,7 @@ const FUNCTION_NAME_MATCHER_REGEX = `(?:${
   TABLE_REFERENCE_TYPE.join('|')
 }|${
   // and lowercase (e.g., 'from', 'join', 'left join')
-  TABLE_REFERENCE_TYPE.map(str => str.toLowerCase()).join('|')
+  TABLE_REFERENCE_TYPE.map((str) => str.toLowerCase()).join('|')
 })\\s(?:\\w+\\.)?(\\w+)?(?:\\()`;
 
 const SPECIFIED_ALIAS_MATCHER_REGEX = `(?:${
@@ -22,7 +22,7 @@ const SPECIFIED_ALIAS_MATCHER_REGEX = `(?:${
   TABLE_REFERENCE_TYPE.join('|')
 }|${
   // and lowercase (e.g., 'from', 'join', 'left join')
-  TABLE_REFERENCE_TYPE.map(str => str.toLowerCase()).join('|')
+  TABLE_REFERENCE_TYPE.map((str) => str.toLowerCase()).join('|')
 })\\s(?:\\w+\\.)?(?:\\w+)(?:\\([\\(\\|\\,\\s\\:\\_\\w\\)]*\\))?(?:\\s(?:as|AS))?\\s(\\w+)?`;
 
 export const extractTypeDefinitionFromTableReference = ({

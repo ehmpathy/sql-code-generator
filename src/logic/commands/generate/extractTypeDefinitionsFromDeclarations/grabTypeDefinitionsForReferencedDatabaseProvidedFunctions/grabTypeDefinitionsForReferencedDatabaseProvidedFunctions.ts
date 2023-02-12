@@ -23,7 +23,10 @@ export const grabTypeDefinitionsForReferencedDatabaseProvidedFunctions = ({
           ...def.selectExpressions.map((exp) => exp.typeReference),
           ...def.inputVariables
             .map((inp) => inp.type)
-            .filter((type): type is TypeDefinitionReference => type instanceof TypeDefinitionReference), // filter out the types that don't reference anything, like when LIMIT type=[DataType.NUMBER]
+            .filter(
+              (type): type is TypeDefinitionReference =>
+                type instanceof TypeDefinitionReference,
+            ), // filter out the types that don't reference anything, like when LIMIT type=[DataType.NUMBER]
         ];
       }
       if (def instanceof TypeDefinitionOfResourceView) {
@@ -39,10 +42,13 @@ export const grabTypeDefinitionsForReferencedDatabaseProvidedFunctions = ({
   const uniqueReferencedFunctionNames = [...new Set(referencedFunctionNames)];
 
   // 2. for each function name, check if we have a type definition for it. if we do, then add it to the list
-  const databaseProvidedReferencedFunctionTypeDefinitions: TypeDefinitionOfResourceFunction[] = [];
+  const databaseProvidedReferencedFunctionTypeDefinitions: TypeDefinitionOfResourceFunction[] =
+    [];
   uniqueReferencedFunctionNames.forEach((referenceFunctionName) => {
     const typeDefinitionOfDatabaseProvidedFunctionForThisReferencedName =
-      DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS[language][referenceFunctionName];
+      DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS[language][
+        referenceFunctionName
+      ];
     if (typeDefinitionOfDatabaseProvidedFunctionForThisReferencedName) {
       databaseProvidedReferencedFunctionTypeDefinitions.push(
         typeDefinitionOfDatabaseProvidedFunctionForThisReferencedName,

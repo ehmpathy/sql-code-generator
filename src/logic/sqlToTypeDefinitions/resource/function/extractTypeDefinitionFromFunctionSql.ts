@@ -1,6 +1,6 @@
+import { TypeDefinitionOfResourceFunction } from '../../../../domain/objects/TypeDefinitionOfResourceFunction';
 import { extractInputsFromFunctionSql } from './extractInputsFromFunctionSql/extractInputsFromFunctionSql';
 import { extractOutputFromFunctionSql } from './extractOutputFromFunctionSql/extractOutputFromFunctionSql';
-import { TypeDefinitionOfResourceFunction } from '../../../../domain/objects/TypeDefinitionOfResourceFunction';
 
 export const extractTypeDefinitionFromFunctionSql = ({
   name,

@@ -13,8 +13,12 @@ const sortTypeDefinition = (a: TypeDefinition, b: TypeDefinition) => {
   const B_FIRST = 1;
 
   // try to sort on definition type
-  const definitionTypeIndexA = typeDefinitionSortOrder.indexOf(a.constructor.name);
-  const definitionTypeIndexB = typeDefinitionSortOrder.indexOf(b.constructor.name);
+  const definitionTypeIndexA = typeDefinitionSortOrder.indexOf(
+    a.constructor.name,
+  );
+  const definitionTypeIndexB = typeDefinitionSortOrder.indexOf(
+    b.constructor.name,
+  );
   if (definitionTypeIndexA < definitionTypeIndexB) return A_FIRST;
   if (definitionTypeIndexA > definitionTypeIndexB) return B_FIRST;
 
@@ -34,7 +38,10 @@ export const defineTypescriptTypesFileCodeFromTypeDefinitions = ({
 
   // define codes
   const typescriptTypesCodes = sortedDefinitions.map((definition) => {
-    const typescriptTypesCodeForDef = getTypescriptTypesFromTypeDefinition({ definition, allDefinitions: definitions });
+    const typescriptTypesCodeForDef = getTypescriptTypesFromTypeDefinition({
+      definition,
+      allDefinitions: definitions,
+    });
     const definitionTypeCommonName = definition.constructor.name
       .replace('TypeDefinitionOfResource', '')
       .replace('TypeDefinitionOf', '')

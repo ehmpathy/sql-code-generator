@@ -5,7 +5,13 @@ import {
   DatabaseLanguage,
 } from '../../../../../domain';
 
-const ANY_TRUTHY = [DataType.STRING, DataType.NUMBER, DataType.DATE, DataType.BUFFER, DataType.JSON];
+const ANY_TRUTHY = [
+  DataType.STRING,
+  DataType.NUMBER,
+  DataType.DATE,
+  DataType.BUFFER,
+  DataType.JSON,
+];
 const ANY = [...ANY_TRUTHY, DataType.NULL, DataType.UNDEFINED];
 
 const ONE_OR_MORE_STRINGS = [
@@ -63,7 +69,9 @@ const ONE_OR_MORE_VALUES = [
   }),
 ];
 
-const MYSQL_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: TypeDefinitionOfResourceFunction } = {
+const MYSQL_PROVIDED_FUNCTION_TYPE_DEFINITIONS: {
+  [index: string]: TypeDefinitionOfResourceFunction;
+} = {
   // https://dev.mysql.com/doc/refman/8.0/en/mathematical-functions.html#function_abs
   ABS: new TypeDefinitionOfResourceFunction({
     name: 'abs',
@@ -205,7 +213,9 @@ const SIMPLE_MATH_INPUT_OUTPUT = {
   ],
   output: [DataType.NUMBER, DataType.NULL], // null if one of the inputs is null
 };
-const POSTGRES_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: TypeDefinitionOfResourceFunction } = {
+const POSTGRES_PROVIDED_FUNCTION_TYPE_DEFINITIONS: {
+  [index: string]: TypeDefinitionOfResourceFunction;
+} = {
   // https://www.postgresql.org/docs/10/functions-math.html
   ABS: new TypeDefinitionOfResourceFunction({
     name: 'abs',
@@ -414,7 +424,9 @@ const POSTGRES_PROVIDED_FUNCTION_TYPE_DEFINITIONS: { [index: string]: TypeDefini
 };
 
 export const DATABASE_PROVIDED_FUNCTION_TYPE_DEFINITIONS: {
-  [key in DatabaseLanguage]: { [index: string]: TypeDefinitionOfResourceFunction };
+  [key in DatabaseLanguage]: {
+    [index: string]: TypeDefinitionOfResourceFunction;
+  };
 } = {
   [DatabaseLanguage.MYSQL]: MYSQL_PROVIDED_FUNCTION_TYPE_DEFINITIONS,
   [DatabaseLanguage.POSTGRES]: POSTGRES_PROVIDED_FUNCTION_TYPE_DEFINITIONS,

@@ -1,6 +1,9 @@
 import { GeneratorConfig } from '../../../../domain';
 import { getAllPathsMatchingGlobs } from '../getAllPathsMatchingGlobs/getAllPathsMatchingGlobs';
-import { DeclarationType, extractDeclarationFromGlobedFile } from './extractDeclarationFromGlobedFile';
+import {
+  DeclarationType,
+  extractDeclarationFromGlobedFile,
+} from './extractDeclarationFromGlobedFile';
 import { readYmlFile } from './utils/readYmlFile';
 
 /*
@@ -9,17 +12,17 @@ import { readYmlFile } from './utils/readYmlFile';
   3. get the definitions and flatten them
 */
 export const readConfig = async ({ filePath }: { filePath: string }) => {
-  const configDir = filePath
-    .split('/')
-    .slice(0, -1)
-    .join('/'); // drops the file name
+  const configDir = filePath.split('/').slice(0, -1).join('/'); // drops the file name
 
   // get the yml
   const contents = await readYmlFile({ filePath });
 
   // get the output dir
   if (!contents.generates) throw new Error('generates key must be defined');
-  if (!contents.generates.types) throw new Error('generates.types must specify where to output the generated types');
+  if (!contents.generates.types)
+    throw new Error(
+      'generates.types must specify where to output the generated types',
+    );
 
   // get the language and dialect
   if (!contents.language) throw new Error('language must be defined');
@@ -37,7 +40,11 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
     resourcePaths
       .sort() // for determinism in order
       .map((relativePath) =>
-        extractDeclarationFromGlobedFile({ rootDir: configDir, relativePath, type: DeclarationType.RESOURCE }),
+        extractDeclarationFromGlobedFile({
+          rootDir: configDir,
+          relativePath,
+          type: DeclarationType.RESOURCE,
+        }),
       ),
   );
 
@@ -51,7 +58,11 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
     queryPaths
       .sort() // for determinism in order
       .map((relativePath) =>
-        extractDeclarationFromGlobedFile({ rootDir: configDir, relativePath, type: DeclarationType.QUERY }),
+        extractDeclarationFromGlobedFile({
+          rootDir: configDir,
+          relativePath,
+          type: DeclarationType.QUERY,
+        }),
       ),
   );
 

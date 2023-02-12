@@ -1,6 +1,6 @@
-import { extractTypeDefinitionReferenceFromSubqueryReferenceToken } from './extractTypeDefinitionReferenceFromSubqueryReferenceToken';
-import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
 import { TypeDefinitionReference } from '../../../../domain';
+import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
+import { extractTypeDefinitionReferenceFromSubqueryReferenceToken } from './extractTypeDefinitionReferenceFromSubqueryReferenceToken';
 
 describe('extractTypeDefinitionReferenceFromSubqueryReferenceToken', () => {
   it('should return the reference type of the only select expression of the correct subquery', () => {

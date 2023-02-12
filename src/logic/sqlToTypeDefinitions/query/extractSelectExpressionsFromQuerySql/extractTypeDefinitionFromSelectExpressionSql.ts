@@ -1,6 +1,6 @@
 import { TypeDefinitionOfQuerySelectExpression } from '../../../../domain';
-import { extractTypeDefinitionReferenceFromSelectExpression } from './extractTypeDefinitionReferenceFromSelectExpressionSql';
 import { SqlSubqueryReference } from '../../../../domain/objects/SqlSubqueryReference';
+import { extractTypeDefinitionReferenceFromSelectExpression } from './extractTypeDefinitionReferenceFromSelectExpressionSql';
 
 export const extractTypeDefinitionFromSelectExpressionSql = ({
   sql,

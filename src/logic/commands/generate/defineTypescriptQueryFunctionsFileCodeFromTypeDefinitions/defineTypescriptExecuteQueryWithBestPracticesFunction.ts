@@ -1,6 +1,10 @@
 import { DatabaseLanguage } from '../../../../domain';
 
-export const defineTypescriptExecuteQueryWithBestPracticesFunction = ({ language }: { language: DatabaseLanguage }) => {
+export const defineTypescriptExecuteQueryWithBestPracticesFunction = ({
+  language,
+}: {
+  language: DatabaseLanguage;
+}) => {
   return `
 // utility used by each query function
 export const executeQueryWithBestPractices = async ({

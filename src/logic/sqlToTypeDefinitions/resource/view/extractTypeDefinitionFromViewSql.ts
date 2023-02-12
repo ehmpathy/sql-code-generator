@@ -1,5 +1,6 @@
-import { extractTypeDefinitionFromQuerySql } from '../../query/extractTypeDefinitionFromQuerySql';
 import { TypeDefinitionOfResourceView } from '../../../../domain/objects/TypeDefinitionOfResourceView';
+import { extractTypeDefinitionFromQuerySql } from '../../query/extractTypeDefinitionFromQuerySql';
+
 /*
   note: a view is effectively a named alias for a query
     - with the condition that the query can not have input variables
