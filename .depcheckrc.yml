@@ -8,3 +8,5 @@ ignores:
   - core-js
   - ts-jest
   - husky
+  - '@oclif/plugin-help'
+  - oclif
