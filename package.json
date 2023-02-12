@@ -2,7 +2,7 @@
   "name": "sql-code-generator",
   "author": "ehmpathy",
   "description": "Generate code from your SQL schema and queries for type safety and development speed.",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "license": "MIT",
   "repository": "ehmpathy/sql-code-generator",
   "homepage": "https://github.com/ehmpathy/sql-code-generator",
