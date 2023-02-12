@@ -10,3 +10,4 @@ ignores:
   - husky
   - '@oclif/plugin-help'
   - oclif
+  - '@types/yesql'
