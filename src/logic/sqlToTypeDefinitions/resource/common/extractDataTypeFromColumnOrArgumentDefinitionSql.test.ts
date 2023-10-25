@@ -65,6 +65,18 @@ describe('extractDataTypeFromColumnOrArgumentDefinitionSql', () => {
       sql: 'in_photo_ids bigint[]',
       type: DataType.NUMBER_ARRAY,
     },
+    {
+      sql: 'verified boolean',
+      type: DataType.BOOLEAN,
+    },
+    {
+      sql: 'in_adhoc_data jsonb',
+      type: DataType.JSON,
+    },
+    {
+      sql: 'in_adhoc_data JSON',
+      type: DataType.JSON,
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine type accurately for this example: "${example.sql}"`, () => {

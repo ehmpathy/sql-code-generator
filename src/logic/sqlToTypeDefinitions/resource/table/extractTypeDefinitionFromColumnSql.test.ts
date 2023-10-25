@@ -46,6 +46,13 @@ describe('extractTypeDefinitionFromColumnSql', () => {
         type: [DataType.BOOLEAN, DataType.NULL],
       }),
     },
+    {
+      sql: 'adhoc_data JSONB NOT NULL',
+      def: new TypeDefinitionOfResourceColumn({
+        name: 'adhoc_data',
+        type: [DataType.JSON],
+      }),
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {

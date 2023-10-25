@@ -98,6 +98,15 @@ const postgresBooleanTypes = ['BOOLEAN'];
 // combine the types so we can search over the union
 const dbBooleanTypes = [...mysqlBooleanTypes, ...postgresBooleanTypes];
 
+// https://dev.mysql.com/doc/refman/8.0/en/json.html
+const mysqlJsonTypes = ['JSON'];
+
+// https://www.postgresql.org/docs/9.5/datatype-json.html
+const postgresJsonTypes = ['JSON', 'JSONB'];
+
+// combine the types so we can search over the union
+const dbJsonTypes = [...mysqlJsonTypes, ...postgresJsonTypes];
+
 export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({
   sql,
 }: {
@@ -121,5 +130,7 @@ export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({
     return DataType.BUFFER;
   if (dbBooleanTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
     return DataType.BOOLEAN;
+  if (dbJsonTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
+    return DataType.JSON;
   throw new Error(`could not extract data type from '${sql}'`);
 };

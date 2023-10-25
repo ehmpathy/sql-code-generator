@@ -39,6 +39,13 @@ describe('extractTypeDefinitionFromFunctionInputSql', () => {
         type: [DataType.BOOLEAN, DataType.NULL],
       }),
     },
+    {
+      sql: 'in_adhoc_data jsonb',
+      def: new TypeDefinitionOfResourceColumn({
+        name: 'in_adhoc_data',
+        type: [DataType.JSON, DataType.NULL],
+      }),
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {
