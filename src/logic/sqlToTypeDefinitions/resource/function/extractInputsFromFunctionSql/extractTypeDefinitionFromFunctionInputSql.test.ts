@@ -32,6 +32,13 @@ describe('extractTypeDefinitionFromFunctionInputSql', () => {
         type: [DataType.NUMBER_ARRAY, DataType.NULL],
       }),
     },
+    {
+      sql: 'in_verified boolean',
+      def: new TypeDefinitionOfResourceColumn({
+        name: 'in_verified',
+        type: [DataType.BOOLEAN, DataType.NULL],
+      }),
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {

@@ -89,6 +89,15 @@ const postgresBinaryTypes = ['BYTEA'];
 // combine the types so we can search over the union
 const dbBinaryTypes = [...mysqlBinaryTypes, ...postgresBinaryTypes];
 
+// https://dev.mysql.com/doc/refman/8.1/en/numeric-type-syntax.html
+const mysqlBooleanTypes = ['BOOL', 'BOOLEAN']; // technically aliases for tinyint, but the intention is clear for our usecase
+
+// https://www.postgresql.org/docs/9.5/datatype-boolean.html
+const postgresBooleanTypes = ['BOOLEAN'];
+
+// combine the types so we can search over the union
+const dbBooleanTypes = [...mysqlBooleanTypes, ...postgresBooleanTypes];
+
 export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({
   sql,
 }: {
@@ -110,5 +119,7 @@ export const extractDataTypeFromColumnOrArgumentDefinitionSql = ({
     return DataType.DATE;
   if (dbBinaryTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
     return DataType.BUFFER;
+  if (dbBooleanTypes.some((dbType) => sqlUpper.includes(` ${dbType}`)))
+    return DataType.BOOLEAN;
   throw new Error(`could not extract data type from '${sql}'`);
 };

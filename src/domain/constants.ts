@@ -22,6 +22,7 @@ export enum DataType {
   JSON_ARRAY = 'Record<string, any>[]', // postgres supports arrays
   DATE = 'Date',
   BUFFER = 'Buffer', // e.g., for binary
+  BOOLEAN = 'boolean',
   NULL = 'null',
   UNDEFINED = 'undefined',
 }

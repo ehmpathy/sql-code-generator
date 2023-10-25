@@ -39,6 +39,13 @@ describe('extractTypeDefinitionFromColumnSql', () => {
         type: [DataType.STRING, DataType.NULL],
       }),
     },
+    {
+      sql: 'verified BOOLEAN',
+      def: new TypeDefinitionOfResourceColumn({
+        name: 'verified',
+        type: [DataType.BOOLEAN, DataType.NULL],
+      }),
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {
