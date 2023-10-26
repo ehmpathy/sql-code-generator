@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.4](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.3...v0.9.4) (2023-10-26)
+
+
+### Bug Fixes
+
+* **types:** add missing support for boolean ([a6e45d2](https://github.com/ehmpathy/sql-code-generator/commit/a6e45d2b5c2b5db4603b300f22f23d3f17c30941))
+* **types:** add missing support for json ([7d6014a](https://github.com/ehmpathy/sql-code-generator/commit/7d6014a9b7622002176448456bcc8125f6146974))
+
 ## [0.9.3](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.2...v0.9.3) (2023-02-12)
 
 
