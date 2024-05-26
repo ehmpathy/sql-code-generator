@@ -1,0 +1,17 @@
+name: test
+
+on:
+  workflow_call:
+  push:
+    branches-ignore:
+      - 'main' # exclude main branch, since deploy workflow triggers on main, and calls the test workflow inside of it already
+    tags-ignore:
+      - v* # exclude tags, since deploy workflow triggers on tags, and calls the test workflow inside of it already
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }} # per [workflow] x [branch, tag]
+  cancel-in-progress: true #  cancel workflows for non-latest commits
+
+jobs:
+  suite:
+    uses: ./.github/workflows/.test.yml

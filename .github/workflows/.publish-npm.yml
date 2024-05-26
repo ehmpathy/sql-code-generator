@@ -1,0 +1,40 @@
+name: .publish-npm
+
+on:
+  workflow_call:
+    secrets:
+      npm-auth-token:
+        required: true
+        description: required credentials to authenticate with the aws account under which to publish
+
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          registry-url: 'https://registry.npmjs.org/'
+          node-version-file: '.nvmrc'
+
+      - name: node-modules cache get
+        uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: node-modules cache miss install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts --prefer-offline --no-audit
+
+      - name: build
+        run: npm run build
+
+      - name: publish
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.npm-auth-token }}

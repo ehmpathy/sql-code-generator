@@ -1,10 +1,13 @@
 *-debug.log
 *-error.log
+*.log
+*.tsbuildinfo
 .artifact
 .env
 .serverless
 .terraform
 .terraform.lock
+.yalc
 /.nyc_output
 /dist
 /lib

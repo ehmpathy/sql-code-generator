@@ -1,0 +1,26 @@
+name: review
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+
+permissions:
+  pull-requests: read
+
+jobs:
+  pullreq-title:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test:pullreq:title
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # https://github.com/commitizen/conventional-commit-types
+          types: |
+            fix
+            feat
+            chore
