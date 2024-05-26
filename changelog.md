@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.5](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.4...v0.9.5) (2024-05-26)
+
+
+### Bug Fixes
+
+* **practs:** upgrade to latest best ([#87](https://github.com/ehmpathy/sql-code-generator/issues/87)) ([eb48427](https://github.com/ehmpathy/sql-code-generator/commit/eb48427d8d99b29ad4b40bb5c1bf3fd82e3f3ea5))
+* **query:** support array query input variables ([#85](https://github.com/ehmpathy/sql-code-generator/issues/85)) ([95a22f0](https://github.com/ehmpathy/sql-code-generator/commit/95a22f04b8abdcd03baef12936e3729598c3cd8c))
+
 ## [0.9.4](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.3...v0.9.4) (2023-10-26)
 
 
