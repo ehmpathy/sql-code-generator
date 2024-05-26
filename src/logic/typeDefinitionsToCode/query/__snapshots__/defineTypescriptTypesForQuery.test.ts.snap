@@ -29,6 +29,21 @@ export interface SqlQueryUpsertJerbOutput {
 }"
 `;
 
+exports[`defineTypescriptTypesForQuery should be able to define types correctly for a query which uses an input variable in an or condition (union) 1`] = `
+"export interface SqlQueryFindAllChatMessagesByThreadInput {
+  threadUuid: SqlTableChatThread['uuid'];
+  until: null | SqlViewViewChatMessageCurrent['created_at'];
+  limit: number;
+}
+export interface SqlQueryFindAllChatMessagesByThreadOutput {
+  id: SqlViewViewChatMessageCurrent['id'];
+  uuid: SqlViewViewChatMessageCurrent['uuid'];
+  thread_uuid: SqlTableChatThread['uuid'];
+  sent_at: SqlViewViewChatMessageCurrent['sent_at'];
+  text: SqlViewViewChatMessageCurrent['text'];
+}"
+`;
+
 exports[`defineTypescriptTypesForQuery should be able to determine types accurately an example of selecting columns a single table by id 1`] = `
 "export interface SqlQueryFindImageByIdInput {
   id: SqlTableImage['id'];
@@ -60,6 +75,19 @@ exports[`defineTypescriptTypesForQuery should be able to determine types accurat
   lastName: SqlTableUser['last_name'];
 }
 export interface SqlQueryFindUsersByLastNameOutput {
+  id: SqlTableUser['id'];
+  full_name: SqlFunctionConcatOutput;
+  age: SqlTableUser['age'];
+  phone_number: SqlTablePhone['number'];
+  description: SqlViewViewUserProfileCurrent['description'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately for this other example that selects from tables, functions, and views 1`] = `
+"export interface SqlQueryFindUsersByLastNameInInput {
+  candidateLastNames: SqlTableUser['last_name'][];
+}
+export interface SqlQueryFindUsersByLastNameInOutput {
   id: SqlTableUser['id'];
   full_name: SqlFunctionConcatOutput;
   age: SqlTableUser['age'];

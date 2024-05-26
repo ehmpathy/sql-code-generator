@@ -84,6 +84,30 @@ describe('defineTypescriptTypesForQuery', () => {
     });
     expect(code).toMatchSnapshot();
   });
+  it('should be able to determine types accurately for this other example that selects from tables, functions, and views', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../__test_assets__/queries/find_users_by_last_name_in.sql`,
+    });
+    const def = extractTypeDefinitionFromQuerySql({
+      name: 'find_users_by_last_name_in',
+      path: '__PATH__',
+      sql,
+    });
+    const code = defineTypescriptTypesForQuery({
+      definition: def,
+      allDefinitions: [
+        new TypeDefinitionOfResourceTable({ name: 'user', columns: [] }),
+        new TypeDefinitionOfResourceTable({ name: 'phone', columns: [] }),
+        new TypeDefinitionOfResourceView({
+          name: 'view_user_profile_current',
+          selectExpressions: [],
+          tableReferences: [],
+        }),
+      ],
+    });
+    expect(code).toContain(`candidateLastNames: SqlTableUser['last_name'][]`);
+    expect(code).toMatchSnapshot();
+  });
   it('should be able to define types accurately a query with subqueries and unnesting', async () => {
     const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../__test_assets__/queries/find_train_by_id.sql`,
@@ -135,7 +159,7 @@ describe('defineTypescriptTypesForQuery', () => {
     });
     expect(code).toMatchSnapshot();
   });
-  it.only('should be able to define types correctly for a query which uses an input variable in an or condition (union)', async () => {
+  it('should be able to define types correctly for a query which uses an input variable in an or condition (union)', async () => {
     const sql = await extractSqlFromFile({
       filePath: `${__dirname}/../../__test_assets__/queries/find_all_chat_messages_by_thread.lessthan_or_equalsto_or_null.sql`,
     });
@@ -159,6 +183,6 @@ describe('defineTypescriptTypesForQuery', () => {
       "until: null | SqlViewViewChatMessageCurrent['created_at'];",
     ); // should have union-ed the two types
     console.log(code);
-    // expect(code).toMatchSnapshot();
+    expect(code).toMatchSnapshot();
   });
 });

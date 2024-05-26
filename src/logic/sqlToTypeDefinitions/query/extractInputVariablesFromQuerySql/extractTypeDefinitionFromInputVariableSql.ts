@@ -32,6 +32,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
         tableReferencePath: leftEqualsTableReferencePath,
         functionReferencePath: null,
       }),
+      plural: false,
     });
   }
 
@@ -53,6 +54,30 @@ export const extractTypeDefinitionFromInputVariableSql = ({
         tableReferencePath: rightEqualsTableReferencePath,
         functionReferencePath: null,
       }),
+      plural: false,
+    });
+  }
+
+  // check if this token matches the "resource.column ANY (:token)" pattern; if so, then the input type = an array of the resource.column type
+  const [
+    ___, // tslint:disable-line no-unused
+    leftEqualsArrayTableReferencePath, // check if "resource.column = :token" or "resource.column <= :token" or "resource.column <= :token"
+  ] =
+    new RegExp(
+      `(\\w+\\.?\\w*)\\s?=?\\s?(?:any|ANY|in|IN)\\s?\\(\\s?(?:${tokenWithOptionalTypecastingRegexString})\\s?\\)(?:[^\\w]|$)`,
+      'g',
+    ).exec(sql) ?? [];
+  if (leftEqualsArrayTableReferencePath) {
+    throwErrorIfTableReferencePathImpliesTable({
+      referencePath: leftEqualsArrayTableReferencePath,
+    });
+    return new TypeDefinitionOfQueryInputVariable({
+      name: token.replace(':', ''),
+      type: new TypeDefinitionReference({
+        tableReferencePath: leftEqualsArrayTableReferencePath,
+        functionReferencePath: null,
+      }),
+      plural: true,
     });
   }
 
@@ -60,7 +85,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
   const reg = `\\s+(\\w+\\((?:\\s*[:\\w#]+,)*(?:\\s*${tokenWithOptionalTypecastingRegexString},?)(?:\\s*[:\\w#]+,?)*\\s?\\))`; // note: this reg matches the whole function def (e.g., `upsert_image(:url,:caption,:credit)`)
   const [
     // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
-    ___,
+    ____,
     tokenInsideFunctionMatch, // check if "functionName(arg1?, :token, arg2?)"
   ] = new RegExp(reg).exec(sql) ?? [];
   if (tokenInsideFunctionMatch) {
@@ -85,6 +110,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
         functionReferencePath: `${functionName}.input.${index}`,
         tableReferencePath: null,
       }),
+      plural: false,
     });
   }
 
@@ -96,6 +122,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
       type: [DataType.NUMBER],
+      plural: false,
     });
   }
 
@@ -107,6 +134,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
       type: [DataType.NUMBER],
+      plural: false,
     });
   }
 
@@ -118,6 +146,7 @@ export const extractTypeDefinitionFromInputVariableSql = ({
     return new TypeDefinitionOfQueryInputVariable({
       name: token.replace(':', ''),
       type: [DataType.NULL],
+      plural: false,
     });
   }
 
