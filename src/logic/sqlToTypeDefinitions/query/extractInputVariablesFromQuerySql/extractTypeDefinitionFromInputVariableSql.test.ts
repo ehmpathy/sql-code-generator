@@ -18,6 +18,7 @@ where i.id = :id
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
+        plural: false,
       }),
     },
     {
@@ -33,6 +34,7 @@ where i.id=:id;
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
+        plural: false,
       }),
     },
     {
@@ -48,6 +50,7 @@ where :id = i.id;
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
+        plural: false,
       }),
     },
     {
@@ -63,6 +66,7 @@ where :id=i.id
           tableReferencePath: 'i.id',
           functionReferencePath: null,
         }),
+        plural: false,
       }),
     },
     {
@@ -80,6 +84,43 @@ where 1=1
           tableReferencePath: 'idea.external_id',
           functionReferencePath: null,
         }),
+        plural: false,
+      }),
+    },
+    {
+      token: ':dataSource',
+      sql: `
+select idea.title, idea.description
+from idea
+where 1=1
+  and idea.external_id = :externalId
+  and idea.data_source IN (:dataSource);
+      `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'dataSource',
+        type: new TypeDefinitionReference({
+          tableReferencePath: 'idea.data_source',
+          functionReferencePath: null,
+        }),
+        plural: true,
+      }),
+    },
+    {
+      token: ':dataSource',
+      sql: `
+select idea.title, idea.description
+from idea
+where 1=1
+  and idea.external_id = :externalId
+  and idea.data_source = ANY (:dataSource);
+      `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'dataSource',
+        type: new TypeDefinitionReference({
+          tableReferencePath: 'idea.data_source',
+          functionReferencePath: null,
+        }),
+        plural: true,
       }),
     },
     {
@@ -99,6 +140,7 @@ SELECT upsert_suggestion(
           tableReferencePath: null,
           functionReferencePath: 'upsert_suggestion.input.1', // second arg of function
         }),
+        plural: false,
       }),
     },
     {
@@ -119,6 +161,7 @@ WHERE 1=1
           tableReferencePath: null,
           functionReferencePath: 'get_id_from_suggestion_source_name.input.0', // first arg of function
         }),
+        plural: false,
       }),
     },
     {
@@ -135,6 +178,7 @@ LIMIT :limit
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'limit',
         type: [DataType.NUMBER],
+        plural: false,
       }),
     },
     {
@@ -152,6 +196,7 @@ limit :limit;
       def: new TypeDefinitionOfQueryInputVariable({
         name: 'limit',
         type: [DataType.NUMBER],
+        plural: false,
       }),
     },
     // TODO: support functions in functions; https://github.com/uladkasach/sql-code-generator/issues/4

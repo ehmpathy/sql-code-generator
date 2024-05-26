@@ -10,6 +10,7 @@ const schema = Joi.object().keys({
     TypeDefinitionReference.schema.required(),
     Joi.array().items(Joi.string().valid(...Object.values(DataType))),
   ]),
+  plural: Joi.boolean().required(),
 });
 export interface TypeDefinitionOfQueryInputVariable {
   /**
@@ -21,6 +22,11 @@ export interface TypeDefinitionOfQueryInputVariable {
    * e.g., either an explicit type or a reference to the type on a sql resource
    */
   type: TypeDefinitionReference | DataType[];
+
+  /**
+   * whether its a plural of this type or not
+   */
+  plural: boolean;
 }
 export class TypeDefinitionOfQueryInputVariable
   extends DomainObject<TypeDefinitionOfQueryInputVariable>

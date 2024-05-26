@@ -27,15 +27,14 @@ export const defineTypescriptTypesForQuery = ({
   const typescriptInputInterfacePropertyDefinitions = Object.keys(
     inputVariableNameToTypeDefinitionsMap,
   ).map((inputVariableName) => {
-    // grab all the types for this input variable (there can be more than one, because an input variable can be used more than once in the same query. e.g., `WHERE x is null OR x = y`)
-    const types = inputVariableNameToTypeDefinitionsMap[inputVariableName]!.map(
-      (def) => def.type,
-    );
+    // grab all the defs for this input variable (there can be more than one, because an input variable can be used more than once in the same query. e.g., `WHERE x is null OR x = y`)
+    const defs = inputVariableNameToTypeDefinitionsMap[inputVariableName]!;
 
     // cast each of those to their typescript-type
-    const typescriptTypesForReference = types.map((type) =>
+    const typescriptTypesForReference = defs.map((def) =>
       defineTypescriptTypeFromDataTypeArrayOrReference({
-        type,
+        type: def.type,
+        plural: def.plural,
         queryTableReferences: definition.tableReferences,
         typeDefinitions: allDefinitions,
       }),
