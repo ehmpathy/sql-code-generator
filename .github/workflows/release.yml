@@ -1,4 +1,4 @@
-name: pr-release-on-main
+name: release
 
 on:
   push:

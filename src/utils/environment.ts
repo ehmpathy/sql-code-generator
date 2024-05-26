@@ -1,8 +1,11 @@
+import { createIsOfEnum } from 'type-fns';
+
 export enum Stage {
   PRODUCTION = 'prod',
   DEVELOPMENT = 'dev',
   TEST = 'test',
 }
+export const isOfStage = createIsOfEnum(Stage);
 
 /**
  * this allows us to infer what the stage should be in environments that do not have STAGE specified
@@ -24,6 +27,7 @@ const inferStageFromNodeEnv = () => {
 const getEnvironment = () => {
   const stage = process.env.STAGE ?? inferStageFromNodeEnv(); // figure it out from NODE_ENV if not explicitly defined
   if (!stage) throw new Error('process.env.STAGE must be defined');
+  if (!isOfStage(stage)) throw new Error(`invalid stage defined '${stage}'`);
   return { stage };
 };
 

@@ -11,3 +11,4 @@ ignores:
   - '@oclif/plugin-help'
   - oclif
   - '@types/yesql'
+  - ts-node

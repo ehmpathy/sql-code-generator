@@ -1,5 +1,8 @@
 import type { Config } from 'jest';
 
+// ensure tests run in utc, like they will on cicd and on server; https://stackoverflow.com/a/56277249/15593329
+process.env.TZ = 'UTC';
+
 // https://jestjs.io/docs/configuration
 const config: Config = {
   verbose: true,

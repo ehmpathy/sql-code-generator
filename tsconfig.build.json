@@ -12,6 +12,8 @@
     "jest.*",
     "prettier.*",
     "commitlint.*",
-    "src/**/*.test.(ts|js)"
+    "codegen.*",
+    "src/**/*.test.(ts|js)",
+    "src/**/__test_utils__/**/*.(ts|js)"
   ]
 }

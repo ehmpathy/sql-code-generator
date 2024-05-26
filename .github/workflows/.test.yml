@@ -1,0 +1,238 @@
+name: .test
+
+on:
+  workflow_call:
+    inputs:
+      aws-region:
+        type: string
+        description: the aws region within which we should run the tests
+        required: false
+      aws-account-id:
+        type: string
+        description: the id of the account the credentials are expected to access
+        required: false
+    secrets:
+      aws-access-key-id:
+        required: false
+        description: required credentials to authenticate with aws the aws account against which to run the tests
+      aws-secret-access-key:
+        required: false
+        description: required credentials to authenticate with aws the aws account against which to run the tests
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: node-modules cache get
+        uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: node-modules cache miss install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts --prefer-offline --no-audit
+
+      - name: node-modules cache set
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: ./node_modules
+          key: ${{ steps.cache.outputs.cache-primary-key }}
+
+  # run tests in parallel
+  test-commits:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # we need all commits to test:commits
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: test:commits
+        run: npm run test:commits
+
+  test-types:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: test:types
+        run: npm run test:types
+
+  test-format:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: test:format
+        run: npm run test:format
+
+  test-lint:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: test:lint
+        run: npm run test:lint
+
+  test-unit:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: test:unit
+        run: THOROUGH=true npm run test:unit
+
+  test-integration:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: configure aws credentials
+        if: "${{ inputs.aws-account-id != '' }}"
+        uses: aws-actions/configure-aws-credentials@v1
+        id: credentials
+        with:
+          aws-access-key-id: ${{ secrets.aws-access-key-id }}
+          aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
+          aws-region: ${{ inputs.aws-region }}
+
+      - name: confirm aws credentials
+        if: "${{ inputs.aws-account-id != '' }}"
+        run: |
+          [[ ${{steps.credentials.outputs.aws-account-id}} != ${{ inputs.aws-account-id }} ]] \
+            && echo 'wrong aws account' && exit 1 \
+            || echo 'correct aws account';
+
+      - name: provision:integration-test-db
+        run: npm run provision:integration-test-db --if-present
+
+      - name: test:integration
+        run: THOROUGH=true npm run test:integration
+
+  test-acceptance-locally:
+    runs-on: ubuntu-latest
+    needs: [install]
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: configure aws credentials
+        if: "${{ inputs.aws-account-id != '' }}"
+        uses: aws-actions/configure-aws-credentials@v1
+        id: credentials
+        with:
+          aws-access-key-id: ${{ secrets.aws-access-key-id }}
+          aws-secret-access-key: ${{ secrets.aws-secret-access-key }}
+          aws-region: ${{ inputs.aws-region }}
+
+      - name: confirm aws credentials
+        if: "${{ inputs.aws-account-id != '' }}"
+        run: |
+          [[ ${{steps.credentials.outputs.aws-account-id}} != ${{ inputs.aws-account-id }} ]] \
+            && echo 'wrong aws account' && exit 1 \
+            || echo 'correct aws account';
+
+      - name: provision:integration-test-db
+        run: npm run provision:integration-test-db --if-present
+
+      - name: test:acceptance:locally
+        run: npm run test:acceptance:locally
