@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.7](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.6...v0.9.7) (2024-06-14)
+
+
+### Bug Fixes
+
+* **query:** extract typedef from input variable via fn output comparison ([3f6063d](https://github.com/ehmpathy/sql-code-generator/commit/3f6063d009bc6430dfb2e0da77f7a1291bf83992))
+
 ## [0.9.6](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.5...v0.9.6) (2024-06-14)
 
 
