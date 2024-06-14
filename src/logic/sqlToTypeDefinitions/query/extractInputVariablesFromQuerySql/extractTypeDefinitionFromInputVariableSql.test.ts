@@ -199,6 +199,73 @@ limit :limit;
         plural: false,
       }),
     },
+    {
+      token: ':untilCreatedAt',
+      sql: `
+SELECT
+  job.id,
+  job.uuid
+FROM view_job_current AS job
+where 1=1
+  and job.owner_user_uuid = :ownerUserUuid
+  and (job.created_at < :untilCreatedAt)
+  and (job.created_at >= :sinceCreatedAt);
+      `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'untilCreatedAt',
+        type: new TypeDefinitionReference({
+          tableReferencePath: 'job.created_at',
+          functionReferencePath: null,
+        }),
+        plural: false,
+      }),
+    },
+    {
+      token: ':radiusInMeters',
+      sql: `
+SELECT
+  job.id,
+  job.uuid
+FROM view_job_current AS job
+join location l ON l.id = job.location_id
+where 1=1
+  ll_to_earth(:latitude, :longitude) < :radiusInMeters
+order by job.created_at desc
+limit :limit
+offset :offset
+      `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'radiusInMeters',
+        type: new TypeDefinitionReference({
+          tableReferencePath: null,
+          functionReferencePath: 'll_to_earth.output',
+        }),
+        plural: false,
+      }),
+    },
+    {
+      token: ':radiusInMeters',
+      sql: `
+    SELECT
+      job.id,
+      job.uuid
+    FROM view_job_current AS job
+    join location l ON l.id = job.location_id
+    where 1=1
+      earth_distance(ll_to_earth(l.latitude, l.longitude), ll_to_earth(:latitude, :longitude)) < :radiusInMeters
+    order by job.created_at desc
+    limit :limit
+    offset :offset
+          `.trim(),
+      def: new TypeDefinitionOfQueryInputVariable({
+        name: 'radiusInMeters',
+        type: new TypeDefinitionReference({
+          tableReferencePath: null,
+          functionReferencePath: 'earth_distance.output',
+        }),
+        plural: false,
+      }),
+    },
     // TODO: support functions in functions; https://github.com/uladkasach/sql-code-generator/issues/4
   ];
   examples.forEach((example) => {
