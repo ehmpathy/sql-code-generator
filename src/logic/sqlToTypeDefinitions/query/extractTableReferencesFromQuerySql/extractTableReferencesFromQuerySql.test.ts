@@ -62,4 +62,19 @@ describe('extractTableReferencesFromQuerySql', () => {
     ); // has the subqueries definition
     expect(defs).toMatchSnapshot();
   });
+  it('should be able to determine types accurately for an example joining to multiple tables without any explicit table aliases defined', async () => {
+    const sql = await extractSqlFromFile({
+      filePath: `${__dirname}/../../../__test_assets__/queries/find_users_by_last_name_no_aliases.sql`,
+    });
+    const defs = extractTableReferencesFromQuerySql({ sql });
+    expect(defs.length).toEqual(3);
+    expect(defs).toContainEqual(
+      new TypeDefinitionOfQueryTableReference({
+        alias: 'view_user_profile_current',
+        tableName: 'view_user_profile_current',
+        functionName: null,
+      }),
+    );
+    expect(defs).toMatchSnapshot();
+  });
 });

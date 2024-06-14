@@ -20,6 +20,26 @@ exports[`extractTableReferencesFromQuerySql should be able to determine types ac
 ]
 `;
 
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for an example joining to multiple tables without any explicit table aliases defined 1`] = `
+[
+  TypeDefinitionOfQueryTableReference {
+    "alias": "user",
+    "functionName": null,
+    "tableName": "user",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "phone",
+    "functionName": null,
+    "tableName": "phone",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "view_user_profile_current",
+    "functionName": null,
+    "tableName": "view_user_profile_current",
+  },
+]
+`;
+
 exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for an example with subqueries referencing their own tables 1`] = `
 [
   TypeDefinitionOfQueryTableReference {

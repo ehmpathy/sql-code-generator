@@ -23,7 +23,7 @@ const SPECIFIED_ALIAS_MATCHER_REGEX = `(?:${
 }|${
   // and lowercase (e.g., 'from', 'join', 'left join')
   TABLE_REFERENCE_TYPE.map((str) => str.toLowerCase()).join('|')
-})\\s(?:\\w+\\.)?(?:\\w+)(?:\\([\\(\\|\\,\\s\\:\\_\\w\\)]*\\))?(?:\\s(?:as|AS))?\\s(\\w+)?`;
+})\\s(?:\\w+\\.)?(?:\\w+)(?:\\([\\(\\|\\,\\s\\:\\_\\w\\)]*\\))?(?:\\s(?:as|AS))?\\s((?!ON|on)\\w+)?`;
 
 export const extractTypeDefinitionFromTableReference = ({
   sql,
@@ -46,7 +46,7 @@ export const extractTypeDefinitionFromTableReference = ({
       'could not identify the referenced table from table reference sql; unexpected',
     ); // fail fast
 
-  // grab the alias, if any
+  // grab the explicit alias, if any
   // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
   const [___, specifiedAlias] =
     new RegExp(SPECIFIED_ALIAS_MATCHER_REGEX).exec(sql) ?? []; // tslint:disable-line no-unused

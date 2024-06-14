@@ -75,6 +75,14 @@ describe('extractTypeDefinitionFromTableReference', () => {
         functionName: 'upsert_job',
       }),
     },
+    {
+      sql: 'JOIN user ON user.id = phone.user_id',
+      def: new TypeDefinitionOfQueryTableReference({
+        alias: 'user',
+        tableName: 'user',
+        functionName: null,
+      }),
+    },
   ];
   examples.forEach((example) => {
     it(`should be able to determine types accurately for this example: "${example.sql}"`, () => {
