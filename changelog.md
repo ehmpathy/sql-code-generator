@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.6](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.5...v0.9.6) (2024-06-14)
+
+
+### Bug Fixes
+
+* **query:** correctly exclude ON term as possible alias ([e529c9d](https://github.com/ehmpathy/sql-code-generator/commit/e529c9d9c825ec82cc6a95d13e8c0adddc19788a))
+
 ## [0.9.5](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.4...v0.9.5) (2024-05-26)
 
 
