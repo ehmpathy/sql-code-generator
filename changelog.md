@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.0](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.8...v0.10.0) (2024-06-15)
+
+
+### Features
+
+* **resources:** support multiple resource declarations per sql file ([5f6e920](https://github.com/ehmpathy/sql-code-generator/commit/5f6e920401badabc033463eb6362392620ba4012)), closes [#47](https://github.com/ehmpathy/sql-code-generator/issues/47)
+
 ## [0.9.8](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.7...v0.9.8) (2024-06-15)
 
 
