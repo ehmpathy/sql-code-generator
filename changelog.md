@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.8](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.7...v0.9.8) (2024-06-15)
+
+
+### Bug Fixes
+
+* **config:** ensure configs without queries are supported ([2b5554f](https://github.com/ehmpathy/sql-code-generator/commit/2b5554f5d7816f1d4c121579ed7a7f70c59ffe88))
+
 ## [0.9.7](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.6...v0.9.7) (2024-06-14)
 
 
