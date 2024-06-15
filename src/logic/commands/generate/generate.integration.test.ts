@@ -99,4 +99,32 @@ describe('generate', () => {
       expect(typesCode).toMatchSnapshot();
     });
   });
+  describe('mysql-dbdump', () => {
+    const testAssetPaths = {
+      codegenYml: `${TEST_ASSETS_ROOT_DIR}/exampleProject/mysql-dbdump/codegen.sql.yml`,
+      generatedTypesCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/mysql-dbdump/src/generated/fromSql/types.ts`,
+      generatedQueryFunctionsCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/mysql-dbdump/src/generated/fromSql/queryFunctions.ts`,
+    };
+    it('should be able to read the example config provisioned in __test_assets__', async () => {
+      await generate({
+        configPath: testAssetPaths.codegenYml,
+      });
+
+      // expect that the types code does not have compile errors
+      await import(testAssetPaths.generatedTypesCode);
+
+      // expect that the query functions code does not get produced, since not asked for in the config
+      const error = await getError(
+        import(testAssetPaths.generatedQueryFunctionsCode),
+      );
+      expect(error.message).toContain('Cannot find module');
+      expect(error.message).toContain('queryFunctions.ts');
+
+      // expect the look right
+      const typesCode = (
+        await readFile(testAssetPaths.generatedTypesCode)
+      ).toString();
+      expect(typesCode).toMatchSnapshot();
+    });
+  });
 });

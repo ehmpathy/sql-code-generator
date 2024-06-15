@@ -259,6 +259,82 @@ export const sqlQuerySelectUserNameFromView = async ({
 "
 `;
 
+exports[`generate mysql-dbdump should be able to read the example config provisioned in __test_assets__ 1`] = `
+"// types for table 'meets'
+export interface SqlTableMeets {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  date: Date | null;
+  url: string | null;
+  registrationOpens: Date | null;
+  registrationCloses: Date | null;
+}
+
+// types for table 'pendingusers'
+export interface SqlTablePendingusers {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  schoolName: string;
+  city: string;
+  state: string;
+  email: string;
+}
+
+// types for table 'races'
+export interface SqlTableRaces {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  raceName: string;
+  distance: number;
+  units: string;
+  sex: string;
+  maxRunners: number;
+  maxRunnersPerSchool: number;
+  meetId: number;
+}
+
+// types for table 'runners'
+export interface SqlTableRunners {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  firstName: string;
+  lastName: string;
+  grade: number;
+  sex: string;
+  raceId: number;
+  schoolId: number;
+}
+
+// types for table 'schools'
+export interface SqlTableSchools {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  schoolName: string;
+  city: string;
+  state: string;
+}
+
+// types for table 'users'
+export interface SqlTableUsers {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  email: string;
+  password: string;
+  failedLogins: number | null;
+  successfulLogins: number | null;
+  resetCode: number | null;
+  schoolId: number;
+}
+"
+`;
+
 exports[`generate postgres should be able to read the example config provisioned in __test_assets__ 1`] = `
 "// types for table 'ice_cream'
 export interface SqlTableIceCream {

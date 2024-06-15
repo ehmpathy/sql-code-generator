@@ -1,1 +1,3 @@
 *.md
+src/logic/__test_assets__/exampleProject/**/*
+src/contract/__test_assets__/src/generated/**/*

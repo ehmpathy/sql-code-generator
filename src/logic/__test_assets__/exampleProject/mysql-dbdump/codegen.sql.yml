@@ -1,0 +1,6 @@
+language: mysql
+dialect: 5.7
+resources:
+  - "schema/**/*.sql"
+generates:
+  types: src/generated/fromSql/types.ts

@@ -2,8 +2,8 @@ import { GeneratorConfig } from '../../../../domain';
 import { getAllPathsMatchingGlobs } from '../getAllPathsMatchingGlobs/getAllPathsMatchingGlobs';
 import {
   DeclarationType,
-  extractDeclarationFromGlobedFile,
-} from './extractDeclarationFromGlobedFile';
+  extractDeclarationsFromGlobedFile,
+} from './extractDeclarationsFromGlobedFile';
 import { readYmlFile } from './utils/readYmlFile';
 
 /*
@@ -36,17 +36,19 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
     globs: resourceGlobs,
     root: configDir,
   });
-  const resourceDeclarations = await Promise.all(
-    resourcePaths
-      .sort() // for determinism in order
-      .map((relativePath) =>
-        extractDeclarationFromGlobedFile({
-          rootDir: configDir,
-          relativePath,
-          type: DeclarationType.RESOURCE,
-        }),
-      ),
-  );
+  const resourceDeclarations = (
+    await Promise.all(
+      resourcePaths
+        .sort() // for determinism in order
+        .map((relativePath) =>
+          extractDeclarationsFromGlobedFile({
+            rootDir: configDir,
+            relativePath,
+            type: DeclarationType.RESOURCE,
+          }),
+        ),
+    )
+  ).flat();
 
   // get the query declarations
   const queryDeclarations = await (async () => {
@@ -56,17 +58,19 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
       globs: queryGlobs,
       root: configDir,
     });
-    return await Promise.all(
-      queryPaths
-        .sort() // for determinism in order
-        .map((relativePath) =>
-          extractDeclarationFromGlobedFile({
-            rootDir: configDir,
-            relativePath,
-            type: DeclarationType.QUERY,
-          }),
-        ),
-    );
+    return (
+      await Promise.all(
+        queryPaths
+          .sort() // for determinism in order
+          .map((relativePath) =>
+            extractDeclarationsFromGlobedFile({
+              rootDir: configDir,
+              relativePath,
+              type: DeclarationType.QUERY,
+            }),
+          ),
+      )
+    ).flat();
   })();
 
   // return the results
