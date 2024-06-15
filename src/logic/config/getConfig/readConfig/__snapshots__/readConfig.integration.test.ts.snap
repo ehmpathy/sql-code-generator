@@ -1,6 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`readConfig should be able to read the example config provisioned in __test_assets__ 1`] = `
+exports[`readConfig should be able to read a config without queries 1`] = `
+{
+  "declarations": [
+    ResourceDeclaration {
+      "path": "schema/functions/get_answer_to_life.sql",
+      "sql": "CREATE OR REPLACE FUNCTION get_answer_to_life()
+RETURNS int
+LANGUAGE plpgsql
+AS $$
+  BEGIN
+    RETURN 42;
+  END;
+$$
+",
+    },
+    ResourceDeclaration {
+      "path": "schema/tables/ice_cream.sql",
+      "sql": "CREATE TABLE \`ice_cream\` (
+  \`id\` bigint(20) NOT NULL AUTO_INCREMENT,
+  \`uuid\` char(36) COLLATE utf8mb4_bin NOT NULL,
+  \`created_at\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  \`name\` varchar(255) COLLATE utf8mb4_bin NOT NULL,
+  \`ingredient_ids_hash\` binary(32) NOT NULL,
+  PRIMARY KEY (\`id\`),
+  UNIQUE KEY \`tag_ux1\` (\`name\`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin
+",
+    },
+    ResourceDeclaration {
+      "path": "schema/tables/ingredient.sql",
+      "sql": "CREATE TABLE ingredient (
+  id bigserial PRIMARY KEY,
+  uuid uuid NOT NULL,
+  created_at timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  name varchar NOT NULL,
+  cost numeric(5, 2) NOT NULL,
+  CONSTRAINT ingredient_pk PRIMARY KEY (id),
+  CONSTRAINT ingredient_ux1 UNIQUE (name)
+)
+",
+    },
+  ],
+  "dialect": "10.7",
+  "generates": {
+    "queryFunctions": undefined,
+    "types": "src/generated/fromSql/types.ts",
+  },
+  "language": "postgres",
+  "rootDir": "__DIR__",
+}
+`;
+
+exports[`readConfig should be able to read a fully declared config 1`] = `
 {
   "declarations": [
     ResourceDeclaration {

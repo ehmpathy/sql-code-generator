@@ -1,12 +1,15 @@
+import { getError } from 'test-fns';
+
+import { TEST_ASSETS_ROOT_DIR } from '../../__test_assets__/directory';
 import { readFile } from '../utils/fileIO';
 import { generate } from './generate';
 
 describe('generate', () => {
   describe('mysql', () => {
     const testAssetPaths = {
-      codegenYml: `${__dirname}/../../__test_assets__/exampleProject/mysql/codegen.sql.yml`,
-      generatedTypesCode: `${__dirname}/../../__test_assets__/exampleProject/mysql/src/generated/fromSql/types.ts`,
-      generatedQueryFunctionsCode: `${__dirname}/../../__test_assets__/exampleProject/mysql/src/generated/fromSql/queryFunctions.ts`,
+      codegenYml: `${TEST_ASSETS_ROOT_DIR}/exampleProject/mysql/codegen.sql.yml`,
+      generatedTypesCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/mysql/src/generated/fromSql/types.ts`,
+      generatedQueryFunctionsCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/mysql/src/generated/fromSql/queryFunctions.ts`,
     };
     it('should be able to read the example config provisioned in __test_assets__', async () => {
       await generate({
@@ -37,9 +40,9 @@ describe('generate', () => {
   });
   describe('postgres', () => {
     const testAssetPaths = {
-      codegenYml: `${__dirname}/../../__test_assets__/exampleProject/postgres/codegen.sql.yml`,
-      generatedTypesCode: `${__dirname}/../../__test_assets__/exampleProject/postgres/src/generated/fromSql/types.ts`,
-      generatedQueryFunctionsCode: `${__dirname}/../../__test_assets__/exampleProject/postgres/src/generated/fromSql/queryFunctions.ts`,
+      codegenYml: `${TEST_ASSETS_ROOT_DIR}/exampleProject/postgres/codegen.sql.yml`,
+      generatedTypesCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/postgres/src/generated/fromSql/types.ts`,
+      generatedQueryFunctionsCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/postgres/src/generated/fromSql/queryFunctions.ts`,
     };
     it('should be able to read the example config provisioned in __test_assets__', async () => {
       await generate({
@@ -66,6 +69,34 @@ describe('generate', () => {
         await readFile(testAssetPaths.generatedQueryFunctionsCode)
       ).toString();
       expect(queryFunctionsCode).toMatchSnapshot();
+    });
+  });
+  describe('postgres-noqueries', () => {
+    const testAssetPaths = {
+      codegenYml: `${TEST_ASSETS_ROOT_DIR}/exampleProject/postgres-noqueries/codegen.sql.yml`,
+      generatedTypesCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/postgres-noqueries/src/generated/fromSql/types.ts`,
+      generatedQueryFunctionsCode: `${TEST_ASSETS_ROOT_DIR}/exampleProject/postgres-noqueries/src/generated/fromSql/queryFunctions.ts`,
+    };
+    it('should be able to read the example config provisioned in __test_assets__', async () => {
+      await generate({
+        configPath: testAssetPaths.codegenYml,
+      });
+
+      // expect that the types code does not have compile errors
+      await import(testAssetPaths.generatedTypesCode);
+
+      // expect that the query functions code does not get produced
+      const error = await getError(
+        import(testAssetPaths.generatedQueryFunctionsCode),
+      );
+      expect(error.message).toContain('Cannot find module');
+      expect(error.message).toContain('queryFunctions.ts');
+
+      // expect the look right
+      const typesCode = (
+        await readFile(testAssetPaths.generatedTypesCode)
+      ).toString();
+      expect(typesCode).toMatchSnapshot();
     });
   });
 });

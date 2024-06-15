@@ -557,3 +557,33 @@ export const sqlQuerySelectUserWithMatchingIceCream = async ({
   });
 "
 `;
+
+exports[`generate postgres-noqueries should be able to read the example config provisioned in __test_assets__ 1`] = `
+"// types for table 'ice_cream'
+export interface SqlTableIceCream {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  name: string;
+  ingredient_ids_hash: Buffer;
+}
+
+// types for table 'ingredient'
+export interface SqlTableIngredient {
+  id: number | null;
+  uuid: string;
+  created_at: Date;
+  name: string;
+  cost: number;
+}
+
+// types for function 'get_answer_to_life'
+export interface SqlFunctionGetAnswerToLifeInput {
+  
+}
+export interface SqlFunctionGetAnswerToLifeInputByName {
+  
+}
+export type SqlFunctionGetAnswerToLifeOutput = number;
+"
+`;

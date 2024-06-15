@@ -49,22 +49,25 @@ export const readConfig = async ({ filePath }: { filePath: string }) => {
   );
 
   // get the query declarations
-  const queryGlobs = contents.queries;
-  const queryPaths = await getAllPathsMatchingGlobs({
-    globs: queryGlobs,
-    root: configDir,
-  });
-  const queryDeclarations = await Promise.all(
-    queryPaths
-      .sort() // for determinism in order
-      .map((relativePath) =>
-        extractDeclarationFromGlobedFile({
-          rootDir: configDir,
-          relativePath,
-          type: DeclarationType.QUERY,
-        }),
-      ),
-  );
+  const queryDeclarations = await (async () => {
+    const queryGlobs = contents.queries;
+    if (!queryGlobs) return [];
+    const queryPaths = await getAllPathsMatchingGlobs({
+      globs: queryGlobs,
+      root: configDir,
+    });
+    return await Promise.all(
+      queryPaths
+        .sort() // for determinism in order
+        .map((relativePath) =>
+          extractDeclarationFromGlobedFile({
+            rootDir: configDir,
+            relativePath,
+            type: DeclarationType.QUERY,
+          }),
+        ),
+    );
+  })();
 
   // return the results
   return new GeneratorConfig({

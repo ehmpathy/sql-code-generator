@@ -1,0 +1,6 @@
+language: postgres
+dialect: 10.7
+resources:
+  - 'schema/**/*.sql'
+generates:
+  types: src/generated/fromSql/types.ts
