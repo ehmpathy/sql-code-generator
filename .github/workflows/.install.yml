@@ -1,0 +1,46 @@
+name: .install
+
+on:
+  workflow_call:
+    outputs:
+      node-modules-cache-key:
+        description: a max(stable) cache key to the node modules of this commit's dependencies
+        value: ${{ jobs.npm.outputs.node-modules-cache-key }}
+
+jobs:
+  npm:
+    runs-on: ubuntu-20.04
+    outputs:
+      node-modules-cache-key: ${{ steps.cache.outputs.cache-primary-key }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: set node-version
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: node-modules deps hash
+        id: deps-hash
+        run: |
+          PACKAGE_DEPS_HASH=$(jq '.packages' package-lock.json | jq 'del(."".version)' | md5sum | awk '{print $1}');
+          echo "PACKAGE_DEPS_HASH=$PACKAGE_DEPS_HASH"
+          echo "package-deps-hash=$PACKAGE_DEPS_HASH" >> "$GITHUB_OUTPUT"
+      - name: node-modules cache get
+        uses: actions/cache/restore@v3
+        id: cache
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ steps.deps-hash.outputs.package-deps-hash }}
+
+      - name: node-modules cache miss install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci --ignore-scripts --prefer-offline --no-audit
+
+      - name: node-modules cache set
+        if: steps.cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: ./node_modules
+          key: ${{ steps.cache.outputs.cache-primary-key }}
