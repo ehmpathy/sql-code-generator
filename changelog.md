@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.10.1](https://github.com/ehmpathy/sql-code-generator/compare/v0.10.0...v0.10.1) (2024-07-27)
+
+
+### Bug Fixes
+
+* **practs:** bump practs to latest best ([efa1fe0](https://github.com/ehmpathy/sql-code-generator/commit/efa1fe0d09b3cc43f08f8e7396d7ddcf78d108b6))
+
 ## [0.10.0](https://github.com/ehmpathy/sql-code-generator/compare/v0.9.8...v0.10.0) (2024-06-15)
 
 
