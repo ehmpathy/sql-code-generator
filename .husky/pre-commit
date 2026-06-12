@@ -1,4 +1,8 @@
 #!/bin/sh
+if [ ! -f "$(dirname -- "$0")/_/husky.sh" ]; then
+  echo "🟡 husky not available, skipping hook"
+  exit 0
+fi
 . "$(dirname -- "$0")/_/husky.sh"
 
 . "$(dirname -- "$0")/check.yalc.sh"

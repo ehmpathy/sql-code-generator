@@ -1,0 +1,141 @@
+name: .declastruct
+
+on:
+  workflow_call:
+    inputs:
+      wish-path:
+        type: string
+        description: "the path to the wish declaration"
+      github-environment:
+        type: string
+        description: "the github environment that the apply step will be executed in"
+      allow-apply:
+        type: boolean
+        description: "whether the apply step is enabled. defaults to true on main"
+        default: ${{ github.ref == 'refs/heads/main' }}
+      creds-github-app-owner:
+        type: string
+        required: false
+        description: "the owner of the github app to generate a token for"
+      creds-github-app-id:
+        type: string
+        required: false
+        description: "the id of the github app to generate a token for"
+    secrets:
+      creds-github-app-private-key:
+        required: false
+        description: the private key of the github app to generate a token for
+
+jobs:
+  # install the dependencies
+  install:
+    uses: ./.github/workflows/.install.yml
+
+  plan:
+    runs-on: ubuntu-latest
+    needs: [install]
+    outputs:
+      has-changes-planned: ${{ steps.evaluate-plan.outputs.has-changes-planned }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: set node-version
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ./node_modules
+          key: ${{ needs.install.outputs.node-modules-cache-key }}
+
+      - name: get github auth, if creds supplied
+        if: ${{ inputs.creds-github-app-id }}
+        id: github-app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          owner: ${{ inputs.creds-github-app-owner }}
+          repositories: ${{ github.event.repository.name }}
+          app-id: ${{ inputs.creds-github-app-id }}
+          private-key: ${{ secrets.creds-github-app-private-key }}
+
+      - name: declastruct plan
+        id: plan
+        run: |
+          set -o pipefail
+          npx declastruct plan --wish ${{ inputs.wish-path }} --into ${{ inputs.wish-path }}.plan.json | tee ./plan.log
+        env:
+          GITHUB_TOKEN: ${{ steps.github-app-token.outputs.token }}
+
+      - name: evaluate plan
+        id: evaluate-plan
+        run: |
+          # check whether it said there were required changes
+          if grep "Everything is in sync" ./plan.log
+          then
+            echo "has-changes-planned=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has-changes-planned=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: has changes planned?
+        run: echo "${{ steps.evaluate-plan.outputs.has-changes-planned }}"
+
+      - name: upload plan artifact
+        if: ${{ inputs.allow-apply == true && steps.evaluate-plan.outputs.has-changes-planned == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: declastruct-plan
+          path: |
+            ${{ inputs.wish-path }}.plan.json
+          retention-days: 1
+          include-hidden-files: false
+
+  apply:
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.github-environment }}
+    needs: [install, plan]
+    if: ${{ inputs.allow-apply == true && needs.plan.outputs.has-changes-planned == 'true' }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: set node-version
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: get node-modules from cache
+        uses: actions/cache/restore@v4
+        with:
+          path: ./node_modules
+          key: ${{ needs.install.outputs.node-modules-cache-key }}
+
+      - name: extract directory from wish-path
+        id: extract-dir
+        run: echo "wish-dir=$(dirname "${{ inputs.wish-path }}")" >> "$GITHUB_OUTPUT"
+
+      - name: download plan artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: declastruct-plan
+          path: ${{ steps.extract-dir.outputs.wish-dir }}
+
+      - name: get github auth, if creds supplied
+        if: ${{ inputs.creds-github-app-id }}
+        id: github-app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          owner: ${{ inputs.creds-github-app-owner }}
+          repositories: ${{ github.event.repository.name }}
+          app-id: ${{ inputs.creds-github-app-id }}
+          private-key: ${{ secrets.creds-github-app-private-key }}
+
+      - name: declastruct apply
+        run: |
+          set -o pipefail
+          npx declastruct apply --plan ${{ inputs.wish-path }}.plan.json | tee ./apply.log
+        env:
+          GITHUB_TOKEN: ${{ steps.github-app-token.outputs.token }}

@@ -1,0 +1,17 @@
+reviews:
+  self:
+    - slug: has-completed-exec-successfully
+      say: |
+        did `rhx declapract.upgrade exec` complete successfully?
+
+        check for:
+        - "shell yeah!" in output = success
+        - "bummer dude..." or error output = failure
+
+        if exec failed:
+        - this is a BLOCKER — do NOT proceed
+        - see brief howto.fix-declapract-upgrade-failures
+        - fix the issue and re-run exec
+        - if unfixable after brief triage, mark stone as blocked
+
+        only proceed to next stone after exec succeeds.

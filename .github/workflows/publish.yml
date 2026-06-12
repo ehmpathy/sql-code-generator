@@ -9,12 +9,18 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }} # per [workflow] x [branch, tag]
   cancel-in-progress: true #  cancel workflows for non-latest commits
 
+permissions:
+  id-token: write # required for oidc
+  contents: read
+
 jobs:
   test:
     uses: ./.github/workflows/.test.yml
+    with:
+      creds-aws-region: us-east-1
+      creds-aws-role-arn: ${{ vars.CREDS_CICD_AWS_DEV_OIDC_ROLE_ARN }} # use aws auth via oidc, if this repo supplies it
+    secrets: inherit # keyrack firewall in .test.yml filters to declared keys
 
   publish:
     uses: ./.github/workflows/.publish-npm.yml
     needs: [test]
-    secrets:
-      npm-auth-token: ${{ secrets.NPM_TOKEN }}

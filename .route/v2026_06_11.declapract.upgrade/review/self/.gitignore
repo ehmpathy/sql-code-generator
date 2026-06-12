@@ -1,0 +1,3 @@
+# ignore all self-review files
+*
+!.gitignore

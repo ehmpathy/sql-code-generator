@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`defineTypescriptTypesForQuery should be able to define types accurately a query with subqueries and unnesting 1`] = `
+"export interface SqlQueryFindTrainByIdInput {
+  id: SqlViewViewTrainCurrent['id'];
+}
+export interface SqlQueryFindTrainByIdOutput {
+  id: SqlViewViewTrainCurrent['id'];
+  uuid: SqlViewViewTrainCurrent['uuid'];
+  home_station_geocode: SqlFunctionJsonBuildObjectOutput;
+  combination_id: SqlViewViewTrainCurrent['combination_id'];
+  locomotive_uuids: SqlFunctionArrayAggOutput;
+  carriage_uuids: SqlFunctionArrayAggOutput;
+  engineer_uuids: SqlFunctionArrayAggOutput;
+  status: SqlViewViewTrainCurrent['status'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to define types accurately for a query which selects from the table output of a function 1`] = `
+"export interface SqlQueryUpsertJerbInput {
+  ownerUuid: SqlFunctionUpsertJerbInput['0'];
+  title: SqlFunctionUpsertJerbInput['1'];
+  details: SqlFunctionUpsertJerbInput['2'];
+  dueDate: SqlFunctionUpsertJerbInput['3'];
+}
+export interface SqlQueryUpsertJerbOutput {
+  id: SqlFunctionUpsertJerbOutput['id'];
+  uuid: SqlFunctionUpsertJerbOutput['uuid'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to define types correctly for a query which uses an input variable in an or condition (union) 1`] = `
+"export interface SqlQueryFindAllChatMessagesByThreadInput {
+  threadUuid: SqlTableChatThread['uuid'];
+  until: null | SqlViewViewChatMessageCurrent['created_at'];
+  limit: number;
+}
+export interface SqlQueryFindAllChatMessagesByThreadOutput {
+  id: SqlViewViewChatMessageCurrent['id'];
+  uuid: SqlViewViewChatMessageCurrent['uuid'];
+  thread_uuid: SqlTableChatThread['uuid'];
+  sent_at: SqlViewViewChatMessageCurrent['sent_at'];
+  text: SqlViewViewChatMessageCurrent['text'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately an example of selecting columns a single table by id 1`] = `
+"export interface SqlQueryFindImageByIdInput {
+  id: SqlTableImage['id'];
+}
+export interface SqlQueryFindImageByIdOutput {
+  id: SqlTableImage['id'];
+  url: SqlTableImage['url'];
+  caption: SqlTableImage['caption'];
+  alt_text: SqlTableImage['alt_text'];
+  credit: SqlTableImage['credit'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately an upsert query 1`] = `
+"export interface SqlQueryUpsertSuggestionInput {
+  suggestionSource: SqlFunctionUpsertSuggestionInput['0'];
+  externalId: SqlFunctionUpsertSuggestionInput['1'];
+  suggestedIdeaId: SqlFunctionUpsertSuggestionInput['2'];
+  status: SqlFunctionUpsertSuggestionInput['3'];
+  result: SqlFunctionUpsertSuggestionInput['4'];
+}
+export interface SqlQueryUpsertSuggestionOutput {
+  id: SqlFunctionUpsertSuggestionOutput;
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately for this example that selects from tables, functions, and views 1`] = `
+"export interface SqlQueryFindUsersByLastNameInput {
+  lastName: SqlTableUser['last_name'];
+}
+export interface SqlQueryFindUsersByLastNameOutput {
+  id: SqlTableUser['id'];
+  full_name: SqlFunctionConcatOutput;
+  age: SqlTableUser['age'];
+  phone_number: SqlTablePhone['number'];
+  description: SqlViewViewUserProfileCurrent['description'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately for this other example that selects from tables, functions, and views 1`] = `
+"export interface SqlQueryFindUsersByLastNameInInput {
+  candidateLastNames: SqlTableUser['last_name'][];
+}
+export interface SqlQueryFindUsersByLastNameInOutput {
+  id: SqlTableUser['id'];
+  full_name: SqlFunctionConcatOutput;
+  age: SqlTableUser['age'];
+  phone_number: SqlTablePhone['number'];
+  description: SqlViewViewUserProfileCurrent['description'];
+}"
+`;
+
+exports[`defineTypescriptTypesForQuery should be able to determine types accurately when selecting columns from multiple tables, no input variables 1`] = `
+"export type SqlQuerySelectSuggestionInput = null;
+export interface SqlQuerySelectSuggestionOutput {
+  id: SqlTableSuggestion['id'];
+  uuid: SqlTableSuggestion['uuid'];
+  suggestion_source: SqlTableSuggestion['suggestion_source'];
+  external_id: SqlTableSuggestion['external_id'];
+  suggested_idea_id: SqlTableSuggestion['suggested_idea_id'];
+  resultant_curated_idea_id: SqlTableSuggestion['resultant_curated_idea_id'];
+  status: SqlTableSuggestionVersion['status'];
+  result: SqlTableSuggestionVersion['result'];
+  created_at: SqlTableSuggestion['created_at'];
+  effective_at: SqlTableSuggestionVersion['effective_at'];
+  updated_at: SqlTableSuggestionVersion['created_at'];
+}"
+`;

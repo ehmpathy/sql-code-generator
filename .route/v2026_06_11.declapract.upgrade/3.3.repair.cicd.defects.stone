@@ -1,0 +1,51 @@
+# 3.3.repair.cicd.defects
+
+## purpose
+
+push changes and fix cicd until green. document each defect with root cause.
+
+## instructions
+
+1. request commit permission:
+   ```sh
+   rhx git.commit.uses allow
+   ```
+
+2. commit changes:
+   ```sh
+   printf 'fix(practs): bump to latest best\n\n- upgraded declapract packages\n- applied latest practices' | rhx git.commit.set -m @stdin --mode apply --push
+   ```
+
+3. watch cicd:
+   ```sh
+   rhx git.release --watch
+   ```
+
+4. if cicd fails:
+   - what: identify the defect
+   - how: compare against origin/main to see what changed:
+     ```sh
+     git diff origin/main -- path/to/failing/file.ts
+     ```
+   - why: determine root cause (why did the change cause this defect?)
+   - fix: fix the defect
+   - commit and push again
+   - repeat until green
+
+   note: comparing against origin/main reveals what the upgrade changed.
+   this helps distinguish between prior issues and upgrade-induced defects.
+
+5. document each defect in artifact.
+
+## emit
+
+emit incrementally to `3.3.repair.cicd.defects.v1.i1.md`:
+- when defect found → add to inventory
+- when root cause found → add to inventory
+- when fixed → add to inventory
+
+each defect entry should have:
+- what: the defect
+- how: what changed? (diff against origin/main)
+- why: root cause (why the change caused this defect)
+- fix: how it was fixed

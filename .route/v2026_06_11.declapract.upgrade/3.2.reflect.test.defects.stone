@@ -1,0 +1,22 @@
+# 3.2.reflect.test.defects
+
+## purpose
+
+classify each test defect for feedback to infrastructure.
+
+## instructions
+
+for each defect in `3.1.repair.test.defects.v1.i1.md`, classify:
+
+1. **repo quirk**: special to this repo, should not be adopted by others
+2. **practice bug**: defective practice in declapract-typescript-ehmpathy or declapract core that should be fixed
+3. **adoption candidate**: pattern this repo uses that should be adopted by everyone
+
+for practice bugs, use gh cli to search the exact practice:
+```sh
+gh search code --repo ehmpathy/declapract-typescript-ehmpathy "pattern"
+```
+
+## emit
+
+emit `3.2.reflect.test.defects.v1.i1.md` with classifications and citations.

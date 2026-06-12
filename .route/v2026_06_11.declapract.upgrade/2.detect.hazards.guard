@@ -1,0 +1,18 @@
+reviews:
+  self:
+    - slug: has-complete-hazard-scan
+      say: |
+        what else was missed? any other real backward compat hazards?
+
+        scan the git diff again and look for:
+        - test hazards you overlooked
+        - cicd hazards you overlooked
+        - path hazards you overlooked
+        - config hazards you overlooked
+
+    - slug: has-validated-hazards
+      say: |
+        which of these are mistaken? are any not actual issues?
+
+        for each hazard listed, prove or disprove via tests or logic.
+        if disprovable, strikeout from artifact.

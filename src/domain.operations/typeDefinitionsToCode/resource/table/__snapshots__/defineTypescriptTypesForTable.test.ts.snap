@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`defineTypescriptTypesForTable should generate an accurate looking interface for this other table definition 1`] = `
+"export interface SqlTableSuggestionVersion {
+  id: number;
+  suggestion_id: number;
+  effective_at: Date;
+  created_at: Date;
+  status: string;
+}"
+`;
+
+exports[`defineTypescriptTypesForTable should generate an accurate looking interface for this other table definition, again 1`] = `
+"export interface SqlTableJobVersion {
+  id: number;
+  job_id: number;
+  effective_at: Date;
+  created_at: Date;
+  location_id: number;
+  photo_ids_hash: Buffer;
+}"
+`;
+
+exports[`defineTypescriptTypesForTable should generate an accurate looking interface for this table definition 1`] = `
+"export interface SqlTableImage {
+  id: number;
+  uuid: string;
+  created_at: Date;
+  url: string;
+  caption: string | null;
+  credit: string | null;
+  alt_text: string | null;
+}"
+`;

@@ -1,0 +1,5 @@
+# ignore all except passage.jsonl and .bind flags
+*
+!.gitignore
+!passage.jsonl
+!.bind.*

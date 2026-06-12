@@ -1,0 +1,16 @@
+reviews:
+  self:
+    - slug: has-complete-defect-coverage
+      say: |
+        are all defects from 3.1.repair.test.defects covered?
+
+        go through each defect and confirm it has a classification and root cause analysis.
+
+    - slug: has-searched-declapract-repo
+      say: |
+        did we search declapract-typescript-ehmpathy via gh cli for the exact practice?
+
+        for each practice bug, cite the root cause with a link or search result.
+
+judges:
+  - $rhachet run --repo bhrain --skill route.stone.judge --mechanism approved? --stone $stone --route $route

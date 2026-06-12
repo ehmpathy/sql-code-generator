@@ -1,0 +1,89 @@
+reviews:
+  self:
+    - slug: has-zero-test-failures
+      say: |
+        do all tests now pass with zero failures?
+
+        run the test suite with `THOROUGH=true` one final time:
+        ```sh
+        THOROUGH=true npm run test
+        ```
+
+        confirm zero failures. without `THOROUGH=true`, some tests
+        may be skipped and defects may go undetected.
+
+    - slug: has-protected-test-intentions
+      say: |
+        were test intentions preserved?
+
+        we tolerate zero degradation of coverage. never skip, never drop.
+
+        this is an infra upgrade — zero domain logic should be impacted.
+
+        review test file changes and confirm:
+        - no tests were newly skipped (no added `.skip`, `xit`, `xdescribe`)
+        - no tests were dropped (no deleted `it()`, `test()`, `then()` blocks)
+        - no test assertions were weakened or removed
+        - no behavioral expectations were changed
+
+        ```sh
+        git diff origin/main -- '**/*.test.ts' '**/*.integration.test.ts'
+        ```
+
+        if any test was modified beyond infra fixes (imports, types, config),
+        this is a BLOCKER.
+
+        1. justify why domain behavior needed to change
+        2. then severely criticize that justification — how does it possibly
+           make sense if this is just a generic infra update? it doesn't.
+           revert the domain change and fix the root cause instead.
+           compare against "what changed?" via origin/main.
+
+    - slug: has-compared-against-main
+      say: |
+        was each defect compared against origin/main?
+
+        for each defect, confirm:
+        - "what changed?" was explicitly asked
+        - `git diff origin/main -- <file>` was run
+        - the diff informed the root cause analysis
+
+        this ensures we understand why the upgrade caused the defect,
+        not just that a defect exists.
+
+    - slug: has-complete-defect-entries
+      say: |
+        does each defect entry have what, how, why, fix?
+
+        go through each defect in the artifact and confirm:
+        - what: the defect is described
+        - how: what changed? (diff against origin/main is documented)
+        - why: root cause is documented (why the change caused the defect)
+        - fix: how it was fixed is documented
+
+    - slug: has-respected-dpdm-exclude
+      say: |
+        did the driver modify .dpdmrc.yaml exclude array incorrectly?
+
+        we avoid all cycles, even in dependencies — ON PURPOSE.
+        we check node_modules for all deps (prod and dev) by default.
+
+        the .dpdmrc.yaml file controls dpdm cycle detection:
+        - exclude: [] means check all files, node_modules included
+        - devDeps may be excluded as escape hatch if needed
+        - prod dependencies must never be excluded
+        - node_modules must never be excluded
+
+        forbidden changes:
+        - add prod dep to exclude array
+        - add node_modules or ^node_modules to exclude
+        - change default to exclude node_modules
+
+        if you exclude a prod dependency or node_modules, you ship
+        cycles to consumers and break their builds.
+        see brief rule.forbid.dpdm-exclude-change.
+
+        if git diff shows any forbidden change to .dpdmrc.yaml:
+        - this is a BLOCKER
+        - revert the change
+        - fix the actual circular imports instead
