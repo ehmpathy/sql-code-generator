@@ -1,0 +1,70 @@
+import { extractSqlFromFile } from '@src/domain.operations/common/extractSqlFromFile';
+
+import { extractTypeDefinitionFromFunctionSql } from './extractTypeDefinitionFromFunctionSql';
+
+describe('extractTypeDefinitionFromFunctionSql', () => {
+  describe('mysql', () => {
+    it('should be able to extract types in this example', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../.test.assets/functions/upsert_image.mysql.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromFunctionSql({
+        name: 'upsert_image',
+        sql: exampleSql,
+      });
+      expect(typeDef).toMatchSnapshot();
+    });
+    it('should be able to extract types in this other example', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../.test.assets/functions/upsert_suggestion.mysql.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromFunctionSql({
+        name: 'upsert_suggestion',
+        sql: exampleSql,
+      });
+      expect(typeDef).toMatchSnapshot();
+    });
+    it('should be able to extract types in this other other example', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../.test.assets/functions/hash_string.mysql.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromFunctionSql({
+        name: 'hash_string',
+        sql: exampleSql,
+      });
+      expect(typeDef).toMatchSnapshot();
+    });
+  });
+  describe('postgres', () => {
+    it('should be able to extract types in this example', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../.test.assets/functions/upsert_photo.postgres.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromFunctionSql({
+        name: 'upsert_photo',
+        sql: exampleSql,
+      });
+      expect(typeDef).toMatchSnapshot();
+    });
+    it('should be able to extract types in this other example', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../.test.assets/functions/upsert_job.postgres.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromFunctionSql({
+        name: 'upsert_job',
+        sql: exampleSql,
+      });
+      expect(typeDef).toMatchSnapshot();
+    });
+    it('should be able to extract types from a function that returns a table', async () => {
+      const exampleSql = await extractSqlFromFile({
+        filePath: `${__dirname}/../../../.test.assets/functions/upsert_jerb.postgres.sql`,
+      });
+      const typeDef = extractTypeDefinitionFromFunctionSql({
+        name: 'upsert_jerb',
+        sql: exampleSql,
+      });
+      expect(typeDef).toMatchSnapshot();
+    });
+  });
+});

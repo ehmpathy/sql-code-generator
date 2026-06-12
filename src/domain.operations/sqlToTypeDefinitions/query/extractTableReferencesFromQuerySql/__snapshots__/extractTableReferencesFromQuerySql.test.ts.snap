@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for an example joining to multiple tables 1`] = `
+[
+  TypeDefinitionOfQueryTableReference {
+    "alias": "u",
+    "functionName": null,
+    "tableName": "user",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "p",
+    "functionName": null,
+    "tableName": "phone",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "up",
+    "functionName": null,
+    "tableName": "view_user_profile_current",
+  },
+]
+`;
+
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for an example joining to multiple tables without any explicit table aliases defined 1`] = `
+[
+  TypeDefinitionOfQueryTableReference {
+    "alias": "user",
+    "functionName": null,
+    "tableName": "user",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "phone",
+    "functionName": null,
+    "tableName": "phone",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "view_user_profile_current",
+    "functionName": null,
+    "tableName": "view_user_profile_current",
+  },
+]
+`;
+
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for an example with subqueries referencing their own tables 1`] = `
+[
+  TypeDefinitionOfQueryTableReference {
+    "alias": "p",
+    "functionName": null,
+    "tableName": "provider",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "w",
+    "functionName": null,
+    "tableName": "work",
+  },
+]
+`;
+
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for queries that select from a function that returns a table 1`] = `
+[
+  TypeDefinitionOfQueryTableReference {
+    "alias": "dgv",
+    "functionName": "upsert_jerb",
+    "tableName": null,
+  },
+]
+`;
+
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for this example 1`] = `
+[
+  TypeDefinitionOfQueryTableReference {
+    "alias": "i",
+    "functionName": null,
+    "tableName": "image",
+  },
+]
+`;
+
+exports[`extractTableReferencesFromQuerySql should be able to determine types accurately for this other example 1`] = `
+[
+  TypeDefinitionOfQueryTableReference {
+    "alias": "s",
+    "functionName": null,
+    "tableName": "suggestion",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "cvp",
+    "functionName": null,
+    "tableName": "suggestion_cvp",
+  },
+  TypeDefinitionOfQueryTableReference {
+    "alias": "v",
+    "functionName": null,
+    "tableName": "suggestion_version",
+  },
+]
+`;

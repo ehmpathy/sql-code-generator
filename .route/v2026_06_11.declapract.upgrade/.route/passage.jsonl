@@ -1,0 +1,14 @@
+{"stone":"1.upgrade.invoke","status":"blocked","blocker":"review.self","reason":"review.self required: has-completed-exec-successfully"}
+{"stone":"1.upgrade.invoke","status":"passed"}
+{"stone":"2.detect.hazards","status":"blocked","blocker":"review.self","reason":"review.self required: has-complete-hazard-scan"}
+{"stone":"2.detect.hazards","status":"blocked","blocker":"review.self","reason":"review.self required: has-complete-hazard-scan"}
+{"stone":"2.detect.hazards","status":"passed"}
+{"stone":"3.1.repair.test.defects","status":"blocked","blocker":"review.self","reason":"review.self required: has-zero-test-failures"}
+{"stone":"3.1.repair.test.defects","status":"passed"}
+{"stone":"3.2.reflect.test.defects","status":"blocked","blocker":"review.self","reason":"review.self required: has-complete-defect-coverage"}
+{"stone":"3.2.reflect.test.defects","status":"blocked","blocker":"review.self","reason":"review.self required: has-complete-defect-coverage"}
+{"stone":"3.2.reflect.test.defects","status":"blocked","blocker":"approval","reason":"wait for human approval"}
+{"stone":"3.2.reflect.test.defects","status":"blocked","blocker":"approval","reason":"wait for human approval"}
+{"stone":"3.2.reflect.test.defects","status":"approved"}
+{"stone":"3.2.reflect.test.defects","status":"passed"}
+{"stone":"3.3.repair.cicd.defects","status":"blocked"}

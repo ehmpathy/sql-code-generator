@@ -1,0 +1,282 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this example 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": [
+    TypeDefinitionOfResourceInput {
+      "name": "in_url",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_caption",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_credit",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_alt_text",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_image",
+  "output": [
+    "number",
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this other example 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": [
+    TypeDefinitionOfResourceInput {
+      "name": "in_suggestion_source",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_external_id",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_suggested_idea_id",
+      "type": [
+        "number",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_status",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_result",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_resultant_curated_idea_id",
+      "type": [
+        "number",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_suggestion",
+  "output": [
+    "number",
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromFunctionSql mysql should be able to extract types in this other other example 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": [
+    TypeDefinitionOfResourceInput {
+      "name": "in_array",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_delimiter",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_index",
+      "type": [
+        "number",
+        "null",
+      ],
+    },
+  ],
+  "name": "hash_string",
+  "output": [
+    "string",
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types from a function that returns a table 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": [
+    TypeDefinitionOfResourceInput {
+      "name": "in_uuid",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_title",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_status",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_description",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_location_id",
+      "type": [
+        "number",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_photo_ids",
+      "type": [
+        "number[]",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_jerb",
+  "output": TypeDefinitionOfResourceTable {
+    "columns": [
+      TypeDefinitionOfResourceColumn {
+        "name": "id",
+        "type": [
+          "number",
+        ],
+      },
+      TypeDefinitionOfResourceColumn {
+        "name": "uuid",
+        "type": [
+          "string",
+        ],
+      },
+      TypeDefinitionOfResourceColumn {
+        "name": "created_at",
+        "type": [
+          "Date",
+        ],
+      },
+      TypeDefinitionOfResourceColumn {
+        "name": "effective_at",
+        "type": [
+          "Date",
+        ],
+      },
+    ],
+    "name": "function.output",
+  },
+}
+`;
+
+exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types in this example 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": [
+    TypeDefinitionOfResourceInput {
+      "name": "in_url",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_description",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_photo",
+  "output": [
+    "number",
+  ],
+}
+`;
+
+exports[`extractTypeDefinitionFromFunctionSql postgres should be able to extract types in this other example 1`] = `
+TypeDefinitionOfResourceFunction {
+  "inputs": [
+    TypeDefinitionOfResourceInput {
+      "name": "in_uuid",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_title",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_status",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_description",
+      "type": [
+        "string",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_location_id",
+      "type": [
+        "number",
+        "null",
+      ],
+    },
+    TypeDefinitionOfResourceInput {
+      "name": "in_photo_ids",
+      "type": [
+        "number[]",
+        "null",
+      ],
+    },
+  ],
+  "name": "upsert_job",
+  "output": [
+    "number",
+  ],
+}
+`;

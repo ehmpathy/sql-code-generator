@@ -1,12 +1,19 @@
 *-debug.log
 *-error.log
+*.bak.*
+*.local.json
 *.log
 *.tsbuildinfo
+.agent/.cache/
 .artifact
+.cache/
 .env
+.log/slowtest/
 .serverless
+.temp
 .terraform
 .terraform.lock
+.vscode
 .yalc
 /.nyc_output
 /dist
@@ -16,3 +23,5 @@
 coverage
 dist
 node_modules
+!.test*/**/node_modules
+!.test*/**/node_modules/**

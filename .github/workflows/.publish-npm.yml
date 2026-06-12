@@ -2,43 +2,91 @@ name: .publish-npm
 
 on:
   workflow_call:
-    secrets:
-      npm-auth-token:
-        required: true
-        description: required credentials to authenticate with the aws account under which to publish
+
+permissions:
+  id-token: write # required for oidc
 
 jobs:
   install:
     uses: ./.github/workflows/.install.yml
 
   publish:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: [install]
     steps:
       - name: checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: set node-version
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          registry-url: 'https://registry.npmjs.org/'
-          node-version-file: '.nvmrc'
+          registry-url: "https://registry.npmjs.org/" # required to publish
+          node-version-file: ".nvmrc"
 
       - name: node-modules cache get
-        uses: actions/cache/restore@v3
+        uses: actions/cache/restore@v4
         id: cache
         with:
           path: ./node_modules
           key: ${{ needs.install.outputs.node-modules-cache-key }}
 
-      - name: node-modules cache miss install
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: npm ci --ignore-scripts --prefer-offline --no-audit
+      - name: verify oidc auth
+        run: |
+          OIDC_TOKEN=$(curl -sS -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org" | jq -r '.value')
+          PACKAGE_NAME_PLAIN=$(jq -r '.name' package.json)
+          PACKAGE_NAME_ENCODED=$(printf '%s' "$PACKAGE_NAME_PLAIN" | jq -sRr @uri)
+          HTTP_CODE=$(curl -sS -o /dev/null -w '%{http_code}' -X POST -H "Authorization: Bearer $OIDC_TOKEN" "https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/$PACKAGE_NAME_ENCODED")
+          if [[ "$HTTP_CODE" =~ ^2 ]]; then
+            echo "oidc: configured for $PACKAGE_NAME_PLAIN"
+          else
+            echo "::error::oidc: not configured for $PACKAGE_NAME_PLAIN (http $HTTP_CODE). add oidc by-hand at https://www.npmjs.com/package/$PACKAGE_NAME_ENCODED/access"
+            exit 1
+          fi
+
+      - name: verify oidc compat
+        run: |
+          NPM_VERSION=$(npm --version)
+          MIN_VERSION="11.5.1"
+          if [ "$(printf '%s\n' "$MIN_VERSION" "$NPM_VERSION" | sort -V | head -n1)" != "$MIN_VERSION" ]; then
+            echo "npm $NPM_VERSION < $MIN_VERSION, will upgrade npm now to support oidc..."
+            npm install -g npm@latest
+          else
+            echo "npm $NPM_VERSION >= $MIN_VERSION, ready to use!"
+          fi
 
       - name: build
         run: npm run build
 
       - name: publish
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.npm-auth-token }}
+        id: publish
+        continue-on-error: true
+        run: npm publish --access public --provenance
+
+      # if publish fails, check whether the intent was successful still, for behavioral idempotency (i.e., if the failure just reported that this is a retry, then its an idempotent success)
+      - name: idempotify
+        if: steps.publish.outcome == 'failure'
+        run: |
+          # get package info
+          PACKAGE_NAME=$(jq -r '.name' package.json)
+          PACKAGE_VERSION=$(jq -r '.version' package.json)
+
+          # check if version exists on npm
+          if ! npm view "$PACKAGE_NAME@$PACKAGE_VERSION" dist.shasum > /dev/null 2>&1; then
+            echo "::error::publish: this version failed to be published. see prior step for cause"
+            exit 1
+          fi
+
+          # get shasums: local (via dry-run) and published (via registry)
+          EXPECTED_SHASUM=$(npm pack --dry-run --json 2>/dev/null | jq -r '.[0].shasum')
+          DETECTED_SHASUM=$(npm view "$PACKAGE_NAME@$PACKAGE_VERSION" dist.shasum)
+          echo "EXPECTED_SHASUM=$EXPECTED_SHASUM"
+          echo "DETECTED_SHASUM=$DETECTED_SHASUM"
+
+          # compare shasums
+          if [ "$EXPECTED_SHASUM" = "$DETECTED_SHASUM" ]; then
+            echo "publish: idempotent success. detected version matches expected version. this was a succesful retry"
+            exit 0
+          else
+            echo "::error::publish: this version was already published with a different payload. overwrites are forbidden. EXPECTED_SHASUM=$EXPECTED_SHASUM, DETECTED_SHASUM=$DETECTED_SHASUM"
+            exit 1
+          fi

@@ -1,0 +1,43 @@
+# 3.1.repair.test.defects
+
+## purpose
+
+run tests until all pass. document each defect with root cause.
+
+## instructions
+
+1. run all tests with `THOROUGH=true` to ensure full coverage:
+   ```sh
+   THOROUGH=true npm run test
+   ```
+
+   note: `THOROUGH=true` runs all test variants and skipped tests.
+   without it, some tests may be skipped and defects may go undetected.
+
+2. for each failure:
+   - what: identify the defect
+   - how: compare against origin/main to see what changed:
+     ```sh
+     git diff origin/main -- path/to/failing/file.ts
+     ```
+   - why: determine root cause (why did the change cause this defect?)
+   - fix: fix the defect
+   - document in artifact
+
+   note: comparing against origin/main reveals what the upgrade changed.
+   this helps distinguish between prior issues and upgrade-induced defects.
+
+3. repeat until zero failures.
+
+## emit
+
+emit incrementally to `3.1.repair.test.defects.v1.i1.md`:
+- when defect found → add to inventory
+- when root cause found → add to inventory
+- when fixed → add to inventory
+
+each defect entry should have:
+- what: the defect
+- how: what changed? (diff against origin/main)
+- why: root cause (why the change caused this defect)
+- fix: how it was fixed

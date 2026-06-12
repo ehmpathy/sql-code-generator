@@ -1,0 +1,27 @@
+# 2.detect.hazards
+
+## purpose
+
+scan the changes from declapract upgrade to detect hazards that may break tests, cicd, or deployments.
+
+## instructions
+
+1. review git diff for changes introduced by this branch (not missed additions from main):
+   ```sh
+   git diff origin/main...HEAD
+   ```
+
+2. identify hazards in these categories:
+   - **test hazards**: changes that may break unit, integration, or acceptance tests
+   - **cicd hazards**: changes that may break github actions workflows
+   - **path hazards**: renamed or moved files that may break imports
+   - **config hazards**: changed configs that may affect behavior
+
+3. for each hazard, document:
+   - what changed
+   - why it may break
+   - how to verify (test command or manual check)
+
+## emit
+
+emit `2.detect.hazards.v1.i1.md` with the hazard list.

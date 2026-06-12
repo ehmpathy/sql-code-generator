@@ -1,4 +1,4 @@
-import { UnexpectedCodePathError } from '@ehmpathy/error-fns';
+import { UnexpectedCodePathError } from 'helpful-errors';
 import { createIsOfEnum } from 'type-fns';
 
 export enum Stage {

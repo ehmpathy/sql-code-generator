@@ -1,0 +1,96 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**/src/**/*.ts",
+      "**/provision/**/*.ts",
+      "!**/dist",
+      "!**/coverage",
+      "!**/node_modules",
+      "!**/.agent/.cache",
+      "!**/.artifact",
+      "!**/.generated",
+      "!**/.test*"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "all"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":SIDE_EFFECT:",
+              ":BLANK_LINE:",
+              [":PACKAGE:", "!@src", "!@src/**"],
+              ":BLANK_LINE:",
+              ["@src", "@src/**"],
+              ":BLANK_LINE:",
+              ":RELATIVE:"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noExcessiveCognitiveComplexity": "warn",
+        "noThisInStatic": {
+          "level": "warn", // warn w/o autofix, since some usecases like polymorphism require `this` in static methods
+          "fix": "none"
+        }
+      },
+      "correctness": {
+        "noUnusedImports": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noUnusedVariables": "warn",
+        "useExhaustiveDependencies": "off"
+      },
+      "style": {
+        "noDefaultExport": "error",
+        "noNonNullAssertion": {
+          "level": "warn",
+          "fix": "none"
+        },
+        "useImportType": "error",
+        "noParameterAssign": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noConfusingVoidType": "off",
+        "noEmptyBlockStatements": "off",
+        "noUnsafeDeclarationMerging": "off",
+        "useIterableCallbackReturn": "warn",
+        "noDuplicateTestHooks": "off",
+        "noThenProperty": "warn"
+      },
+      "nursery": {
+        "noFloatingPromises": "error",
+        "useExplicitType": "warn"
+      }
+    }
+  }
+}

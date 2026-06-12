@@ -1,0 +1,19 @@
+# 3.4.reflect.cicd.defects
+
+## purpose
+
+classify each cicd defect for feedback to infrastructure.
+
+## instructions
+
+for each defect in `3.3.repair.cicd.defects.v1.i1.md`, classify:
+
+1. **repo quirk**: special to this repo
+2. **practice bug**: defective practice that should be fixed
+3. **adoption candidate**: pattern that should be adopted
+
+for practice bugs, search declapract-typescript-ehmpathy via gh cli.
+
+## emit
+
+emit `3.4.reflect.cicd.defects.v1.i1.md` with classifications and citations.

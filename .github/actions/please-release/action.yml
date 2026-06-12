@@ -1,0 +1,469 @@
+name: please-release
+description: upsert release pr or cutta release tag
+
+inputs:
+  github-token:
+    description: token for gh cli calls
+    required: true
+  commit-message:
+    description: the head commit message
+    required: true
+  commit-sha:
+    description: the head commit sha
+    required: true
+  repository:
+    description: the repository (owner/repo)
+    required: true
+
+outputs:
+  action:
+    description: what action was taken (noop, created, updated, released)
+    value: ${{ steps.result.outputs.action }}
+  version:
+    description: the computed or released version
+    value: ${{ steps.result.outputs.version }}
+  pr-number:
+    description: the release pr number
+    value: ${{ steps.result.outputs.pr-number }}
+
+runs:
+  using: "composite"
+  steps:
+    # step 1: cutta tag, if release commit
+    - name: cutta tag, if release commit
+      id: cutta
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        COMMIT_MSG: ${{ inputs.commit-message }}
+        REPO_URL: https://github.com/${{ inputs.repository }}
+      run: |
+        set -euo pipefail
+
+        # check if this is a release commit
+        if [[ "$COMMIT_MSG" != chore\(release\):* ]]; then
+          echo "🔭 cutta tag"
+          echo "   └── skipped (not a release commit)"
+          echo "did-cutta=false" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        echo "🔭 cutta tag"
+
+        # extract version from commit message
+        VERSION=$(echo "$COMMIT_MSG" | sed -n 's/^chore(release): \(v[0-9.]*\).*/\1/p')
+
+        # failfast if version not found
+        if [ -z "$VERSION" ]; then
+          echo "   └── ⛈️ could not extract version from: $COMMIT_MSG"
+          echo "::error::could not extract version from commit message: $COMMIT_MSG"
+          exit 1
+        fi
+
+        # find the release pr that was merged (by head branch, not search - avoids indexing delay)
+        PR_NUMBER=$(gh pr list --state merged --head "release/${VERSION}" --json number --jq '.[0].number')
+
+        # failfast if release pr not found
+        if [ -z "$PR_NUMBER" ]; then
+          echo "   └── ⛈️ could not find merged release pr for: $VERSION"
+          echo "::error::could not find merged release pr for version: $VERSION"
+          exit 1
+        fi
+
+        echo "   ├── version: $VERSION"
+        echo "   ├── release-pr: #$PR_NUMBER"
+
+        # create and push tag
+        git tag "$VERSION"
+        git push origin "$VERSION"
+        echo "   ├── ✨ tag pushed"
+
+        # create github release
+        RELEASE_URL=$(gh release create "$VERSION" \
+          --title "$VERSION" \
+          --generate-notes \
+          --latest)
+        echo "   └── ✨ release created: $RELEASE_URL"
+
+        # comment on the release pr
+        gh pr comment "$PR_NUMBER" --body "🐢 released at ${RELEASE_URL}"
+
+        # extract pr links from the release pr body and comment on each
+        PR_BODY=$(gh pr view "$PR_NUMBER" --json body --jq '.body')
+        REFERENCED_PRS=$(echo "$PR_BODY" | grep -oE '/pull/[0-9]+' | grep -oE '[0-9]+' | sort -u || true)
+
+        for REF_PR in $REFERENCED_PRS; do
+          gh pr comment "$REF_PR" --body "🐢 released at ${RELEASE_URL}" 2>/dev/null || true
+        done
+
+        echo "🌊 cutta tag complete"
+        echo "did-cutta=true" >> $GITHUB_OUTPUT
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "action=released" >> $GITHUB_OUTPUT
+
+    # step 2: crunch future semver, if other commit
+    #
+    # version resolution strategy:
+    #   1. if latest-pkg-version > latest-tag-version: user has manually bumped, use package.json version as-is
+    #   2. otherwise: auto-compute next version from max(latest-pkg-version, latest-tag-version) based on conventional commits
+    #
+    # this lets users manually control versions when needed (e.g., major releases, pre-releases)
+    # while still providing automatic semver bumping for typical workflows
+    #
+    - name: crunch future semver, if other commit
+      id: semver
+      if: ${{ steps.cutta.outputs.did-cutta == 'false' }}
+      shell: bash
+      run: |
+        set -euo pipefail
+        echo "🔭 crunch semver"
+
+        # helper: compare semver (returns 0 if $1 > $2, 1 otherwise)
+        version_gt() {
+          [ "$(printf '%s\n%s' "$1" "$2" | sort -V | tail -n1)" = "$1" ] && [ "$1" != "$2" ]
+        }
+
+        # get versions from all sources
+        LATEST_PACKAGE_VERSION=$(jq -r '.version' package.json)
+        LATEST_GITTAG_VERSION=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.0")
+
+        # find last release commit (shared with changelog step via output)
+        LAST_RELEASE_SHA=$(git log --pretty=format:"%H" --grep="^chore(release):" -n 1 || true)
+        LAST_RELEASE_MSG=$(git log --pretty=format:"%s" --grep="^chore(release):" -n 1 2>/dev/null || true)
+        LATEST_RELEASE_VERSION=$(echo "$LAST_RELEASE_MSG" | sed -n 's/^chore(release): v\([0-9.]*\).*/\1/p')
+
+        echo "last-release-sha=$LAST_RELEASE_SHA" >> $GITHUB_OUTPUT
+        echo "   ├── package-version: $LATEST_PACKAGE_VERSION"
+        echo "   ├── gittag-version: $LATEST_GITTAG_VERSION"
+        echo "   ├── release-version: ${LATEST_RELEASE_VERSION:-"(none)"}"
+        echo "   ├── release-sha: ${LAST_RELEASE_SHA:0:7}${LAST_RELEASE_SHA:+...}"
+
+        # case 1: package.json > release-version means user manually bumped AFTER last release
+        # (if package == release-version, that was set by automation, not user)
+        if [ -n "$LATEST_RELEASE_VERSION" ] && version_gt "$LATEST_PACKAGE_VERSION" "$LATEST_RELEASE_VERSION"; then
+          echo "   ├── ✨ pkg > release: user manually bumped"
+          echo "   └── 🌊 next-version: v${LATEST_PACKAGE_VERSION}"
+          echo "next-version=v${LATEST_PACKAGE_VERSION}" >> $GITHUB_OUTPUT
+          echo "current-tag=v${LATEST_GITTAG_VERSION}" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        # case 2: auto-compute next version from the greater of tag vs package.json
+        # (handles edge cases like tag existing but package.json being behind)
+        if version_gt "$LATEST_GITTAG_VERSION" "$LATEST_PACKAGE_VERSION"; then
+          BASE_VERSION="$LATEST_GITTAG_VERSION"
+          echo "   ├── base: gittag ($LATEST_GITTAG_VERSION)"
+        else
+          BASE_VERSION="$LATEST_PACKAGE_VERSION"
+          echo "   ├── base: package ($LATEST_PACKAGE_VERSION)"
+        fi
+
+        # handle first release
+        if [ "$BASE_VERSION" = "0.0.0" ]; then
+          echo "   ├── ✨ first release"
+          echo "   └── 🌊 next-version: v0.1.0"
+          echo "next-version=v0.1.0" >> $GITHUB_OUTPUT
+          echo "current-tag=v0.0.0" >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        # get commits since last release (reuse LAST_RELEASE_SHA computed above)
+        if [ -n "$LAST_RELEASE_SHA" ]; then
+          COMMITS=$(git log ${LAST_RELEASE_SHA}..HEAD --pretty=format:"%s")
+        else
+          COMMITS=$(git log --pretty=format:"%s")
+        fi
+        COMMIT_COUNT=$(echo "$COMMITS" | grep -c . || echo "0")
+        echo "   ├── commits: $COMMIT_COUNT"
+
+        # determine bump type
+        BUMP="patch"  # default
+
+        if echo "$COMMITS" | grep -qE "^break(\(.+\))?:"; then
+          BUMP="major"
+        elif echo "$COMMITS" | grep -qE "^feat(\(.+\))?:"; then
+          BUMP="minor"
+        fi
+        echo "   ├── bump: $BUMP"
+
+        # compute next version
+        IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE_VERSION"
+
+        case $BUMP in
+          major) NEXT_VERSION="v$((MAJOR + 1)).0.0" ;;
+          minor) NEXT_VERSION="v${MAJOR}.$((MINOR + 1)).0" ;;
+          patch) NEXT_VERSION="v${MAJOR}.${MINOR}.$((PATCH + 1))" ;;
+        esac
+
+        echo "   └── 🌊 next-version: $NEXT_VERSION"
+        echo "next-version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+        echo "current-tag=v${BASE_VERSION}" >> $GITHUB_OUTPUT
+
+    # step 3: crunch future changelog, if other commit
+    - name: crunch future changelog, if other commit
+      id: changelog
+      if: ${{ steps.cutta.outputs.did-cutta == 'false' }}
+      shell: bash
+      run: |
+        set -euo pipefail
+        echo "🔭 crunch changelog"
+        REPO_URL="https://github.com/${{ inputs.repository }}"
+        PREV_TAG="${{ steps.semver.outputs.current-tag }}"
+        NEXT_TAG="${{ steps.semver.outputs.next-version }}"
+        LAST_RELEASE_SHA="${{ steps.semver.outputs.last-release-sha }}"
+        TODAY=$(date +%Y-%m-%d)
+
+        # get commits since last release (reuse SHA from semver step)
+        if [ -n "$LAST_RELEASE_SHA" ]; then
+          COMMITS_SINCE_LAST_RELEASE=$(git log ${LAST_RELEASE_SHA}..HEAD --pretty=format:"%H %cs %s")
+        else
+          COMMITS_SINCE_LAST_RELEASE=$(git log --pretty=format:"%H %cs %s")
+        fi
+
+        # group commits by type (hash, date, subject)
+        FEATS=$(echo "$COMMITS_SINCE_LAST_RELEASE" | grep -E "^[a-f0-9]+ [0-9-]+ feat(\(.+\))?:" || true)
+        FIXES=$(echo "$COMMITS_SINCE_LAST_RELEASE" | grep -E "^[a-f0-9]+ [0-9-]+ fix(\(.+\))?:" || true)
+        BREAKS=$(echo "$COMMITS_SINCE_LAST_RELEASE" | grep -E "^[a-f0-9]+ [0-9-]+ break(\(.+\))?:" || true)
+
+        # format changelog - write to temp file to avoid yaml parsing issues with multiline strings
+        CHANGELOG_FILE="/tmp/changelog.md"
+        echo "## [${NEXT_TAG#v}](${REPO_URL}/compare/${PREV_TAG}...${NEXT_TAG}) (${TODAY})" > "$CHANGELOG_FILE"
+
+        format_commits() {
+          local commits="$1"
+          while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            HASH="${line%% *}"
+            REST="${line#* }"
+            DATE="${REST%% *}"
+            COMMIT_MESSAGE="${REST#* }"
+            SHORT_HASH="${HASH:0:7}"
+            # extract pr number from message if present
+            PR_NUM=$(echo "$COMMIT_MESSAGE" | grep -oE '\(#[0-9]+\)' | head -1 | tr -d '(#)' || true)
+            echo "&nbsp;&nbsp;○ ${COMMIT_MESSAGE}"
+            if [ -n "$PR_NUM" ]; then
+              echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── ${DATE}"
+              echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── [#${PR_NUM}](${REPO_URL}/pull/${PR_NUM})"
+              echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [${SHORT_HASH}](${REPO_URL}/commit/${HASH})"
+            else
+              echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── ${DATE}"
+              echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── [${SHORT_HASH}](${REPO_URL}/commit/${HASH})"
+            fi
+            echo ""
+          done <<< "$commits"
+        }
+
+        # count non-empty lines (handles empty vars gracefully)
+        BREAK_COUNT=0; [ -n "$BREAKS" ] && BREAK_COUNT=$(echo "$BREAKS" | wc -l | tr -d ' ')
+        FEAT_COUNT=0; [ -n "$FEATS" ] && FEAT_COUNT=$(echo "$FEATS" | wc -l | tr -d ' ')
+        FIX_COUNT=0; [ -n "$FIXES" ] && FIX_COUNT=$(echo "$FIXES" | wc -l | tr -d ' ')
+
+        if [ -n "$BREAKS" ]; then
+          { echo ""; echo "### breaks"; echo ""; format_commits "$BREAKS"; } >> "$CHANGELOG_FILE"
+        fi
+        if [ -n "$FEATS" ]; then
+          { echo ""; echo "### feats"; echo ""; format_commits "$FEATS"; } >> "$CHANGELOG_FILE"
+        fi
+        if [ -n "$FIXES" ]; then
+          { echo ""; echo "### fixes"; echo ""; format_commits "$FIXES"; } >> "$CHANGELOG_FILE"
+        fi
+
+        echo "   ├── breaks: $BREAK_COUNT"
+        echo "   ├── feats: $FEAT_COUNT"
+        echo "   └── fixes: $FIX_COUNT"
+
+        echo "changelog-file=$CHANGELOG_FILE" >> $GITHUB_OUTPUT
+
+    # step 4: upsert release pr, if other commit
+    - name: upsert release pr, if other commit
+      id: upsert
+      if: ${{ steps.cutta.outputs.did-cutta == 'false' }}
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: |
+        set -euo pipefail
+        echo "🔭 upsert release pr"
+        NEXT_VERSION="${{ steps.semver.outputs.next-version }}"
+        CHANGELOG=$(cat "${{ steps.changelog.outputs.changelog-file }}")
+
+        # failfast if package.json doesnt exist
+        if [ ! -f package.json ]; then
+          echo "   └── ⛈️ package.json not found"
+          echo "::error::package.json not found"
+          exit 1
+        fi
+
+        REPO="${{ inputs.repository }}"
+
+        # find release pr by head branch pattern (more reliable than search)
+        FOUND_PR=$(gh pr list --state open --json number,headRefName --jq '[.[] | select(.headRefName | startswith("release/"))] | .[0]')
+        echo "   ├── version: $NEXT_VERSION"
+
+        # build pr body in temp file to avoid yaml parsing issues
+        PR_BODY_FILE="/tmp/pr-body.md"
+        echo "🐢 noice! ready to let these changes ride?" > "$PR_BODY_FILE"
+        echo "---" >> "$PR_BODY_FILE"
+        echo "" >> "$PR_BODY_FILE"
+        cat "${{ steps.changelog.outputs.changelog-file }}" >> "$PR_BODY_FILE"
+        PR_BODY=$(cat "$PR_BODY_FILE")
+
+        # operation: upsert rebased commit on a branch (atomic, no PR auto-close)
+        # - creates blob, tree, commit based on parent_sha
+        # - upserts branch ref (create if missing, update if exists)
+        upsert_rebased_commit() {
+          local branch="$1"
+          local parent_sha="$2"
+          local message="$3"
+
+          # update package.json version locally
+          CURRENT_VERSION=$(jq -r '.version' package.json)
+          if [ "$CURRENT_VERSION" != "${NEXT_VERSION#v}" ]; then
+            npm version "${NEXT_VERSION#v}" --no-git-tag-version --ignore-scripts
+          fi
+
+          # create blob with updated package.json
+          PKG_CONTENT=$(base64 -w0 package.json)
+          BLOB_SHA=$(gh api "repos/${REPO}/git/blobs" \
+            -f content="$PKG_CONTENT" \
+            -f encoding="base64" \
+            --jq '.sha')
+
+          # get parent's tree
+          PARENT_TREE=$(gh api "repos/${REPO}/git/commits/${parent_sha}" --jq '.tree.sha')
+
+          # create new tree with updated package.json
+          NEW_TREE=$(gh api "repos/${REPO}/git/trees" \
+            -f base_tree="$PARENT_TREE" \
+            -f 'tree[][path]=package.json' \
+            -f 'tree[][mode]=100644' \
+            -f 'tree[][type]=blob' \
+            -f "tree[][sha]=$BLOB_SHA" \
+            --jq '.sha')
+
+          # create commit (auto-verified by github!)
+          COMMIT_SHA=$(gh api "repos/${REPO}/git/commits" \
+            -f message="$message" \
+            -f tree="$NEW_TREE" \
+            -f "parents[]=$parent_sha" \
+            --jq '.sha')
+
+          # upsert branch ref (create or update, never equals main)
+          if gh api "repos/${REPO}/git/ref/heads/${branch}" --jq '.object.sha' 2>/dev/null; then
+            gh api "repos/${REPO}/git/refs/heads/${branch}" -X PATCH -f sha="$COMMIT_SHA" -F force=true > /dev/null
+          else
+            gh api "repos/${REPO}/git/refs" -X POST -f ref="refs/heads/${branch}" -f sha="$COMMIT_SHA" > /dev/null
+          fi
+
+          echo "$COMMIT_SHA"
+        }
+
+        # get main head (shared by both flows)
+        MAIN_SHA=$(gh api "repos/${REPO}/git/ref/heads/main" --jq '.object.sha')
+
+        if [ -n "$FOUND_PR" ] && [ "$FOUND_PR" != "null" ]; then
+          FOUND_PR_NUMBER=$(echo "$FOUND_PR" | jq -r '.number')
+          FOUND_PR_BRANCH=$(echo "$FOUND_PR" | jq -r '.headRefName')
+          IDEAL_PR_BRANCH="release/${NEXT_VERSION}"
+          echo "   ├── found-pr: #$FOUND_PR_NUMBER ($FOUND_PR_BRANCH)"
+
+          # check if branch name matches expected version
+          if [ "$FOUND_PR_BRANCH" != "$IDEAL_PR_BRANCH" ]; then
+            echo "   ├── branch mismatch: $FOUND_PR_BRANCH != $IDEAL_PR_BRANCH"
+            echo "   ├── recreate pr with correct branch..."
+
+            # close found pr (with comment explaining why)
+            gh pr comment "$FOUND_PR_NUMBER" --body "🫧 closed: version bumped to ${NEXT_VERSION}, recreated pr with branch \`${IDEAL_PR_BRANCH}\`"
+            gh pr close "$FOUND_PR_NUMBER"
+            echo "   ├── closed: #$FOUND_PR_NUMBER"
+
+            # delete found branch (fail fast unless already gone)
+            DELETE_OUTPUT=$(gh api "repos/${REPO}/git/refs/heads/${FOUND_PR_BRANCH}" -X DELETE 2>&1) || {
+              if echo "$DELETE_OUTPUT" | grep -q "Reference does not exist"; then
+                echo "   ├── branch already deleted: $FOUND_PR_BRANCH"
+              else
+                echo "   ├── ⛈️ failed to delete branch: $FOUND_PR_BRANCH"
+                echo "$DELETE_OUTPUT"
+                exit 1
+              fi
+            }
+            echo "   ├── deleted branch: $FOUND_PR_BRANCH"
+
+            # create new branch with correct name
+            echo "   ├── create branch: $IDEAL_PR_BRANCH"
+            COMMIT_SHA=$(upsert_rebased_commit "$IDEAL_PR_BRANCH" "$MAIN_SHA" "chore(release): ${NEXT_VERSION} 🎉")
+            echo "   ├── commit: ${COMMIT_SHA:0:7}"
+
+            # create new pr
+            echo "   ├── create pr..."
+            PR_URL=$(gh pr create \
+              --title "chore(release): ${NEXT_VERSION} 🎉" \
+              --body "$PR_BODY" \
+              --base main \
+              --head "$IDEAL_PR_BRANCH")
+
+            PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+            echo "   ├── ✨ pr recreated: #$PR_NUMBER (was #$FOUND_PR_NUMBER)"
+            echo "   └── 🌊 action: recreated"
+            echo "action=recreated" >> $GITHUB_OUTPUT
+            echo "pr-number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          else
+            # branch name matches, update in place
+            echo "   ├── upsert rebased commit..."
+            COMMIT_SHA=$(upsert_rebased_commit "$FOUND_PR_BRANCH" "$MAIN_SHA" "chore(release): ${NEXT_VERSION} 🎉")
+            echo "   ├── commit: ${COMMIT_SHA:0:7}"
+
+            # update pr metadata
+            echo "   ├── update pr metadata..."
+            gh pr edit "$FOUND_PR_NUMBER" \
+              --title "chore(release): ${NEXT_VERSION} 🎉" \
+              --body "$PR_BODY"
+
+            echo "   ├── ✨ pr updated: #$FOUND_PR_NUMBER"
+            echo "   └── 🌊 action: updated"
+            echo "action=updated" >> $GITHUB_OUTPUT
+            echo "pr-number=$FOUND_PR_NUMBER" >> $GITHUB_OUTPUT
+          fi
+        else
+          BRANCH="release/${NEXT_VERSION}"
+          echo "   ├── found-pr: (none)"
+          echo "   ├── branch: $BRANCH"
+
+          # upsert rebased commit (creates branch if missing)
+          echo "   ├── upsert rebased commit..."
+          COMMIT_SHA=$(upsert_rebased_commit "$BRANCH" "$MAIN_SHA" "chore(release): ${NEXT_VERSION} 🎉")
+          echo "   ├── commit: ${COMMIT_SHA:0:7}"
+
+          # create pr
+          echo "   ├── create pr..."
+          PR_URL=$(gh pr create \
+            --title "chore(release): ${NEXT_VERSION} 🎉" \
+            --body "$PR_BODY" \
+            --base main \
+            --head "$BRANCH")
+
+          PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+          echo "   ├── ✨ pr created: #$PR_NUMBER"
+          echo "   └── 🌊 action: created"
+
+          echo "action=created" >> $GITHUB_OUTPUT
+          echo "pr-number=$PR_NUMBER" >> $GITHUB_OUTPUT
+        fi
+
+        echo "version=$NEXT_VERSION" >> $GITHUB_OUTPUT
+
+    # step 5: aggregate outputs
+    - name: aggregate outputs
+      id: result
+      if: always()
+      shell: bash
+      run: |
+        set -euo pipefail
+        if [ "${{ steps.cutta.outputs.did-cutta }}" = "true" ]; then
+          echo "action=${{ steps.cutta.outputs.action }}" >> $GITHUB_OUTPUT
+          echo "version=${{ steps.cutta.outputs.version }}" >> $GITHUB_OUTPUT
+        else
+          echo "action=${{ steps.upsert.outputs.action }}" >> $GITHUB_OUTPUT
+          echo "version=${{ steps.upsert.outputs.version }}" >> $GITHUB_OUTPUT
+          echo "pr-number=${{ steps.upsert.outputs.pr-number }}" >> $GITHUB_OUTPUT
+        fi

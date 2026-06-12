@@ -1,2 +1,8 @@
-# exclude package-lock from git diff; https://stackoverflow.com/a/72834452/3068233
 package-lock.json -diff
+
+# exclude package locks from git diff; https://stackoverflow.com/a/72834452/3068233
+pnpm-lock.yaml -diff
+
+# auto-resolve lock file conflicts by taking theirs; run install after merge
+pnpm-lock.yaml merge=theirs
+package-lock.json merge=theirs

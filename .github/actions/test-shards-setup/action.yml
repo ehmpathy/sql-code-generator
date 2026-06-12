@@ -1,0 +1,68 @@
+name: test-shards-setup
+description: generate shard matrix from jest.*.shards.jsonc config
+
+inputs:
+  config-file:
+    description: path to the shards config file (e.g., jest.integration.shards.jsonc)
+    required: true
+  test-type:
+    description: label for notices (e.g., integration, acceptance)
+    required: true
+
+outputs:
+  matrix:
+    description: "JSON array of shard configs for matrix strategy"
+    value: ${{ steps.generate.outputs.matrix }}
+  patterns:
+    description: "pipe-delimited patterns for --testPathIgnorePatterns"
+    value: ${{ steps.generate.outputs.patterns }}
+
+runs:
+  using: composite
+  steps:
+    - name: generate matrix from ${{ inputs.config-file }}
+      id: generate
+      shell: bash
+      run: |
+        config_file="${{ inputs.config-file }}"
+        test_type="${{ inputs.test-type }}"
+
+        # no config = single dynamic shard (backwards compat)
+        if [[ ! -f "$config_file" ]]; then
+          echo "$test_type: no config, default to single shard"
+          echo 'matrix=[{"type":"dynamic","shard":1,"total":1}]' >> $GITHUB_OUTPUT
+          echo 'patterns=' >> $GITHUB_OUTPUT
+          exit 0
+        fi
+
+        # read config (strip comments for jq)
+        config=$(grep -v '^\s*//' "$config_file" | jq -c '.')
+
+        # extract explicit shards
+        explicit=$(echo "$config" | jq -c '.explicit // []')
+        explicit_count=$(echo "$explicit" | jq 'length')
+
+        # extract dynamic shard count
+        dynamic_count=$(echo "$config" | jq '.dynamic.shards // 0')
+
+        # build matrix
+        matrix="[]"
+
+        # add explicit shards
+        for i in $(seq 0 $((explicit_count - 1))); do
+          patterns=$(echo "$explicit" | jq -c ".[$i].patterns")
+          matrix=$(echo "$matrix" | jq -c ". + [{\"type\": \"explicit\", \"index\": $i, \"patterns\": $patterns}]")
+        done
+
+        # add dynamic shards
+        for i in $(seq 1 $dynamic_count); do
+          matrix=$(echo "$matrix" | jq -c ". + [{\"type\": \"dynamic\", \"shard\": $i, \"total\": $dynamic_count}]")
+        done
+
+        # collect all explicit patterns for exclusion
+        explicit_patterns=$(echo "$explicit" | jq -r '.[].patterns[]' 2>/dev/null | paste -sd '|' || echo '')
+
+        echo "matrix=$matrix" >> $GITHUB_OUTPUT
+        echo "patterns=$explicit_patterns" >> $GITHUB_OUTPUT
+
+        echo "$test_type: $(echo "$matrix" | jq 'length') shards"

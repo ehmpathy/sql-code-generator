@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this example 1`] = `
+[
+  TypeDefinitionOfResourceInput {
+    "name": "in_url",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_caption",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_credit",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_alt_text",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this other example 1`] = `
+[
+  TypeDefinitionOfResourceInput {
+    "name": "in_suggestion_source",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_external_id",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_suggested_idea_id",
+    "type": [
+      "number",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_status",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_result",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_resultant_curated_idea_id",
+    "type": [
+      "number",
+      "null",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql mysql should extract the inputs accurately in this other example again 1`] = `
+[
+  TypeDefinitionOfResourceInput {
+    "name": "in_array",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_delimiter",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_index",
+    "type": [
+      "number",
+      "null",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately in this example 1`] = `
+[
+  TypeDefinitionOfResourceInput {
+    "name": "in_url",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_description",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+]
+`;
+
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately there is no input args 1`] = `[]`;
+
+exports[`extractInputsFromFunctionSql postgres should extract the inputs accurately when one of the inputs is an array type 1`] = `
+[
+  TypeDefinitionOfResourceInput {
+    "name": "in_uuid",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_title",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_status",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_description",
+    "type": [
+      "string",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_location_id",
+    "type": [
+      "number",
+      "null",
+    ],
+  },
+  TypeDefinitionOfResourceInput {
+    "name": "in_photo_ids",
+    "type": [
+      "number[]",
+      "null",
+    ],
+  },
+]
+`;

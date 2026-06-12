@@ -1,0 +1,16 @@
+# dpdm exclude patterns
+# each entry is joined with | to form a single regex for --exclude
+#
+# with --transform flag, type imports are erased before analysis
+# and test files are excluded via glob pattern '!(*.test).ts'
+# so excludes are rarely needed even for devDependencies
+#
+# never exclude prod dependencies — you'd ship cycles to consumers
+exclude:
+  # node_modules cycles are external packages (oclif, etc.) — cannot fix
+  # these cycles ship with the dependencies regardless of our detection
+  - node_modules
+  # intentional mutual recursion for nested subquery extraction
+  # extractTypeDefinitionReferenceFromSubqueryReferenceToken calls
+  # extractSelectExpressionsFromQuerySql recursively
+  - extractSelectExpressionsFromQuerySql

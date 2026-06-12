@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for a case where an input variable is defined in a subquery used as an input to a function 1`] = `
+[
+  TypeDefinitionOfQueryInputVariable {
+    "name": "serviceProviderUuid",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "p.uuid",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "bannerImageUuid",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_provider_profile.input.1",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "pictureImageUuid",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_provider_profile.input.2",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "introduction",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_provider_profile.input.3",
+      "tableReferencePath": null,
+    },
+  },
+]
+`;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this example 1`] = `
+[
+  TypeDefinitionOfQueryInputVariable {
+    "name": "id",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "i.id",
+    },
+  },
+]
+`;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other example 1`] = `[]`;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for this other other example 1`] = `
+[
+  TypeDefinitionOfQueryInputVariable {
+    "name": "suggestionSource",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "externalId",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.1",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "suggestedIdeaId",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.2",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "status",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.3",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "result",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_suggestion.input.4",
+      "tableReferencePath": null,
+    },
+  },
+]
+`;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to determine types accurately for yet another example 1`] = `
+[
+  TypeDefinitionOfQueryInputVariable {
+    "name": "name",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "get_id_from_suggestion_source_name.input.0",
+      "tableReferencePath": null,
+    },
+  },
+]
+`;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to extract input variables from a function that compares a timestamp with less-than-or-equals-to and null 1`] = `
+[
+  TypeDefinitionOfQueryInputVariable {
+    "name": "threadUuid",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "chat_thread.uuid",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "until",
+    "plural": false,
+    "type": [
+      "null",
+    ],
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "until",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "chat_message.created_at",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "limit",
+    "plural": false,
+    "type": [
+      "number",
+    ],
+  },
+]
+`;
+
+exports[`extractSelectExpressionsFromQuerySql should be able to extract input variables from a function that postgres::typecasts some of the input variables 1`] = `
+[
+  TypeDefinitionOfQueryInputVariable {
+    "name": "homeStationGeocodeId",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_train.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "combinationId",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_train.input.1",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "locomotiveUuids",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "unnest.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "carriageUuids",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "unnest.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "engineerUuids",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "unnest.input.0",
+      "tableReferencePath": null,
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "leadEngineerUuid",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": null,
+      "tableReferencePath": "train_engineer.uuid",
+    },
+  },
+  TypeDefinitionOfQueryInputVariable {
+    "name": "status",
+    "plural": false,
+    "type": TypeDefinitionReference {
+      "functionReferencePath": "upsert_train.input.6",
+      "tableReferencePath": null,
+    },
+  },
+]
+`;

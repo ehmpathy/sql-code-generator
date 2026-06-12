@@ -1,16 +1,14 @@
-import SqlCodeGenerator from './generate';
+import { generate } from '@src/domain.operations/commands/generate/generate';
 
 describe('generate', () => {
-  it('should be able to generate code for valid config and sql, generating both types and query functions', async () => {
-    await SqlCodeGenerator.run([
-      '-c',
-      `${__dirname}/../__test_assets__/codegen.sql.yml`,
-    ]);
+  it('should generate code for valid config and sql with both types and query functions', async () => {
+    await generate({
+      configPath: `${__dirname}/../.test.assets/codegen.sql.yml`,
+    });
   });
-  it('should be able to generate code for valid config and sql, only generating types', async () => {
-    await SqlCodeGenerator.run([
-      '-c',
-      `${__dirname}/../__test_assets__/codegen.sql.only-types.yml`,
-    ]);
+  it('should generate code for valid config and sql with only types', async () => {
+    await generate({
+      configPath: `${__dirname}/../.test.assets/codegen.sql.only-types.yml`,
+    });
   });
 });
